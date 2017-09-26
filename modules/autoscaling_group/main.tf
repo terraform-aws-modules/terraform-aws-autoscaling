@@ -10,7 +10,7 @@ resource "aws_autoscaling_group" "this" {
   min_size             = "${var.min_size}"
   desired_capacity     = "${var.desired_capacity}"
 
-  load_balancers            = "${var.load_balancers}"
+  load_balancers            = ["${var.load_balancers}"]
   health_check_grace_period = "${var.health_check_grace_period}"
   health_check_type         = "${var.health_check_type}"
 
