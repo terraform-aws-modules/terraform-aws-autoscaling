@@ -41,7 +41,7 @@ data "aws_ami" "amazon_linux" {
 ######
 # Launch configuration and autoscaling group
 ######
-module "example" {
+module "example_asg" {
   source = "../../"
 
   # Launch configuration
@@ -53,6 +53,7 @@ module "example" {
   image_id        = "${data.aws_ami.amazon_linux.id}"
   instance_type   = "t2.micro"
   security_groups = ["${data.aws_security_group.default.id}"]
+  load_balancers  = ["${module.elb.this_elb_id}"]
 
   ebs_block_device = [
     {
@@ -91,4 +92,41 @@ module "example" {
       propagate_at_launch = true
     },
   ]
+}
+
+######
+# ELB
+######
+module "elb" {
+  source = "terraform-aws-modules/elb/aws"
+
+  name = "elb-example"
+
+  subnets         = ["${data.aws_subnet_ids.all.ids}"]
+  security_groups = ["${data.aws_security_group.default.id}"]
+  internal        = false
+
+  listener = [
+    {
+      instance_port     = "80"
+      instance_protocol = "HTTP"
+      lb_port           = "80"
+      lb_protocol       = "HTTP"
+    },
+  ]
+
+  health_check = [
+    {
+      target              = "HTTP:80/"
+      interval            = 30
+      healthy_threshold   = 2
+      unhealthy_threshold = 2
+      timeout             = 5
+    },
+  ]
+
+  tags = {
+    Owner       = "user"
+    Environment = "dev"
+  }
 }
