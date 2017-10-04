@@ -16,7 +16,7 @@ resource "aws_autoscaling_group" "this" {
 
   min_elb_capacity          = "${var.min_elb_capacity}"
   wait_for_elb_capacity     = "${var.wait_for_elb_capacity}"
-  target_group_arns         = "${var.target_group_arns}"
+  target_group_arns         = ["${var.target_group_arns}"]
   default_cooldown          = "${var.default_cooldown}"
   force_delete              = "${var.force_delete}"
   termination_policies      = "${var.termination_policies}"
