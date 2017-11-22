@@ -54,10 +54,10 @@ output "this_autoscaling_group_vpc_zone_identifier" {
   value       = "${aws_autoscaling_group.this.vpc_zone_identifier}"
 }
 
-output "this_autoscaling_group_load_balancers" {
-  description = "The load balancer names associated with the autoscaling group"
-  value       = "${aws_autoscaling_group.this.load_balancers}"
-}
+//output "this_autoscaling_group_load_balancers" {
+//  description = "The load balancer names associated with the autoscaling group"
+//  value       = "${aws_autoscaling_group.this.load_balancers}"
+//}
 
 output "this_autoscaling_group_target_group_arns" {
   description = "List of Target Group ARNs that apply to this AutoScaling Group"
