@@ -65,7 +65,9 @@ output "this_autoscaling_group_vpc_zone_identifier" {
 //  value       = "${module.autoscaling_group.this_autoscaling_group_load_balancers}"
 //}
 
-output "this_autoscaling_group_target_group_arns" {
-  description = "List of Target Group ARNs that apply to this AutoScaling Group"
-  value       = "${module.autoscaling_group.this_autoscaling_group_target_group_arns}"
-}
+
+//output "this_autoscaling_group_target_group_arns" {
+//  description = "List of Target Group ARNs that apply to this AutoScaling Group"
+//  value       = "${module.autoscaling_group.this_autoscaling_group_target_group_arns}"
+//}
+
