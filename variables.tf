@@ -1,14 +1,33 @@
-# Existing launch configuration
-variable "existing_launch_configuration" {
-  description = "Name of existing launch configuration to use. If empty new launch configuration will be created"
+variable "create_lc" {
+  description = "Whether to create launch configuration"
+  default     = true
+}
+
+variable "create_asg" {
+  description = "Whether to create autoscaling group"
+  default     = true
+}
+
+variable "name" {
+  description = "Creates a unique name beginning with the specified prefix"
+}
+
+variable "lc_name" {
+  description = "Creates a unique name for launch configuration beginning with the specified prefix"
+  default     = ""
+}
+
+variable "asg_name" {
+  description = "Creates a unique name for autoscaling group beginning with the specified prefix"
+  default     = ""
+}
+
+variable "launch_configuration" {
+  description = "The name of the launch configuration to use (if it is created outside of this module)"
   default     = ""
 }
 
 # Launch configuration
-variable "lc_name" {
-  description = "Creates a unique name beginning with the specified prefix"
-}
-
 variable "image_id" {
   description = "The EC2 image ID to launch"
 }
@@ -81,10 +100,6 @@ variable "placement_tenancy" {
 }
 
 # Autoscaling group
-variable "asg_name" {
-  description = "The name of the auto scaling group"
-}
-
 variable "max_size" {
   description = "The maximum size of the auto scale group"
 }

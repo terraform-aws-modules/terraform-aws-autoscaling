@@ -1,5 +1,12 @@
 provider "aws" {
   region = "eu-west-1"
+
+  # Make it faster by skipping something
+  skip_get_ec2_platforms      = true
+  skip_metadata_api_check     = true
+  skip_region_validation      = true
+  skip_credentials_validation = true
+  skip_requesting_account_id  = true
 }
 
 ##############################################################
@@ -44,15 +51,18 @@ data "aws_ami" "amazon_linux" {
 module "example" {
   source = "../../"
 
+  name = "example-with-ec2"
+
   # Launch configuration
   #
-  # Uncomment the value below and provide value of existing launch configuration to use it instead of making new one
-  # existing_launch_configuration = "aa"
+  # launch_configuration = "my-existing-launch-configuration" # Use the existing launch configuration
+  # create_lc = false # disables creation of launch configuration
   lc_name = "example-lc"
 
-  image_id        = "${data.aws_ami.amazon_linux.id}"
-  instance_type   = "t2.micro"
-  security_groups = ["${data.aws_security_group.default.id}"]
+  image_id                    = "${data.aws_ami.amazon_linux.id}"
+  instance_type               = "t2.micro"
+  security_groups             = ["${data.aws_security_group.default.id}"]
+  associate_public_ip_address = true
 
   ebs_block_device = [
     {

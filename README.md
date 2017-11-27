@@ -8,17 +8,14 @@ These types of resources are supported:
 * [Launch Configuration](https://www.terraform.io/docs/providers/aws/r/launch_configuration.html)
 * [Auto Scaling Group](https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html)
 
-Root module calls these modules which can also be used separately to create independent resources:
-
-* [launch_configuration](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/modules/launch_configuration) - creates Launch Configuration
-* [autoscaling_group](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/modules/autoscaling_group) - creates Auto Scaling Group
-
 Usage
 -----
 
 ```hcl
 module "asg" {
   source = "terraform-aws-modules/autoscaling/aws"
+
+  name = "service"
 
   # Launch configuration
   lc_name = "example-lc"
@@ -66,6 +63,32 @@ module "asg" {
   ]
 }
 ```
+
+Conditional creation
+--------------------
+
+Normally this module creates both Auto Scaling Group (ASG) and Launch Configuration (LC), and connect them together.
+It is possible to customize this behaviour passing different parameters to this module:
+1. To create ASG, but not LC. Associate ASG with an existing LC:
+```hcl
+create_lc = false
+launch_configuration = "existing-launch-configuration"
+```
+
+1. To create ASG, but not LC. Don't associate ASG with any LC:
+```hcl
+create_lc = false
+```
+
+1. To create LC, but not ASG.
+```hcl
+create_asg = false
+```
+
+1. To create LC, but not ASG. Associate LC with an existing ASG currently not possible.
+
+1. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to have a way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
+
 
 Examples
 --------
