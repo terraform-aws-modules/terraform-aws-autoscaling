@@ -1,12 +1,10 @@
 #######################
 # Launch configuration
 #######################
-module "launch_configuration" {
-  source = "./modules/launch_configuration"
+resource "aws_launch_configuration" "this" {
+  count = "${var.create_lc}"
 
-  count = "${var.existing_launch_configuration != "" ? 0 : 1}"
-
-  name                        = "${var.lc_name}"
+  name_prefix                 = "${coalesce(var.lc_name, var.name)}-"
   image_id                    = "${var.image_id}"
   instance_type               = "${var.instance_type}"
   iam_instance_profile        = "${var.iam_instance_profile}"
@@ -15,28 +13,31 @@ module "launch_configuration" {
   associate_public_ip_address = "${var.associate_public_ip_address}"
   user_data                   = "${var.user_data}"
   enable_monitoring           = "${var.enable_monitoring}"
-  spot_price                  = "${var.spot_price}"
   placement_tenancy           = "${var.placement_tenancy}"
+  ebs_optimized               = "${var.ebs_optimized}"
+  ebs_block_device            = "${var.ebs_block_device}"
+  ephemeral_block_device      = "${var.ephemeral_block_device}"
+  root_block_device           = "${var.root_block_device}"
 
-  ebs_optimized          = "${var.ebs_optimized}"
-  ebs_block_device       = "${var.ebs_block_device}"
-  ephemeral_block_device = "${var.ephemeral_block_device}"
-  root_block_device      = "${var.root_block_device}"
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  # spot_price                  = "${var.spot_price}"  // placement_tenancy does not work with spot_price
 }
 
 ####################
-# Autoscaling Group
+# Autoscaling group
 ####################
-module "autoscaling_group" {
-  source = "./modules/autoscaling_group"
+resource "aws_autoscaling_group" "this" {
+  count = "${var.create_asg}"
 
-  name                 = "${var.asg_name}"
-  launch_configuration = "${var.existing_launch_configuration != "" ? var.existing_launch_configuration : module.launch_configuration.this_launch_configuration_id}"
+  name_prefix          = "${coalesce(var.asg_name, var.name)}-"
+  launch_configuration = "${var.create_lc ? element(concat(aws_launch_configuration.this.*.id, list(var.launch_configuration)), 0) : var.launch_configuration}"
   vpc_zone_identifier  = ["${var.vpc_zone_identifier}"]
-
-  max_size         = "${var.max_size}"
-  min_size         = "${var.min_size}"
-  desired_capacity = "${var.desired_capacity}"
+  max_size             = "${var.max_size}"
+  min_size             = "${var.min_size}"
+  desired_capacity     = "${var.desired_capacity}"
 
   load_balancers            = ["${var.load_balancers}"]
   health_check_grace_period = "${var.health_check_grace_period}"
@@ -55,5 +56,8 @@ module "autoscaling_group" {
   wait_for_capacity_timeout = "${var.wait_for_capacity_timeout}"
   protect_from_scale_in     = "${var.protect_from_scale_in}"
 
-  tags = "${var.tags}"
+  tags = ["${concat(
+      var.tags,
+      list(map("key", "Name", "value", var.name, "propagate_at_launch", true))
+   )}"]
 }

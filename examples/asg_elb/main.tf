@@ -44,10 +44,12 @@ data "aws_ami" "amazon_linux" {
 module "example_asg" {
   source = "../../"
 
+  name = "example-with-elb"
+
   # Launch configuration
   #
-  # Uncomment the value below and provide value of existing launch configuration to use it instead of making new one
-  # existing_launch_configuration = "aa"
+  # launch_configuration = "my-existing-launch-configuration" # Use the existing launch configuration
+  # create_lc = false # disables creation of launch configuration
   lc_name = "example-lc"
 
   image_id        = "${data.aws_ami.amazon_linux.id}"
