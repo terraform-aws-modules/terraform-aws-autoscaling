@@ -75,19 +75,12 @@ create_lc = false
 launch_configuration = "existing-launch-configuration"
 ```
 
-1. To create ASG, but not LC. Don't associate ASG with any LC:
-```hcl
-create_lc = false
-```
-
-1. To create LC, but not ASG.
+1. To create LC, but not ASG. Outputs may produce errors.
 ```hcl
 create_asg = false
 ```
 
-1. To create LC, but not ASG. Associate LC with an existing ASG currently not possible.
-
-1. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to have a way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
+1. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to use this way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
 
 
 Examples

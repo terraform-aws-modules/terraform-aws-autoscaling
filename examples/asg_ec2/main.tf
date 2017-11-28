@@ -77,6 +77,7 @@ module "example" {
     {
       volume_size = "50"
       volume_type = "gp2"
+      delete_on_termination = true
     },
   ]
 
