@@ -33,7 +33,7 @@ resource "aws_autoscaling_group" "this" {
   count = "${var.create_asg}"
 
   name_prefix          = "${coalesce(var.asg_name, var.name)}-"
-  launch_configuration = "${var.create_lc ? element(concat(aws_launch_configuration.this.*.id, list(var.launch_configuration)), 0) : var.launch_configuration}"
+  launch_configuration = "${var.create_lc ? element(aws_launch_configuration.this.*.name, 0) : var.launch_configuration}"
   vpc_zone_identifier  = ["${var.vpc_zone_identifier}"]
   max_size             = "${var.max_size}"
   min_size             = "${var.min_size}"
