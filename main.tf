@@ -57,7 +57,7 @@ resource "aws_autoscaling_group" "this" {
   protect_from_scale_in     = "${var.protect_from_scale_in}"
 
   tags = ["${concat(
-      var.tags,
-      list(map("key", "Name", "value", var.name, "propagate_at_launch", true))
+      list(map("key", "Name", "value", var.name, "propagate_at_launch", true)),
+      var.tags
    )}"]
 }
