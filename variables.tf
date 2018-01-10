@@ -158,7 +158,7 @@ variable "suspended_processes" {
 }
 
 variable "tags" {
-  description = "A list of tag blocks"
+  description = "A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch."
   default     = []
 }
 
