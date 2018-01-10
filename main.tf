@@ -60,4 +60,8 @@ resource "aws_autoscaling_group" "this" {
       var.tags,
       list(map("key", "Name", "value", var.name, "propagate_at_launch", true))
    )}"]
+  
+  lifecycle {
+    create_before_destroy = "${var.create_before_destroy}"
+  }
 }
