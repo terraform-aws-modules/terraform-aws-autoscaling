@@ -8,6 +8,11 @@ variable "create_asg" {
   default     = true
 }
 
+variable "create_before_destroy" {
+  description = "Whether to create the new autoscaling group before destroying the old one, during updates"
+  default     = false
+}
+
 variable "name" {
   description = "Creates a unique name beginning with the specified prefix"
 }
