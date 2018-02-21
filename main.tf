@@ -56,6 +56,10 @@ resource "aws_autoscaling_group" "this" {
   wait_for_capacity_timeout = "${var.wait_for_capacity_timeout}"
   protect_from_scale_in     = "${var.protect_from_scale_in}"
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = ["${concat(
       list(map("key", "Name", "value", var.name, "propagate_at_launch", true)),
       var.tags
