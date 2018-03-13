@@ -58,6 +58,7 @@ resource "aws_autoscaling_group" "this" {
 
   tags = ["${concat(
       list(map("key", "Name", "value", var.name, "propagate_at_launch", true)),
-      var.tags
+      var.tags,
+      local.tags_asg_format
    )}"]
 }
