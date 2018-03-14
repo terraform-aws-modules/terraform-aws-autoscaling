@@ -162,6 +162,12 @@ variable "tags" {
   default     = []
 }
 
+variable "tags_as_map" {
+  description = "A map of tags and values in the same format as other resources accept.  This will be zipmapped into the non-standard format that the aws_autoscaling_group requires."
+  type        = "map"
+  default     = {}
+}
+
 variable "placement_group" {
   description = "The name of the placement group into which you'll launch your instances, if any"
   default     = ""
