@@ -61,10 +61,10 @@ module "asg" {
       propagate_at_launch = true
     },
   ]
-  
+
   tags_as_map = {
-    extra_tag1             = "extra_value1"
-    extra_tag2             = "extra_value2"
+    extra_tag1 = "extra_value1"
+    extra_tag2 = "extra_value2"
   }
 }
 ```
@@ -87,6 +87,10 @@ create_asg = false
 
 1. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to use this way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
 
+Tags
+----
+
+There are two ways to specify tags for auto-scaling group in this module - `tags` and `tags_as_map`. See [examples/asg_ec2/main.tf](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/blob/master/examples/asg_ec2/main.tf) for example.
 
 Examples
 --------

@@ -75,8 +75,8 @@ module "example" {
 
   root_block_device = [
     {
-      volume_size = "50"
-      volume_type = "gp2"
+      volume_size           = "50"
+      volume_type           = "gp2"
       delete_on_termination = true
     },
   ]
@@ -102,4 +102,9 @@ module "example" {
       propagate_at_launch = true
     },
   ]
+
+  tags_as_map = {
+    extra_tag1 = "extra_value1"
+    extra_tag2 = "extra_value2"
+  }
 }

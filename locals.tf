@@ -91,7 +91,7 @@ locals {
       zipmap(
         local.key_list,
         local.list0
-      ) ,
+      ),
       zipmap(
         local.key_list,
         local.list1
