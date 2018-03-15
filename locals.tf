@@ -2,9 +2,12 @@ locals {
   # This whole block is dedicated to converting an input variable of map (same type as other resources) into asg
   # compatible format, which is a list of maps with the propagate_at_launch variable set at true.
   # Split the full_tags variable (map) into 2 lists in same order as the map
-  tag_keys = "${keys(var.tags_as_map)}"
 
-  tag_values = "${values(var.tags_as_map)}"
+  tags_as_map = "${merge(var.tags_as_map, map("",""))}"
+
+  tag_keys = "${keys(local.tags_as_map)}"
+
+  tag_values = "${values(local.tags_as_map)}"
 
   list_blank = "${list()}"
 
@@ -15,74 +18,94 @@ locals {
     "propagate_at_launch")}"
 
   # 10 lists containing values that will be zipmapped to the above structure later.
+  list0_key = "${length(local.tag_keys) > 1 ? element(local.tag_keys, 1) : "key"}"
+  list0_value = "${length(local.tag_keys) > 1 ? element(local.tag_keys, 1) : "value"}"
   list0 = "${list(
-      element(local.tag_keys, 0) != "" ? element(local.tag_keys, 0) : "",
-      element(local.tag_values, 0) != "" ? element(local.tag_values, 0) : "",
+      local.list0_key,
+      local.list0_value,
       "true"
     )
   }"
-
+  
+  list1_key = "${length(local.tag_keys) > 2 ? element(local.tag_keys, 2) : "key"}"
+  list1_value = "${length(local.tag_keys) > 2 ? element(local.tag_keys, 2) : "value"}"
   list1 = "${list(
-      element(local.tag_keys, 1) != "" ? element(local.tag_keys, 1) : "",
-      element(local.tag_values, 1) != "" ? element(local.tag_values, 1) : "",
+      local.list1_key,
+      local.list1_value,
       "true"
     )
   }"
-
+  
+  list2_key = "${length(local.tag_keys) > 3 ? element(local.tag_keys, 3) : "key"}"
+  list2_value = "${length(local.tag_keys) > 3 ? element(local.tag_keys, 3) : "value"}"
   list2 = "${list(
-      element(local.tag_keys, 2) != "" ? element(local.tag_keys, 2) : "",
-      element(local.tag_values, 2) != "" ? element(local.tag_values, 2) : "",
+      local.list2_key,
+      local.list2_value,
       "true"
     )
   }"
-
+  
+  list3_key = "${length(local.tag_keys) > 4 ? element(local.tag_keys, 4) : "key"}"
+  list3_value = "${length(local.tag_keys) > 4 ? element(local.tag_keys, 4) : "value"}"
   list3 = "${list(
-      element(local.tag_keys, 3) != "" ? element(local.tag_keys, 3) : "",
-      element(local.tag_values, 3) != "" ? element(local.tag_values, 3) : "",
+      local.list3_key,
+      local.list3_value,
       "true"
     )
   }"
-
+  
+  list4_key = "${length(local.tag_keys) > 5 ? element(local.tag_keys, 5) : "key"}"
+  list4_value = "${length(local.tag_keys) > 5 ? element(local.tag_keys, 5) : "value"}"
   list4 = "${list(
-      element(local.tag_keys, 4) != "" ? element(local.tag_keys, 4) : "",
-      element(local.tag_values, 4) != "" ? element(local.tag_values, 4) : "",
+      local.list4_key,
+      local.list4_value,
       "true"
     )
   }"
-
+  
+  list5_key = "${length(local.tag_keys) > 6 ? element(local.tag_keys, 6) : "key"}"
+  list5_value = "${length(local.tag_keys) > 6 ? element(local.tag_keys, 6) : "value"}"
   list5 = "${list(
-      element(local.tag_keys, 5) != "" ? element(local.tag_keys, 5) : "",
-      element(local.tag_values, 5) != "" ? element(local.tag_values, 5) : "",
+      local.list5_key,
+      local.list5_value,
       "true"
     )
   }"
-
+  
+  list6_key = "${length(local.tag_keys) > 7 ? element(local.tag_keys, 7) : "key"}"
+  list6_value = "${length(local.tag_keys) > 7 ? element(local.tag_keys, 7) : "value"}"
   list6 = "${list(
-      element(local.tag_keys, 6) != "" ? element(local.tag_keys, 6) : "",
-      element(local.tag_values, 6) != "" ? element(local.tag_values, 6) : "",
+      local.list6_key,
+      local.list6_value,
       "true"
     )
   }"
-
+  
+  list7_key = "${length(local.tag_keys) > 8 ? element(local.tag_keys, 8) : "key"}"
+  list7_value = "${length(local.tag_keys) > 8 ? element(local.tag_keys, 8) : "value"}"
   list7 = "${list(
-      element(local.tag_keys, 7) != "" ? element(local.tag_keys, 7) : "",
-      element(local.tag_values, 7) != "" ? element(local.tag_values, 7) : "",
+      local.list7_key,
+      local.list7_value,
       "true"
     )
   }"
-
+  
+  list8_key = "${length(local.tag_keys) > 9 ? element(local.tag_keys, 9) : "key"}"
+  list8_value = "${length(local.tag_keys) > 9 ? element(local.tag_keys, 9) : "value"}"
   list8 = "${list(
-      element(local.tag_keys, 8) != "" ? element(local.tag_keys, 8) : "",
-      element(local.tag_values, 8) != "" ? element(local.tag_values, 8) : "",
+      local.list8_key,
+      local.list8_value,
       "true"
     )
   }"
-
+  
+  list9_key = "${length(local.tag_keys) > 10 ? element(local.tag_keys, 10) : "key"}"
+  list9_value = "${length(local.tag_keys) > 10 ? element(local.tag_keys, 10) : "value"}"
   list9 = "${list(
-    element(local.tag_keys, 9) != "" ? element(local.tag_keys, 9) : "",
-    element(local.tag_values, 9) != "" ? element(local.tag_values, 9) : "",
-    "true"
-  )
+      local.list9_key,
+      local.list9_value,
+      "true"
+    )
   }"
 
   # Construct list of dicts in required format by zipmapping the value lists with the standard key list
