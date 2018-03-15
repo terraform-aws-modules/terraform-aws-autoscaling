@@ -16,77 +16,77 @@ locals {
 
   # 10 lists containing values that will be zipmapped to the above structure later.
   list0 = "${list(
-      element(local.tag_keys, 0) != "" ? element(local.tag_keys, 0) : "",
-      element(local.tag_values, 0) != "" ? element(local.tag_values, 0) : "",
+      element(concat(local.tag_keys, list("")), 0),
+      element(concat(local.tag_values, list("")), 0),
       "true"
     )
   }"
 
   list1 = "${list(
-      element(local.tag_keys, 1) != "" ? element(local.tag_keys, 1) : "",
-      element(local.tag_values, 1) != "" ? element(local.tag_values, 1) : "",
+      element(concat(local.tag_keys, list("")), 1),
+      element(concat(local.tag_values, list("")), 1),
       "true"
     )
   }"
 
   list2 = "${list(
-      element(local.tag_keys, 2) != "" ? element(local.tag_keys, 2) : "",
-      element(local.tag_values, 2) != "" ? element(local.tag_values, 2) : "",
+      element(concat(local.tag_keys, list("")), 2),
+      element(concat(local.tag_values, list("")), 2),
       "true"
     )
   }"
 
   list3 = "${list(
-      element(local.tag_keys, 3) != "" ? element(local.tag_keys, 3) : "",
-      element(local.tag_values, 3) != "" ? element(local.tag_values, 3) : "",
+      element(concat(local.tag_keys, list("")), 3),
+      element(concat(local.tag_values, list("")), 3),
       "true"
     )
   }"
 
   list4 = "${list(
-      element(local.tag_keys, 4) != "" ? element(local.tag_keys, 4) : "",
-      element(local.tag_values, 4) != "" ? element(local.tag_values, 4) : "",
+      element(concat(local.tag_keys, list("")), 4),
+      element(concat(local.tag_values, list("")), 4),
       "true"
     )
   }"
 
   list5 = "${list(
-      element(local.tag_keys, 5) != "" ? element(local.tag_keys, 5) : "",
-      element(local.tag_values, 5) != "" ? element(local.tag_values, 5) : "",
+      element(concat(local.tag_keys, list("")), 5),
+      element(concat(local.tag_values, list("")), 5),
       "true"
     )
   }"
 
   list6 = "${list(
-      element(local.tag_keys, 6) != "" ? element(local.tag_keys, 6) : "",
-      element(local.tag_values, 6) != "" ? element(local.tag_values, 6) : "",
+      element(concat(local.tag_keys, list("")), 6),
+      element(concat(local.tag_values, list("")), 6),
       "true"
     )
   }"
 
   list7 = "${list(
-      element(local.tag_keys, 7) != "" ? element(local.tag_keys, 7) : "",
-      element(local.tag_values, 7) != "" ? element(local.tag_values, 7) : "",
+      element(concat(local.tag_keys, list("")), 7),
+      element(concat(local.tag_values, list("")), 7),
       "true"
     )
   }"
 
   list8 = "${list(
-      element(local.tag_keys, 8) != "" ? element(local.tag_keys, 8) : "",
-      element(local.tag_values, 8) != "" ? element(local.tag_values, 8) : "",
+      element(concat(local.tag_keys, list("")), 8),
+      element(concat(local.tag_values, list("")), 8),
       "true"
     )
   }"
 
   list9 = "${list(
-    element(local.tag_keys, 9) != "" ? element(local.tag_keys, 9) : "",
-    element(local.tag_values, 9) != "" ? element(local.tag_values, 9) : "",
-    "true"
-  )
+      element(concat(local.tag_keys, list("")), 9),
+      element(concat(local.tag_values, list("")), 9),
+      "true"
+    )
   }"
 
   # Construct list of dicts in required format by zipmapping the value lists with the standard key list
-  # Slicing to the length of the map of tags so we dont get blank or repeating tags
+  # Slicing to the length of the map of tags so we dont get blank or repeating tags starting from first non-default value
   tags_asg_format = "${slice(list(
       zipmap(
         local.key_list,
@@ -128,6 +128,6 @@ locals {
         local.key_list,
         local.list9
       )
-    ), 0, length(local.tag_keys) - 1)
+    ), 0, min(length(local.tag_keys), 10))
   }"
 }
