@@ -91,7 +91,7 @@ variable "ephemeral_block_device" {
 
 variable "spot_price" {
   description = "The price to use for reserving spot instances"
-  default     = 0
+  default     = ""
 }
 
 variable "placement_tenancy" {
