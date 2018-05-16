@@ -103,6 +103,8 @@ Authors
 
 Module managed by [Anton Babenko](https://github.com/antonbabenko).
 
+Thanks to [Jamie-BitFlight](https://github.com/Jamie-BitFlight) who added possibility to specify unlimited numbers of tags.
+
 License
 -------
 

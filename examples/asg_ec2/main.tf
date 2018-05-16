@@ -87,7 +87,7 @@ module "example" {
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
-  desired_capacity          = 1
+  desired_capacity          = 0
   wait_for_capacity_timeout = 0
 
   tags = [
@@ -106,14 +106,5 @@ module "example" {
   tags_as_map = {
     extra_tag1 = "extra_value1"
     extra_tag2 = "extra_value2"
-
-    //    extra_tag3 = "extra_value3"
-    //    extra_tag4 = "extra_value4"
-    //    extra_tag5 = "extra_value5"
-    //    extra_tag6 = "extra_value6"
-    //    extra_tag7 = "extra_value7"
-    //    extra_tag8 = "extra_value8"
-    //    extra_tag9 = "extra_value9"
-    //    extra_tag10 = "extra_value10"
   }
 }
