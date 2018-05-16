@@ -163,7 +163,7 @@ variable "tags" {
 }
 
 variable "tags_as_map" {
-  description = "A map of tags and values in the same format as other resources accept.  This will be converted into the non-standard format that the aws_autoscaling_group requires."
+  description = "A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws_autoscaling_group requires."
   type        = "map"
   default     = {}
 }

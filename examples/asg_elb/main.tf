@@ -79,7 +79,7 @@ module "example_asg" {
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
-  desired_capacity          = 1
+  desired_capacity          = 0
   wait_for_capacity_timeout = 0
 
   tags = [
