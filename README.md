@@ -1,5 +1,4 @@
-AWS Auto Scaling Group (ASG) Terraform module
-================================================
+# AWS Auto Scaling Group (ASG) Terraform module
 
 Terraform module which creates Auto Scaling resources on AWS.
 
@@ -8,8 +7,7 @@ These types of resources are supported:
 * [Launch Configuration](https://www.terraform.io/docs/providers/aws/r/launch_configuration.html)
 * [Auto Scaling Group](https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html)
 
-Usage
------
+## Usage
 
 ```hcl
 module "asg" {
@@ -69,8 +67,7 @@ module "asg" {
 }
 ```
 
-Conditional creation
---------------------
+## Conditional creation
 
 Normally this module creates both Auto Scaling Group (ASG) and Launch Configuration (LC), and connect them together.
 It is possible to customize this behaviour passing different parameters to this module:
@@ -87,13 +84,11 @@ create_asg = false
 
 1. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to use this way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
 
-Tags
-----
+## Tags
 
 There are two ways to specify tags for auto-scaling group in this module - `tags` and `tags_as_map`. See [examples/asg_ec2/main.tf](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/blob/master/examples/asg_ec2/main.tf) for example.
 
-Examples
---------
+## Examples
 
 * [Auto Scaling Group without ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2)
 * [Auto Scaling Group with ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_elb)
@@ -164,14 +159,12 @@ Examples
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
-Authors
--------
+## Authors
 
 Module managed by [Anton Babenko](https://github.com/antonbabenko).
 
 Thanks to [Jamie-BitFlight](https://github.com/Jamie-BitFlight) who added possibility to specify unlimited numbers of tags.
 
-License
--------
+## License
 
 Apache 2 Licensed. See LICENSE for full details.

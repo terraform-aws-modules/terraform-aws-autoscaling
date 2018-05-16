@@ -1,12 +1,10 @@
-Auto Scaling Group without ELB example
-======================================
+# Auto Scaling Group without ELB example
 
 Configuration in this directory creates Launch Configuration and Auto Scaling Group.
 
 Data sources are used to discover existing VPC resources (VPC, subnet and security group) as well as AMI details.
 
-Usage
-=====
+## Usage
 
 To run this example you need to execute:
 
