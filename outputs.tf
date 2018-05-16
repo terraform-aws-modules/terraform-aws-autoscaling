@@ -1,4 +1,3 @@
-# Launch configuration
 output "this_launch_configuration_id" {
   description = "The ID of the launch configuration"
   value       = "${var.launch_configuration == "" && var.create_lc ? element(concat(aws_launch_configuration.this.*.id, list("")), 0) : var.launch_configuration}"
@@ -9,7 +8,6 @@ output "this_launch_configuration_name" {
   value       = "${var.launch_configuration == "" && var.create_lc ? element(concat(aws_launch_configuration.this.*.name, list("")), 0) : ""}"
 }
 
-# Autoscaling group
 output "this_autoscaling_group_id" {
   description = "The autoscaling group id"
   value       = "${element(concat(aws_autoscaling_group.this.*.id, list("")), 0)}"
