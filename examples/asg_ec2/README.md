@@ -17,3 +17,14 @@ $ terraform apply
 ```
 
 Note that this example may create resources which cost money. Run `terraform destroy` when you don't need these resources.
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| this_autoscaling_group_id | The autoscaling group id |
+| this_launch_configuration_id | The ID of the launch configuration |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
