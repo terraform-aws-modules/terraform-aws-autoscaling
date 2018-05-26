@@ -60,4 +60,8 @@ resource "aws_autoscaling_group" "this" {
       var.tags,
       local.tags_asg_format
    )}"]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
