@@ -59,10 +59,11 @@ module "example" {
   # create_lc = false # disables creation of launch configuration
   lc_name = "example-lc"
 
-  image_id                    = "${data.aws_ami.amazon_linux.id}"
-  instance_type               = "t2.micro"
-  security_groups             = ["${data.aws_security_group.default.id}"]
-  associate_public_ip_address = true
+  image_id                     = "${data.aws_ami.amazon_linux.id}"
+  instance_type                = "t2.micro"
+  security_groups              = ["${data.aws_security_group.default.id}"]
+  associate_public_ip_address  = true
+  recreate_asg_when_lc_changes = true
 
   ebs_block_device = [
     {

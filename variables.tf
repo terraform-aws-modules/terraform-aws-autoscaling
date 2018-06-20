@@ -8,6 +8,11 @@ variable "create_asg" {
   default     = true
 }
 
+variable "recreate_asg_when_lc_changes" {
+  description = "Whether to recreate an autoscaling group when launch configuration changes"
+  default     = false
+}
+
 variable "name" {
   description = "Creates a unique name beginning with the specified prefix"
 }
