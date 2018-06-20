@@ -128,6 +128,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | placement_group | The name of the placement group into which you'll launch your instances, if any | string | `` | no |
 | placement_tenancy | The tenancy of the instance. Valid values are 'default' or 'dedicated' | string | `default` | no |
 | protect_from_scale_in | Allows setting instance protection. The autoscaling group will not select instances with this setting for terminination during scale in events. | string | `false` | no |
+| recreate_asg_when_lc_changes | Whether to recreate an autoscaling group when launch configuration changes | string | `false` | no |
 | root_block_device | Customize details about the root block device of the instance | list | `<list>` | no |
 | security_groups | A list of security group IDs to assign to the launch configuration | list | - | yes |
 | spot_price | The price to use for reserving spot instances | string | `` | no |

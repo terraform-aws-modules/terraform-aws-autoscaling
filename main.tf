@@ -31,7 +31,7 @@ resource "aws_launch_configuration" "this" {
 resource "aws_autoscaling_group" "this" {
   count = "${var.create_asg}"
 
-  name_prefix          = "${coalesce(var.asg_name, var.name)}-"
+  name_prefix          = "${join("-", compact(list(coalesce(var.asg_name, var.name), var.recreate_asg_when_lc_changes ? element(concat(random_pet.asg_name.*.id, list("")), 0) : "")))}-"
   launch_configuration = "${var.create_lc ? element(aws_launch_configuration.this.*.name, 0) : var.launch_configuration}"
   vpc_zone_identifier  = ["${var.vpc_zone_identifier}"]
   max_size             = "${var.max_size}"
@@ -63,5 +63,17 @@ resource "aws_autoscaling_group" "this" {
 
   lifecycle {
     create_before_destroy = true
+  }
+}
+
+resource "random_pet" "asg_name" {
+  count = "${var.recreate_asg_when_lc_changes ? 1 : 0}"
+
+  separator = "-"
+  length    = 2
+
+  keepers = {
+    # Generate a new pet name each time we switch launch configuration
+    lc_name = "${var.create_lc ? element(aws_launch_configuration.this.*.name, 0) : var.launch_configuration}"
   }
 }
