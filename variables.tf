@@ -8,6 +8,46 @@ variable "create_asg" {
   default     = true
 }
 
+variable "create_asg_with_initial_lifecycle_hook" {
+  description = "Create an ASG with intial"
+  default     = false
+}
+
+variable "initial_lifecycle_hook_name" {
+  description = "Initial lifecycle hook name required parameter"
+  default     = ""
+}
+
+variable "initial_lifecycle_hook_transition" {
+  description = "Initial Lifecycle hook transtion type"
+  default     = ""
+}
+
+variable "initial_lifecycle_hook_default_result" {
+  description = "Defines the default action the autoscaler takes when the lifecyle hook timesout"
+  default     = "CONTINUE"
+}
+
+variable "initial_lifecycle_hook_notification_metadata" {
+  description = "Metadata for the lifecycle notification event"
+  default     = ""
+}
+
+variable "initial_lifecycle_hook_heartbeat_time" {
+  description = "Lifecyle action timer"
+  default     = "60"
+}
+
+variable "initial_lifecycle_hook_notification_target_arn" {
+  description = "SNS target arn to allow notifications from autoscaling group"
+  default     = ""
+}
+
+variable "initial_lifecycle_hook_role_arn" {
+  description = "AWS iam role to grant access to notification target"
+  default     = ""
+}
+
 variable "recreate_asg_when_lc_changes" {
   description = "Whether to recreate an autoscaling group when launch configuration changes"
   default     = false
