@@ -82,6 +82,19 @@ launch_configuration = "existing-launch-configuration"
 create_asg = false
 ```
 
+1. To create ASG with initial lifecycle hook
+```hcl
+create_asg = false
+create_asg_with_initial_lifecycle_hook = true
+
+initial_lifecycle_hook_name                  = "NameOfLifeCycleHook"
+initial_lifecycle_hook_transition            = "autoscaling:EC2_INSTANCE_TERMINATING"
+initial_lifecycle_hook_notification_metadata =<<EOF
+{
+  "foo": "bar"
+}
+EOF
+```
 1. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to use this way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
 
 ## Tags
@@ -115,6 +128,13 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | health_check_type | Controls how health checking is done. Values are - EC2 and ELB | string | - | yes |
 | iam_instance_profile | The IAM instance profile to associate with launched instances | string | `` | no |
 | image_id | The EC2 image ID to launch | string | - | yes |
+| initial_lifecycle_hook_name | Name of the inital lifecycle hook | string | - | yes
+| initial_lifecycle_hook_transition | Lifecycle hook transition type | string | - | yes
+| initial_lifecycle_hook_notification_metadata | Metadata sent from the lifecycle hook | string | - | no
+| initial_lifecycle_hook_heartbeat_time | Time in seconds before the lifecycle hook times out | string | `60` | no
+| initial_lifecycle_hook_notification_target_arn | Arn of the notification target can be SQS queue or SNS topic | string | - | no 
+| initial_lifecycle_hook_role_arn | The ARN of the IAM role that allows ASG to publish to specified target ARN | string | - | no
+| initial_lifecycle_hook_default_result | Defines the Action the ASG should take when the lifecycle hook times out or fails | string | `continue` | no
 | instance_type | The size of instance to launch | string | - | yes |
 | key_name | The key name that should be used for the instance | string | `` | no |
 | launch_configuration | The name of the launch configuration to use (if it is created outside of this module) | string | `` | no |
