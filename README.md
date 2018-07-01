@@ -114,8 +114,8 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | health_check_grace_period | Time (in seconds) after instance comes into service before checking health | string | `300` | no |
 | health_check_type | Controls how health checking is done. Values are - EC2 and ELB | string | - | yes |
 | iam_instance_profile | The IAM instance profile to associate with launched instances | string | `` | no |
-| image_id | The EC2 image ID to launch | string | - | yes |
-| instance_type | The size of instance to launch | string | - | yes |
+| image_id | The EC2 image ID to launch | string | `` | no |
+| instance_type | The size of instance to launch | string | `` | no |
 | key_name | The key name that should be used for the instance | string | `` | no |
 | launch_configuration | The name of the launch configuration to use (if it is created outside of this module) | string | `` | no |
 | lc_name | Creates a unique name for launch configuration beginning with the specified prefix | string | `` | no |
@@ -130,7 +130,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | protect_from_scale_in | Allows setting instance protection. The autoscaling group will not select instances with this setting for terminination during scale in events. | string | `false` | no |
 | recreate_asg_when_lc_changes | Whether to recreate an autoscaling group when launch configuration changes | string | `false` | no |
 | root_block_device | Customize details about the root block device of the instance | list | `<list>` | no |
-| security_groups | A list of security group IDs to assign to the launch configuration | list | - | yes |
+| security_groups | A list of security group IDs to assign to the launch configuration | list | `<list>` | no |
 | spot_price | The price to use for reserving spot instances | string | `` | no |
 | suspended_processes | A list of processes to suspend for the AutoScaling Group. The allowed values are Launch, Terminate, HealthCheck, ReplaceUnhealthy, AZRebalance, AlarmNotification, ScheduledActions, AddToLoadBalancer. Note that if you suspend either the Launch or Terminate process types, it can prevent your autoscaling group from functioning properly. | string | `<list>` | no |
 | tags | A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch. | string | `<list>` | no |
