@@ -75,10 +75,12 @@ variable "launch_configuration" {
 # Launch configuration
 variable "image_id" {
   description = "The EC2 image ID to launch"
+  default     = ""
 }
 
 variable "instance_type" {
   description = "The size of instance to launch"
+  default     = ""
 }
 
 variable "iam_instance_profile" {
@@ -94,6 +96,7 @@ variable "key_name" {
 variable "security_groups" {
   description = "A list of security group IDs to assign to the launch configuration"
   type        = "list"
+  default     = []
 }
 
 variable "associate_public_ip_address" {

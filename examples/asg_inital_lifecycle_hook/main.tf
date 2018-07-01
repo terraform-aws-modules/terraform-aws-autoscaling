@@ -53,13 +53,14 @@ module "example" {
 
   name = "example-with-ec2-lifecycle-hook"
 
-  create_asg = false
+  create_asg                             = false
   create_asg_with_initial_lifecycle_hook = true
 
-  initial_lifecycle_hook_name                  = "ExampleLifeCycleHook"
-  initial_lifecycle_hook_transition            = "autoscaling:EC2_INSTANCE_TERMINATING"
+  initial_lifecycle_hook_name       = "ExampleLifeCycleHook"
+  initial_lifecycle_hook_transition = "autoscaling:EC2_INSTANCE_TERMINATING"
+
   # This could be a rendered data resource
-  initial_lifecycle_hook_notification_metadata =<<EOF
+  initial_lifecycle_hook_notification_metadata = <<EOF
 {
   "foo": "bar"
 }
