@@ -20,11 +20,6 @@ data "aws_subnet_ids" "all" {
   vpc_id = "${data.aws_vpc.default.id}"
 }
 
-data "aws_security_group" "default" {
-  vpc_id = "${data.aws_vpc.default.id}"
-  name   = "default"
-}
-
 data "aws_ami" "amazon_linux" {
   most_recent = true
 
@@ -64,7 +59,7 @@ module "example" {
 
   name = "example-with-ec2-external-lc"
 
-  # Use фт existing launch configuration (created outside of this module)
+  # Use of existing launch configuration (created outside of this module)
   launch_configuration = "${aws_launch_configuration.this.name}"
 
   create_lc = false
