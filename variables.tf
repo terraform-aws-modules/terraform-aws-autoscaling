@@ -221,3 +221,9 @@ variable "protect_from_scale_in" {
   description = "Allows setting instance protection. The autoscaling group will not select instances with this setting for terminination during scale in events."
   default     = false
 }
+
+variable "scaling_notification" {
+  type        = "list"
+  default     = []
+  description = "A list of maps containing information regarding SNS notification to set up for scaling event of the autoscaling group"
+}

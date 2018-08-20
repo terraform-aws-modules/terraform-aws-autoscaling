@@ -77,12 +77,12 @@ create_lc = false
 launch_configuration = "existing-launch-configuration"
 ```
 
-1. To create LC, but not ASG. Outputs may produce errors.
+2. To create LC, but not ASG. Outputs may produce errors.
 ```hcl
 create_asg = false
 ```
 
-1. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to use this way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
+3. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to use this way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
 
 ## Tags
 
@@ -93,6 +93,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 * [Auto Scaling Group without ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2)
 * [Auto Scaling Group with ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_elb)
 * [Auto Scaling Group with external Launch Configuration](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2_external_launch_configuration)
+* [Auto Scaling Group with Notification SNS](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2_sns_notification)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

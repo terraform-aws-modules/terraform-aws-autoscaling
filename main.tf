@@ -77,3 +77,13 @@ resource "random_pet" "asg_name" {
     lc_name = "${var.create_lc ? element(concat(aws_launch_configuration.this.*.name, list("")), 0) : var.launch_configuration}"
   }
 }
+
+#####################################
+# Scaling notification to SNS Topics
+#####################################
+resource "aws_autoscaling_notification" "this" {
+  count         = "${var.create_asg? length(var.scaling_notification) : 0}"
+  group_names   = ["${element(concat(aws_autoscaling_group.this.*.name, list("")), 0)}"]
+  notifications = ["${split(",", lookup(var.scaling_notification[count.index], "notifications", local.all_notification_types))}"]
+  topic_arn     = "${lookup(var.scaling_notification[count.index], "topic_arn")}"
+}
