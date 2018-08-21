@@ -103,6 +103,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 |------|-------------|:----:|:-----:|:-----:|
 | asg_name | Creates a unique name for autoscaling group beginning with the specified prefix | string | `` | no |
 | associate_public_ip_address | Associate a public ip address with an instance in a VPC | string | `false` | no |
+| computed_scaling_notifications | A list of maps containing information regarding SNS notification to set up for scaling event of the autoscaling group - this accepts reference to other resources | list | `<list>` | no |
 | create_asg | Whether to create autoscaling group | string | `true` | no |
 | create_lc | Whether to create launch configuration | string | `true` | no |
 | default_cooldown | The amount of time, in seconds, after a scaling activity completes before another scaling activity can start | string | `300` | no |
@@ -127,11 +128,13 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | min_elb_capacity | Setting this causes Terraform to wait for this number of instances to show up healthy in the ELB only on creation. Updates will not wait on ELB instance number changes | string | `0` | no |
 | min_size | The minimum size of the auto scale group | string | - | yes |
 | name | Creates a unique name beginning with the specified prefix | string | - | yes |
+| number_of_computed_scaling_notifications | Number of elements of computed_scaling_notifications that you would like to set up | string | `0` | no |
 | placement_group | The name of the placement group into which you'll launch your instances, if any | string | `` | no |
 | placement_tenancy | The tenancy of the instance. Valid values are 'default' or 'dedicated' | string | `default` | no |
 | protect_from_scale_in | Allows setting instance protection. The autoscaling group will not select instances with this setting for terminination during scale in events. | string | `false` | no |
 | recreate_asg_when_lc_changes | Whether to recreate an autoscaling group when launch configuration changes | string | `false` | no |
 | root_block_device | Customize details about the root block device of the instance | list | `<list>` | no |
+| scaling_notifications | A list of maps containing information regarding SNS notification to set up for scaling event of the autoscaling group | list | `<list>` | no |
 | security_groups | A list of security group IDs to assign to the launch configuration | list | `<list>` | no |
 | spot_price | The price to use for reserving spot instances | string | `` | no |
 | suspended_processes | A list of processes to suspend for the AutoScaling Group. The allowed values are Launch, Terminate, HealthCheck, ReplaceUnhealthy, AZRebalance, AlarmNotification, ScheduledActions, AddToLoadBalancer. Note that if you suspend either the Launch or Terminate process types, it can prevent your autoscaling group from functioning properly. | string | `<list>` | no |

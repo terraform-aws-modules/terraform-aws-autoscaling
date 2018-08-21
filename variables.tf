@@ -222,8 +222,19 @@ variable "protect_from_scale_in" {
   default     = false
 }
 
-variable "scaling_notification" {
+variable "scaling_notifications" {
   type        = "list"
   default     = []
   description = "A list of maps containing information regarding SNS notification to set up for scaling event of the autoscaling group"
+}
+
+variable "computed_scaling_notifications" {
+  type        = "list"
+  default     = []
+  description = "A list of maps containing information regarding SNS notification to set up for scaling event of the autoscaling group - this accepts reference to other resources"
+}
+
+variable "number_of_computed_scaling_notifications" {
+  default     = 0
+  description = "Number of elements of computed_scaling_notifications that you would like to set up"
 }

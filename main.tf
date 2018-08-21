@@ -82,8 +82,8 @@ resource "random_pet" "asg_name" {
 # Scaling notification to SNS Topics
 #####################################
 resource "aws_autoscaling_notification" "this" {
-  count         = "${var.create_asg? length(var.scaling_notification) : 0}"
+  count         = "${var.create_asg? local.notification_count : 0}"
   group_names   = ["${element(concat(aws_autoscaling_group.this.*.name, list("")), 0)}"]
-  notifications = ["${split(",", lookup(var.scaling_notification[count.index], "notifications", local.all_notification_types))}"]
-  topic_arn     = "${lookup(var.scaling_notification[count.index], "topic_arn")}"
+  notifications = ["${split(",", lookup(local.all_notifications[count.index], "notifications", local.all_notification_types))}"]
+  topic_arn     = "${lookup(local.all_notifications[count.index], "topic_arn")}"
 }

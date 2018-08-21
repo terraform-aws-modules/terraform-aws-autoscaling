@@ -22,8 +22,8 @@ Note that this example may create resources which cost money. Run `terraform des
 
 | Name | Description |
 |------|-------------|
-| this_autoscaling_group_id | Autoscaling group |
-| this_elb_dns_name | ELB DNS name |
-| this_launch_configuration_id | Launch configuration |
+| this_autoscaling_group_id | The autoscaling group id |
+| this_elb_dns_name | DNS Name of the ELB |
+| this_launch_configuration_id | The ID of the launch configuration |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

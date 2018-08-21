@@ -1,6 +1,9 @@
 locals {
   tags_asg_format = ["${null_resource.tags_as_list_of_maps.*.triggers}"]
 
+  all_notifications  = "${concat(var.scaling_notifications, var.computed_scaling_notifications)}"
+  notification_count = "${length(var.scaling_notifications) + var.number_of_computed_scaling_notifications}"
+
   all_notification_types = "${join(",", list(
     "autoscaling:EC2_INSTANCE_LAUNCH",
     "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
