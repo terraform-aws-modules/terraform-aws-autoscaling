@@ -119,9 +119,9 @@ module "example_asg" {
       topic_arn = "${module.notify_slack.this_slack_topic_arn}"
 
       notifications = "${join(",", list(
-  "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
-  "autoscaling:EC2_INSTANCE_TERMINATE_ERROR",
-  ))}"
+        "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+        "autoscaling:EC2_INSTANCE_TERMINATE_ERROR",
+      ))}"
     },
   ]
   number_of_computed_scaling_notifications = 2
