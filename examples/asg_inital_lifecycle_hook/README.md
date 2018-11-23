@@ -1,6 +1,6 @@
-# Auto Scaling Group without ELB example
+# Auto Scaling Group with initial lifecycle hook
 
-Configuration in this directory creates Launch Configuration and Auto Scaling Group.
+Configuration in this directory creates Launch Configuration and Auto Scaling Group with initial_lifecycle_hook specified.
 
 Data sources are used to discover existing VPC resources (VPC, subnet and security group) as well as AMI details.
 

@@ -8,6 +8,46 @@ variable "create_asg" {
   default     = true
 }
 
+variable "create_asg_with_initial_lifecycle_hook" {
+  description = "Create an ASG with initial lifecycle hook"
+  default     = false
+}
+
+variable "initial_lifecycle_hook_name" {
+  description = "The name of initial lifecycle hook"
+  default     = ""
+}
+
+variable "initial_lifecycle_hook_lifecycle_transition" {
+  description = "The instance state to which you want to attach the initial lifecycle hook"
+  default     = ""
+}
+
+variable "initial_lifecycle_hook_default_result" {
+  description = "Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The value for this parameter can be either CONTINUE or ABANDON"
+  default     = "ABANDON"
+}
+
+variable "initial_lifecycle_hook_notification_metadata" {
+  description = "Contains additional information that you want to include any time Auto Scaling sends a message to the notification target"
+  default     = ""
+}
+
+variable "initial_lifecycle_hook_heartbeat_timeout" {
+  description = "Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. When the lifecycle hook times out, Auto Scaling performs the action defined in the DefaultResult parameter"
+  default     = "60"
+}
+
+variable "initial_lifecycle_hook_notification_target_arn" {
+  description = "The ARN of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook. This ARN target can be either an SQS queue or an SNS topic"
+  default     = ""
+}
+
+variable "initial_lifecycle_hook_role_arn" {
+  description = "The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target"
+  default     = ""
+}
+
 variable "recreate_asg_when_lc_changes" {
   description = "Whether to recreate an autoscaling group when launch configuration changes"
   default     = false
