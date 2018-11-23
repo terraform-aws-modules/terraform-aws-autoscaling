@@ -29,7 +29,7 @@ resource "aws_launch_configuration" "this" {
 # Autoscaling group
 ####################
 resource "aws_autoscaling_group" "this" {
-  count = "${var.create_asg}"
+  count = "${var.create_asg && !var.create_asg_with_initial_lifecycle_hook ? 1 : 0}"
 
   name_prefix          = "${join("-", compact(list(coalesce(var.asg_name, var.name), var.recreate_asg_when_lc_changes ? element(concat(random_pet.asg_name.*.id, list("")), 0) : "")))}-"
   launch_configuration = "${var.create_lc ? element(concat(aws_launch_configuration.this.*.name, list("")), 0) : var.launch_configuration}"
@@ -69,8 +69,8 @@ resource "aws_autoscaling_group" "this" {
 ################################################
 # Autoscaling group with initial lifecycle hook
 ################################################
-resource "aws_autoscaling_group" "with_initial_lifecycle_hook" {
-  count = "${var.create_asg_with_initial_lifecycle_hook}"
+resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
+  count = "${var.create_asg && var.create_asg_with_initial_lifecycle_hook ? 1 : 0}"
 
   name_prefix          = "${join("-", compact(list(coalesce(var.asg_name, var.name), var.recreate_asg_when_lc_changes ? element(concat(random_pet.asg_name.*.id, list("")), 0) : "")))}-"
   launch_configuration = "${var.create_lc ? element(aws_launch_configuration.this.*.name, 0) : var.launch_configuration}"
@@ -98,9 +98,9 @@ resource "aws_autoscaling_group" "with_initial_lifecycle_hook" {
 
   initial_lifecycle_hook {
     name                    = "${var.initial_lifecycle_hook_name}"
-    lifecycle_transition    = "${var.initial_lifecycle_hook_transition}"
+    lifecycle_transition    = "${var.initial_lifecycle_hook_lifecycle_transition}"
     notification_metadata   = "${var.initial_lifecycle_hook_notification_metadata}"
-    heartbeat_timeout       = "${var.initial_lifecycle_hook_heartbeat_time}"
+    heartbeat_timeout       = "${var.initial_lifecycle_hook_heartbeat_timeout}"
     notification_target_arn = "${var.initial_lifecycle_hook_notification_target_arn}"
     role_arn                = "${var.initial_lifecycle_hook_role_arn}"
     default_result          = "${var.initial_lifecycle_hook_default_result}"
