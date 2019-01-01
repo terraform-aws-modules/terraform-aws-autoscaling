@@ -258,6 +258,6 @@ variable "wait_for_elb_capacity" {
 }
 
 variable "protect_from_scale_in" {
-  description = "Allows setting instance protection. The autoscaling group will not select instances with this setting for terminination during scale in events."
+  description = "Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events."
   default     = false
 }
