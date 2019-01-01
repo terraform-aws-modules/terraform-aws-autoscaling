@@ -137,7 +137,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | initial\_lifecycle\_hook\_role\_arn | The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target | string | `` | no |
 | instance\_type | The size of instance to launch | string | `` | no |
 | key\_name | The key name that should be used for the instance | string | `` | no |
-| launch\_configuration | The name of the launch configuration to use (if it is created outside of this module) | string | `` | no |
+| launch\_configuration | The name of the launch configuration to use (if it is created outside of this module) (also set create_lc = false to prevent a creation of an additional one)| string | `` | no |
 | lc\_name | Creates a unique name for launch configuration beginning with the specified prefix | string | `` | no |
 | load\_balancers | A list of elastic load balancer names to add to the autoscaling group names | list | `<list>` | no |
 | max\_size | The maximum size of the auto scale group | string | - | yes |
