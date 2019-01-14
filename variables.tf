@@ -104,8 +104,8 @@ variable "associate_public_ip_address" {
   default     = false
 }
 
-variable "user_data" {
-  description = "The user data to provide when launching the instance"
+variable "user_data_base64" {
+  description = "Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string."
   default     = " "
 }
 
