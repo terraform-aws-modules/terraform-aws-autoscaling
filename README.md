@@ -22,6 +22,8 @@ module "asg" {
   instance_type   = "t2.micro"
   security_groups = ["sg-12345678"]
 
+  user_data = "${data.template_file.user-data.rendered}"
+
   ebs_block_device = [
     {
       device_name           = "/dev/xvdz"
@@ -64,6 +66,10 @@ module "asg" {
     extra_tag1 = "extra_value1"
     extra_tag2 = "extra_value2"
   }
+}
+
+data "template_file" "user-data" {
+template = "${file("${path.module}/templates/bootstrap.sh")}"
 }
 ```
 
