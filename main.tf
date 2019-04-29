@@ -2,7 +2,7 @@
 # Launch configuration
 #######################
 resource "aws_launch_configuration" "this" {
-  count = "${var.create_lc}"
+  count = "${var.create_lc ? 1 : 0}"
 
   name_prefix                 = "${coalesce(var.lc_name, var.name)}-"
   image_id                    = "${var.image_id}"
