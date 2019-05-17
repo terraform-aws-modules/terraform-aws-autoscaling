@@ -63,6 +63,7 @@ resource "aws_autoscaling_group" "this" {
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = ["desired_capacity"]
   }
 }
 
@@ -114,6 +115,7 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = ["desired_capacity"]
   }
 }
 
