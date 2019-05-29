@@ -95,7 +95,7 @@ variable "key_name" {
 
 variable "security_groups" {
   description = "A list of security group IDs to assign to the launch configuration"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
@@ -121,19 +121,19 @@ variable "ebs_optimized" {
 
 variable "root_block_device" {
   description = "Customize details about the root block device of the instance"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "ebs_block_device" {
   description = "Additional EBS block devices to attach to the instance"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "ephemeral_block_device" {
   description = "Customize Ephemeral (also known as 'Instance Store') volumes on the instance"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
@@ -162,7 +162,7 @@ variable "desired_capacity" {
 
 variable "vpc_zone_identifier" {
   description = "A list of subnet IDs to launch resources in"
-  type        = "list"
+  type        = list(string)
 }
 
 variable "default_cooldown" {
@@ -196,7 +196,7 @@ variable "target_group_arns" {
 
 variable "termination_policies" {
   description = "A list of policies to decide how the instances in the auto scale group should be terminated. The allowed values are OldestInstance, NewestInstance, OldestLaunchConfiguration, ClosestToNextInstanceHour, Default"
-  type        = "list"
+  type        = list(string)
   default     = ["Default"]
 }
 
@@ -212,7 +212,7 @@ variable "tags" {
 
 variable "tags_as_map" {
   description = "A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws_autoscaling_group requires."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
@@ -228,7 +228,7 @@ variable "metrics_granularity" {
 
 variable "enabled_metrics" {
   description = "A list of metrics to collect. The allowed values are GroupMinSize, GroupMaxSize, GroupDesiredCapacity, GroupInServiceInstances, GroupPendingInstances, GroupStandbyInstances, GroupTerminatingInstances, GroupTotalInstances"
-  type        = "list"
+  type        = list(string)
 
   default = [
     "GroupMinSize",
@@ -261,3 +261,4 @@ variable "protect_from_scale_in" {
   description = "Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events."
   default     = false
 }
+
