@@ -17,7 +17,7 @@ data "aws_vpc" "default" {
 }
 
 data "aws_subnet_ids" "all" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  vpc_id = data.aws_vpc.default.id
 }
 
 data "aws_ami" "amazon_linux" {
@@ -46,7 +46,7 @@ data "aws_ami" "amazon_linux" {
 #######################
 resource "aws_launch_configuration" "this" {
   name_prefix   = "my-launch-configuration-"
-  image_id      = "${data.aws_ami.amazon_linux.id}"
+  image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
 
   lifecycle {
@@ -60,7 +60,7 @@ module "example" {
   name = "example-with-ec2-external-lc"
 
   # Use of existing launch configuration (created outside of this module)
-  launch_configuration = "${aws_launch_configuration.this.name}"
+  launch_configuration = aws_launch_configuration.this.name
 
   create_lc = false
 
@@ -68,7 +68,7 @@ module "example" {
 
   # Auto scaling group
   asg_name                  = "example-asg"
-  vpc_zone_identifier       = ["${data.aws_subnet_ids.all.ids}"]
+  vpc_zone_identifier       = [data.aws_subnet_ids.all.ids]
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
@@ -93,3 +93,4 @@ module "example" {
     extra_tag2 = "extra_value2"
   }
 }
+
