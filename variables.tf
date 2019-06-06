@@ -254,11 +254,11 @@ variable "min_elb_capacity" {
 
 variable "wait_for_elb_capacity" {
   description = "Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over min_elb_capacity behavior."
-  default     = false
+  type        = number
+  default     = null
 }
 
 variable "protect_from_scale_in" {
   description = "Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events."
   default     = false
 }
-

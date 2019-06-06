@@ -2,7 +2,7 @@
 # Launch configuration
 #######################
 resource "aws_launch_configuration" "this" {
-  count = var.create_lc
+  count = var.create_lc ? 1 : 0
 
   name_prefix                 = "${coalesce(var.lc_name, var.name)}-"
   image_id                    = var.image_id
@@ -89,7 +89,7 @@ resource "aws_autoscaling_group" "this" {
   wait_for_capacity_timeout = var.wait_for_capacity_timeout
   protect_from_scale_in     = var.protect_from_scale_in
 
-  tags = [
+  tags = (
     concat(
       [
         {
@@ -100,8 +100,9 @@ resource "aws_autoscaling_group" "this" {
       ],
       var.tags,
       local.tags_asg_format,
-    ),
-  ]
+    )
+  )
+
 
   lifecycle {
     create_before_destroy = true
