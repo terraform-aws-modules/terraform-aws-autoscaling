@@ -7,6 +7,12 @@ These types of resources are supported:
 * [Launch Configuration](https://www.terraform.io/docs/providers/aws/r/launch_configuration.html)
 * [Auto Scaling Group](https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html)
 
+## Terraform versions
+
+Terraform 0.12. Pin module version to `~> v3.0`. Submit pull-requests to `master` branch.
+
+Terraform 0.11. Pin module version to `~> v2.0`. Submit pull-requests to `terraform011` branch.
+
 ## Usage
 
 ```hcl
