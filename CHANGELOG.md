@@ -3,9 +3,16 @@
 
 
 
-<a name="v2.10.0"></a>
-## [v2.10.0] - 0001-01-01
+<a name="v3.0.0"></a>
+## [v3.0.0] - 2019-06-08
 
+- Update for Terraform 0.12 ([#68](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/68))
+
+
+<a name="v2.10.0"></a>
+## [v2.10.0] - 2019-06-08
+
+- Updated CHANGELOG
 
 
 <a name="v2.9.1"></a>
@@ -142,7 +149,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.10.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.0.0...HEAD
+[v3.0.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.10.0...v3.0.0
 [v2.10.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.9.1...v2.10.0
 [v2.9.1]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.9.0...v2.9.1
 [v2.9.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.8.0...v2.9.0
