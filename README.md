@@ -17,8 +17,9 @@ Terraform 0.11. Pin module version to `~> v2.0`. Submit pull-requests to `terraf
 
 ```hcl
 module "asg" {
-  source = "terraform-aws-modules/autoscaling/aws"
-
+  source  = "terraform-aws-modules/autoscaling/aws"
+  version = "~> 3.0"
+  
   name = "service"
 
   # Launch configuration
