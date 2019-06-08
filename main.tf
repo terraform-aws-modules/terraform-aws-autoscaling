@@ -2,7 +2,7 @@
 # Launch configuration
 #######################
 resource "aws_launch_configuration" "this" {
-  count = "${var.create_lc}"
+  count = "${var.create_lc ? 1 : 0}"
 
   name_prefix                 = "${coalesce(var.lc_name, var.name)}-"
   image_id                    = "${var.image_id}"
@@ -29,7 +29,7 @@ resource "aws_launch_configuration" "this" {
 # Autoscaling group
 ####################
 resource "aws_autoscaling_group" "this" {
-  count = "${var.create_asg && !var.create_asg_with_initial_lifecycle_hook ? 1 : 0}"
+  count = "${var.create_asg && ! var.create_asg_with_initial_lifecycle_hook ? 1 : 0}"
 
   name_prefix          = "${join("-", compact(list(coalesce(var.asg_name, var.name), var.recreate_asg_when_lc_changes ? element(concat(random_pet.asg_name.*.id, list("")), 0) : "")))}-"
   launch_configuration = "${var.create_lc ? element(concat(aws_launch_configuration.this.*.name, list("")), 0) : var.launch_configuration}"
@@ -56,10 +56,10 @@ resource "aws_autoscaling_group" "this" {
   protect_from_scale_in     = "${var.protect_from_scale_in}"
 
   tags = ["${concat(
-      list(map("key", "Name", "value", var.name, "propagate_at_launch", true)),
-      var.tags,
-      local.tags_asg_format
-   )}"]
+    list(map("key", "Name", "value", var.name, "propagate_at_launch", true)),
+    var.tags,
+    local.tags_asg_format
+  )}"]
 
   lifecycle {
     create_before_destroy = true
@@ -107,10 +107,10 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
   }
 
   tags = ["${concat(
-      list(map("key", "Name", "value", var.name, "propagate_at_launch", true)),
-      var.tags,
-      local.tags_asg_format
-   )}"]
+    list(map("key", "Name", "value", var.name, "propagate_at_launch", true)),
+    var.tags,
+    local.tags_asg_format
+  )}"]
 
   lifecycle {
     create_before_destroy = true
