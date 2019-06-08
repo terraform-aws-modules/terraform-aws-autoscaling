@@ -20,6 +20,7 @@ data "aws_security_group" "default" {
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
+  owners      = ["137112412989"] # Amazon
 
   filter {
     name = "name"
@@ -75,7 +76,7 @@ module "example_asg" {
 
   # Auto scaling group
   asg_name                  = "example-asg"
-  vpc_zone_identifier       = [data.aws_subnet_ids.all.ids]
+  vpc_zone_identifier       = data.aws_subnet_ids.all.ids
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
@@ -104,7 +105,7 @@ module "elb" {
 
   name = "elb-example"
 
-  subnets         = [data.aws_subnet_ids.all.ids]
+  subnets         = data.aws_subnet_ids.all.ids
   security_groups = [data.aws_security_group.default.id]
   internal        = false
 

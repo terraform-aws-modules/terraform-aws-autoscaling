@@ -16,6 +16,7 @@ resource "aws_launch_configuration" "this" {
   spot_price                  = var.spot_price
   placement_tenancy           = var.spot_price == "" ? var.placement_tenancy : ""
   ebs_optimized               = var.ebs_optimized
+
   dynamic "ebs_block_device" {
     for_each = var.ebs_block_device
     content {
@@ -29,6 +30,7 @@ resource "aws_launch_configuration" "this" {
       volume_type           = lookup(ebs_block_device.value, "volume_type", null)
     }
   }
+
   dynamic "ephemeral_block_device" {
     for_each = var.ephemeral_block_device
     content {
@@ -36,6 +38,7 @@ resource "aws_launch_configuration" "this" {
       virtual_name = ephemeral_block_device.value.virtual_name
     }
   }
+
   dynamic "root_block_device" {
     for_each = var.root_block_device
     content {
@@ -100,7 +103,6 @@ resource "aws_autoscaling_group" "this" {
     var.tags,
     local.tags_asg_format,
   )
-
 
   lifecycle {
     create_before_destroy = true
