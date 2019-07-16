@@ -11,6 +11,7 @@ locals {
   this_autoscaling_group_default_cooldown          = "${element(concat(coalescelist(aws_autoscaling_group.this.*.default_cooldown, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.default_cooldown), list("")), 0)}"
   this_autoscaling_group_health_check_grace_period = "${element(concat(coalescelist(aws_autoscaling_group.this.*.health_check_grace_period, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.health_check_grace_period), list("")), 0)}"
   this_autoscaling_group_health_check_type         = "${element(concat(coalescelist(aws_autoscaling_group.this.*.health_check_type, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.health_check_type), list("")), 0)}"
+  this_autoscaling_group_service_linked_role_arn   = "${element(concat(coalescelist(aws_autoscaling_group.this.*.service_linked_role_arn, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.service_linked_role_arn), list("")), 0)}"
 }
 
 output "this_launch_configuration_id" {
@@ -66,6 +67,11 @@ output "this_autoscaling_group_health_check_grace_period" {
 output "this_autoscaling_group_health_check_type" {
   description = "EC2 or ELB. Controls how health checking is done"
   value       = "${local.this_autoscaling_group_health_check_type}"
+}
+
+output "this_autoscaling_service_linked_role_arn" {
+  description = "The arn of the service linked role"
+  value       = "${local.this_autoscaling_group_service_linked_role_arn}"
 }
 
 //output "this_autoscaling_group_vpc_zone_identifier" {
