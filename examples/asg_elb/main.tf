@@ -20,6 +20,7 @@ data "aws_security_group" "default" {
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
+  owners = ["amazon"]
 
   filter {
     name = "name"
@@ -101,6 +102,7 @@ module "example_asg" {
 ######
 module "elb" {
   source = "terraform-aws-modules/elb/aws"
+  version = ">= 1.0.0, < 2.0.0"
 
   name = "elb-example"
 

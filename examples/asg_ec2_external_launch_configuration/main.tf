@@ -22,6 +22,7 @@ data "aws_subnet_ids" "all" {
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
+  owners = ["amazon"]
 
   filter {
     name = "name"
