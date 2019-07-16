@@ -15,6 +15,7 @@ locals {
   this_autoscaling_group_vpc_zone_identifier       = concat(aws_autoscaling_group.this.*.vpc_zone_identifier, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.vpc_zone_identifier, [""])[0]
   this_autoscaling_group_load_balancers            = concat(aws_autoscaling_group.this.*.load_balancers, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.load_balancers, [""])[0]
   this_autoscaling_group_target_group_arns         = concat(aws_autoscaling_group.this.*.target_group_arns, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.target_group_arns, [""])[0]
+  this_autoscaling_group_service_linked_role_arn   = concat(aws_autoscaling_group.this.*.service_linked_role_arn, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.service_linked_role_arn, [""])[0]
 }
 
 output "this_launch_configuration_id" {
@@ -90,4 +91,9 @@ output "this_autoscaling_group_load_balancers" {
 output "this_autoscaling_group_target_group_arns" {
   description = "List of Target Group ARNs that apply to this AutoScaling Group"
   value       = local.this_autoscaling_group_target_group_arns
+}
+
+output "this_autoscaling_service_linked_role_arn" {
+  description = "The arn of the service linked role"
+  value       = local.this_autoscaling_group_service_linked_role_arn
 }

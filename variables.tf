@@ -87,6 +87,11 @@ variable "launch_configuration" {
   default     = ""
 }
 
+variable "service_linked_role_arn" {
+  description = "The ARN of the service-linked role that the ASG will use to call other AWS services"
+  default     = ""
+}
+
 # Launch configuration
 variable "image_id" {
   description = "The EC2 image ID to launch"
