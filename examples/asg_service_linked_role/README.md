@@ -6,18 +6,22 @@ can use encrypted AMIs.
 
  Data sources are used to discover existing VPC resources (VPC, subnet and security group) as well as AMI details.
 
- NOTE:
+NOTES:
 
-  - Creating the service-linked role within the same terraform run might fail with the 
+ - We ignore the custom_suffix on the service_linked_role definition otherwise Terraform will
+   recreate it on every run.
+ - Creating the service-linked role within the same terraform run might fail with the
    following error, most likely due to the IAM syncing in the background. Re-running terraform apply
    again will work.
 
+```
  Error: Error applying plan:
 
  1 error occurred:
 	* module.example.aws_autoscaling_group.this: 1 error occurred:
 	* aws_autoscaling_group.this: Error creating AutoScaling Group: ValidationError: ARN specified for Service-Linked Role does not exist.
 	status code: 400, request id: f127baea-a76c-11e9-8ad4-dd6bbb197602
+```
 
  ## Usage
 
@@ -38,5 +42,6 @@ $ terraform apply
 |------|-------------|
 | this\_autoscaling\_group\_id | The autoscaling group id |
 | this\_launch\_configuration\_id | The ID of the launch configuration |
+| this\_service\_linked\_role\_arn | The arn of the custom service linked role |
 
  <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
