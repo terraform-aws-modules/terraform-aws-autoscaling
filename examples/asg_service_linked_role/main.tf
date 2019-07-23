@@ -51,6 +51,9 @@ resource "aws_iam_service_linked_role" "autoscaling_service_linked_role" {
   description = "A service linked role for autoscaling groups"
   custom_suffix = "TEST"
 
+  # Ignore the custom_suffix, otherwise Terraform will recreate
+  # this resource on every run
+  # https://www.terraform.io/docs/providers/aws/r/iam_service_linked_role.html
   lifecycle {
     ignore_changes = ["custom_suffix"]
   }

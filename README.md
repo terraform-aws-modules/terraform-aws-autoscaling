@@ -158,6 +158,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | recreate\_asg\_when\_lc\_changes | Whether to recreate an autoscaling group when launch configuration changes | string | `"false"` | no |
 | root\_block\_device | Customize details about the root block device of the instance | list | `<list>` | no |
 | security\_groups | A list of security group IDs to assign to the launch configuration | list | `<list>` | no |
+| service\_linked\_role\_arn | The ARN of the service-linked role that the ASG will use to call other AWS services | string | `""` | no |
 | spot\_price | The price to use for reserving spot instances | string | `""` | no |
 | suspended\_processes | A list of processes to suspend for the AutoScaling Group. The allowed values are Launch, Terminate, HealthCheck, ReplaceUnhealthy, AZRebalance, AlarmNotification, ScheduledActions, AddToLoadBalancer. Note that if you suspend either the Launch or Terminate process types, it can prevent your autoscaling group from functioning properly. | list | `<list>` | no |
 | tags | A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch. | list | `<list>` | no |
@@ -182,6 +183,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | this\_autoscaling\_group\_max\_size | The maximum size of the autoscale group |
 | this\_autoscaling\_group\_min\_size | The minimum size of the autoscale group |
 | this\_autoscaling\_group\_name | The autoscaling group name |
+| this\_autoscaling\_service\_linked\_role\_arn | The arn of the service linked role |
 | this\_launch\_configuration\_id | The ID of the launch configuration |
 | this\_launch\_configuration\_name | The name of the launch configuration |
 
