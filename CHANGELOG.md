@@ -3,9 +3,26 @@
 
 
 
+<a name="v3.1.0"></a>
+## [v3.1.0] - 2019-08-21
+
+- Updated pre-commit hooks
+- Fixed example (health_check to map of strings) ([#73](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/73))
+- Updated CHANGELOG
+- Update for Terraform 0.12 ([#68](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/68))
+
+
+<a name="v2.11.0"></a>
+## [v2.11.0] - 2019-06-08
+
+- Updated CHANGELOG
+- Corrected create launch configuration flag
+
+
 <a name="v3.0.0"></a>
 ## [v3.0.0] - 2019-06-08
 
+- Updated CHANGELOG
 - Update for Terraform 0.12 ([#68](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/68))
 
 
@@ -149,7 +166,9 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.1.0...HEAD
+[v3.1.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.11.0...v3.1.0
+[v2.11.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.0.0...v2.11.0
 [v3.0.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.10.0...v3.0.0
 [v2.10.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.9.1...v2.10.0
 [v2.9.1]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.9.0...v2.9.1
