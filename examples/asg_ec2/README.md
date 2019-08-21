@@ -21,7 +21,11 @@ Note that this example may create resources which cost money. Run `terraform des
 
 | Name | Description |
 |------|-------------|
+| this\_autoscaling\_group\_availability\_zones | The availability zones of the autoscale group |
 | this\_autoscaling\_group\_id | The autoscaling group id |
+| this\_autoscaling\_group\_load\_balancers | The load balancer names associated with the autoscaling group |
+| this\_autoscaling\_group\_target\_group\_arns | List of Target Group ARNs that apply to this AutoScaling Group |
+| this\_autoscaling\_group\_vpc\_zone\_identifier | The VPC zone identifier |
 | this\_launch\_configuration\_id | The ID of the launch configuration |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
