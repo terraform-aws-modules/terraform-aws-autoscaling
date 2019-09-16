@@ -46,6 +46,7 @@ resource "aws_launch_configuration" "this" {
       iops                  = lookup(root_block_device.value, "iops", null)
       volume_size           = lookup(root_block_device.value, "volume_size", null)
       volume_type           = lookup(root_block_device.value, "volume_type", null)
+      encrypted             = lookup(root_block_device.value, "encrypted", null)
     }
   }
 
