@@ -3,9 +3,17 @@
 
 
 
+<a name="v3.2.0"></a>
+## [v3.2.0] - 2019-11-08
+
+- Updated pre-commit hooks
+- added encrypted option to root_block_device ([#78](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/78))
+
+
 <a name="v3.1.0"></a>
 ## [v3.1.0] - 2019-08-21
 
+- Updated CHANGELOG
 - Updated pre-commit hooks
 - Fixed example (health_check to map of strings) ([#73](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/73))
 - Updated CHANGELOG
@@ -166,7 +174,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.2.0...HEAD
+[v3.2.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.1.0...v3.2.0
 [v3.1.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.11.0...v3.1.0
 [v2.11.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.0.0...v2.11.0
 [v3.0.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.10.0...v3.0.0
