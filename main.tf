@@ -92,6 +92,7 @@ resource "aws_autoscaling_group" "this" {
   metrics_granularity       = var.metrics_granularity
   wait_for_capacity_timeout = var.wait_for_capacity_timeout
   protect_from_scale_in     = var.protect_from_scale_in
+  service_linked_role_arn   = var.service_linked_role_arn
 
   tags = concat(
     [
@@ -147,6 +148,7 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
   metrics_granularity       = var.metrics_granularity
   wait_for_capacity_timeout = var.wait_for_capacity_timeout
   protect_from_scale_in     = var.protect_from_scale_in
+  service_linked_role_arn   = var.service_linked_role_arn
 
   initial_lifecycle_hook {
     name                    = var.initial_lifecycle_hook_name
