@@ -27,6 +27,7 @@ data "aws_security_group" "default" {
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
+  owners      = ["137112412989"] # Amazon
 
   filter {
     name = "name"

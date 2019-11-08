@@ -27,6 +27,7 @@ data "aws_security_group" "default" {
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
+  owners      = ["137112412989"] # Amazon
 
   filter {
     name = "name"
@@ -42,6 +43,17 @@ data "aws_ami" "amazon_linux" {
     values = [
       "amazon",
     ]
+  }
+}
+
+resource "aws_iam_service_linked_role" "autoscaling" {
+  aws_service_name = "autoscaling.amazonaws.com"
+  description      = "A service linked role for autoscaling"
+  custom_suffix    = "something"
+
+  # Sometimes good sleep is required to have some IAM resources created before they can be used
+  provisioner "local-exec" {
+    command = "sleep 10"
   }
 }
 
@@ -90,6 +102,7 @@ module "example" {
   max_size                  = 1
   desired_capacity          = 0
   wait_for_capacity_timeout = 0
+  service_linked_role_arn   = "${aws_iam_service_linked_role.autoscaling.arn}"
 
   tags = [
     {

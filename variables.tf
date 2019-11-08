@@ -261,3 +261,8 @@ variable "protect_from_scale_in" {
   description = "Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events."
   default     = false
 }
+
+variable "service_linked_role_arn" {
+  description = "The ARN of the service-linked role that the ASG will use to call other AWS services."
+  default     = ""
+}
