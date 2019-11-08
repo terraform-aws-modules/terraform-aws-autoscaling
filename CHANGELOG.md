@@ -3,9 +3,16 @@
 
 
 
+<a name="v3.4.0"></a>
+## [v3.4.0] - 2019-11-08
+
+- Updated aws_ec2 example with service_linked_role_arn
+
+
 <a name="v3.3.0"></a>
 ## [v3.3.0] - 2019-11-08
 
+- Updated CHANGELOG
 - Adds service_linked_role ([#77](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/77))
 
 
@@ -181,7 +188,8 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.3.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.4.0...HEAD
+[v3.4.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.3.0...v3.4.0
 [v3.3.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.2.0...v3.3.0
 [v3.2.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.1.0...v3.2.0
 [v3.1.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.11.0...v3.1.0
