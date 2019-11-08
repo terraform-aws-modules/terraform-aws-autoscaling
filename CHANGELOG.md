@@ -3,9 +3,50 @@
 
 
 
+<a name="v2.12.0"></a>
+## [v2.12.0] - 2019-11-08
+
+- Added support for service_linked_role_arn (based on [#70](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/70))
+- Updated CHANGELOG
+- Corrected create launch configuration flag
+
+
+<a name="v3.4.0"></a>
+## [v3.4.0] - 2019-11-08
+
+- Updated CHANGELOG
+- Updated aws_ec2 example with service_linked_role_arn
+
+
+<a name="v3.3.0"></a>
+## [v3.3.0] - 2019-11-08
+
+- Updated CHANGELOG
+- Adds service_linked_role ([#77](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/77))
+
+
+<a name="v3.2.0"></a>
+## [v3.2.0] - 2019-11-08
+
+- Updated CHANGELOG
+- Updated pre-commit hooks
+- added encrypted option to root_block_device ([#78](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/78))
+
+
+<a name="v3.1.0"></a>
+## [v3.1.0] - 2019-08-21
+
+- Updated CHANGELOG
+- Updated pre-commit hooks
+- Fixed example (health_check to map of strings) ([#73](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/73))
+- Updated CHANGELOG
+- Update for Terraform 0.12 ([#68](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/68))
+
+
 <a name="v2.11.0"></a>
 ## [v2.11.0] - 2019-06-08
 
+- Updated CHANGELOG
 - Corrected create launch configuration flag
 
 
@@ -156,7 +197,12 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.11.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.12.0...HEAD
+[v2.12.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.4.0...v2.12.0
+[v3.4.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.3.0...v3.4.0
+[v3.3.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.2.0...v3.3.0
+[v3.2.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.1.0...v3.2.0
+[v3.1.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.11.0...v3.1.0
 [v2.11.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.0.0...v2.11.0
 [v3.0.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.10.0...v3.0.0
 [v2.10.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.9.1...v2.10.0
