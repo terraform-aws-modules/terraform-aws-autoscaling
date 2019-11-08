@@ -158,9 +158,9 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | recreate\_asg\_when\_lc\_changes | Whether to recreate an autoscaling group when launch configuration changes | bool | `"false"` | no |
 | root\_block\_device | Customize details about the root block device of the instance | list(map(string)) | `[]` | no |
 | security\_groups | A list of security group IDs to assign to the launch configuration | list(string) | `[]` | no |
+| service\_linked\_role\_arn | The ARN of the service-linked role that the ASG will use to call other AWS services. | string | `""` | no |
 | spot\_price | The price to use for reserving spot instances | string | `""` | no |
 | suspended\_processes | A list of processes to suspend for the AutoScaling Group. The allowed values are Launch, Terminate, HealthCheck, ReplaceUnhealthy, AZRebalance, AlarmNotification, ScheduledActions, AddToLoadBalancer. Note that if you suspend either the Launch or Terminate process types, it can prevent your autoscaling group from functioning properly. | list(string) | `[]` | no |
-| service\_linked\_role\_arn | The ARN of service linked role for Autoscaling Group to call other AWS services. | string | `""` | no |
 | tags | A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch. | list(map(string)) | `[]` | no |
 | tags\_as\_map | A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws_autoscaling_group requires. | map(string) | `{}` | no |
 | target\_group\_arns | A list of aws_alb_target_group ARNs, for use with Application Load Balancing | list(string) | `[]` | no |
