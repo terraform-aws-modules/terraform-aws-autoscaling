@@ -58,7 +58,7 @@ resource "aws_iam_service_linked_role" "autoscaling" {
 }
 
 ######
-# Launch configuration and autoscaling group
+# Launch template and autoscaling group
 ######
 module "example" {
   source = "../../"

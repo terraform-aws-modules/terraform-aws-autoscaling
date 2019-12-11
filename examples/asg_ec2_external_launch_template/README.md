@@ -1,6 +1,6 @@
-# Auto Scaling Group with external launch configuration example
+# Auto Scaling Group with external launch template example
 
-Configuration in this directory creates Launch Configuration outside of the module and pass it to this module to create an Auto Scaling Group.
+Configuration in this directory creates Launch Template outside of the module and pass it to this module to create an Auto Scaling Group.
 
 Data sources are used to discover existing VPC resources (VPC, subnet and security group) as well as AMI details.
 

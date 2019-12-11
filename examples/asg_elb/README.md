@@ -1,6 +1,6 @@
 # Auto Scaling Group with ELB example
 
-Configuration in this directory creates Launch Configuration, Auto Scaling Group, Elastic Load Balancer and places Auto Scaling EC2 instances under ELB.
+Configuration in this directory creates Launch Template, Auto Scaling Group, Elastic Load Balancer and places Auto Scaling EC2 instances under ELB.
 
 Data sources are used to discover existing VPC resources (VPC, subnet and security group) as well as AMI details.
 
