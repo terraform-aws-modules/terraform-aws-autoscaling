@@ -1,6 +1,6 @@
 locals {
-  this_launch_configuration_id   = var.launch_configuration == "" && var.create_lc ? concat(aws_launch_configuration.this.*.id, [""])[0] : var.launch_configuration
-  this_launch_configuration_name = var.launch_configuration == "" && var.create_lc ? concat(aws_launch_configuration.this.*.name, [""])[0] : ""
+  this_launch_template_id   = var.launch_template == "" && var.create_lt ? concat(aws_launch_template.this.*.id, [""])[0] : var.launch_template
+  this_launch_template_name = var.launch_template == "" && var.create_lt ? concat(aws_launch_template.this.*.name, [""])[0] : ""
 
   this_autoscaling_group_id                        = concat(aws_autoscaling_group.this.*.id, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.id, [""])[0]
   this_autoscaling_group_name                      = concat(aws_autoscaling_group.this.*.name, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.name, [""])[0]
@@ -17,14 +17,14 @@ locals {
   this_autoscaling_group_target_group_arns         = concat(aws_autoscaling_group.this.*.target_group_arns, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.target_group_arns, [""])[0]
 }
 
-output "this_launch_configuration_id" {
-  description = "The ID of the launch configuration"
-  value       = local.this_launch_configuration_id
+output "this_launch_template_id" {
+  description = "The ID of the launch template"
+  value       = local.this_launch_template_id
 }
 
-output "this_launch_configuration_name" {
-  description = "The name of the launch configuration"
-  value       = local.this_launch_configuration_name
+output "this_launch_template_name" {
+  description = "The name of the launch template"
+  value       = local.this_launch_template_name
 }
 
 output "this_autoscaling_group_id" {

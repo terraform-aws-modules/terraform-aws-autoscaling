@@ -22,6 +22,6 @@ Note that this example may create resources which cost money. Run `terraform des
 | Name | Description |
 |------|-------------|
 | this\_autoscaling\_group\_id | The autoscaling group id |
-| this\_launch\_configuration\_id | The ID of the launch configuration |
+| this\_launch\_template\_id | The ID of the launch template |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

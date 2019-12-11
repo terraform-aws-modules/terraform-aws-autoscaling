@@ -1,52 +1,65 @@
 #######################
-# Launch configuration
+# Launch template
 #######################
-resource "aws_launch_configuration" "this" {
-  count = var.create_lc ? 1 : 0
+resource "aws_launch_template" "this" {
+  count = var.create_lt ? 1 : 0
 
-  name_prefix                 = "${coalesce(var.lc_name, var.name)}-"
-  image_id                    = var.image_id
-  instance_type               = var.instance_type
-  iam_instance_profile        = var.iam_instance_profile
-  key_name                    = var.key_name
-  security_groups             = var.security_groups
-  associate_public_ip_address = var.associate_public_ip_address
-  user_data                   = var.user_data
-  enable_monitoring           = var.enable_monitoring
-  spot_price                  = var.spot_price
-  placement_tenancy           = var.spot_price == "" ? var.placement_tenancy : ""
-  ebs_optimized               = var.ebs_optimized
-
-  dynamic "ebs_block_device" {
-    for_each = var.ebs_block_device
+  name_prefix   = "${coalesce(var.lt_name, var.name)}-"
+  image_id      = var.image_id
+  instance_type = var.instance_type
+  key_name      = var.key_name
+  user_data     = base64encode(var.user_data)
+  ebs_optimized = var.ebs_optimized
+  dynamic "block_device_mappings" {
+    for_each = var.block_device_mappings
     content {
-      delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
-      device_name           = ebs_block_device.value.device_name
-      encrypted             = lookup(ebs_block_device.value, "encrypted", null)
-      iops                  = lookup(ebs_block_device.value, "iops", null)
-      no_device             = lookup(ebs_block_device.value, "no_device", null)
-      snapshot_id           = lookup(ebs_block_device.value, "snapshot_id", null)
-      volume_size           = lookup(ebs_block_device.value, "volume_size", null)
-      volume_type           = lookup(ebs_block_device.value, "volume_type", null)
+      device_name  = lookup(block_device_mappings.value, "device_name", null)
+      no_device    = lookup(block_device_mappings.value, "no_device", null)
+      virtual_name = lookup(block_device_mappings.value, "virtual_name", null)
+
+      dynamic "ebs" {
+        for_each = lookup(block_device_mappings.value, "ebs", [])
+        content {
+          delete_on_termination = lookup(ebs.value, "delete_on_termination", null)
+          encrypted             = lookup(ebs.value, "encrypted", null)
+          iops                  = lookup(ebs.value, "iops", null)
+          kms_key_id            = lookup(ebs.value, "kms_key_id", null)
+          snapshot_id           = lookup(ebs.value, "snapshot_id", null)
+          volume_size           = lookup(ebs.value, "volume_size", null)
+          volume_type           = lookup(ebs.value, "volume_type", null)
+        }
+      }
     }
   }
 
-  dynamic "ephemeral_block_device" {
-    for_each = var.ephemeral_block_device
-    content {
-      device_name  = ephemeral_block_device.value.device_name
-      virtual_name = ephemeral_block_device.value.virtual_name
-    }
+  iam_instance_profile {
+    arn = var.iam_instance_profile
   }
 
-  dynamic "root_block_device" {
-    for_each = var.root_block_device
+  network_interfaces {
+    description                 = coalesce(var.lt_name, var.name)
+    device_index                = 0
+    associate_public_ip_address = var.associate_public_ip_address
+    delete_on_termination       = true
+    security_groups             = var.security_groups
+  }
+
+  monitoring {
+    enabled = var.enable_monitoring
+  }
+
+  placement {
+    tenancy = var.spot_price == "" ? "default" : var.placement_tenancy
+  }
+
+  # Create block when var.spot_price is set, else make it run on-demand to mimic behaviour of v3.x
+  dynamic "instance_market_options" {
+    for_each = var.spot_price != "" ? [var.spot_price] : []
     content {
-      delete_on_termination = lookup(root_block_device.value, "delete_on_termination", null)
-      iops                  = lookup(root_block_device.value, "iops", null)
-      volume_size           = lookup(root_block_device.value, "volume_size", null)
-      volume_type           = lookup(root_block_device.value, "volume_type", null)
-      encrypted             = lookup(root_block_device.value, "encrypted", null)
+      market_type = "spot"
+      spot_options {
+        max_price = instance_market_options.value
+      }
     }
   }
 
@@ -66,15 +79,14 @@ resource "aws_autoscaling_group" "this" {
     compact(
       [
         coalesce(var.asg_name, var.name),
-        var.recreate_asg_when_lc_changes ? element(concat(random_pet.asg_name.*.id, [""]), 0) : "",
+        var.recreate_asg_when_lt_changes ? element(concat(random_pet.asg_name.*.id, [""]), 0) : "",
       ],
     ),
   )}-"
-  launch_configuration = var.create_lc ? element(concat(aws_launch_configuration.this.*.name, [""]), 0) : var.launch_configuration
-  vpc_zone_identifier  = var.vpc_zone_identifier
-  max_size             = var.max_size
-  min_size             = var.min_size
-  desired_capacity     = var.desired_capacity
+  vpc_zone_identifier = var.vpc_zone_identifier
+  max_size            = var.max_size
+  min_size            = var.min_size
+  desired_capacity    = var.desired_capacity
 
   load_balancers            = var.load_balancers
   health_check_grace_period = var.health_check_grace_period
@@ -94,12 +106,17 @@ resource "aws_autoscaling_group" "this" {
   protect_from_scale_in     = var.protect_from_scale_in
   service_linked_role_arn   = var.service_linked_role_arn
 
+  launch_template {
+    id      = var.create_lt ? element(concat(aws_launch_template.this.*.id, [""]), 0) : var.launch_template
+    version = "$Latest"
+  }
+
   tags = concat(
     [
       {
-        "key"                 = "Name"
-        "value"               = var.name
-        "propagate_at_launch" = true
+        key                 = "Name"
+        value               = var.name
+        propagate_at_launch = true
       },
     ],
     var.tags,
@@ -122,15 +139,14 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
     compact(
       [
         coalesce(var.asg_name, var.name),
-        var.recreate_asg_when_lc_changes ? element(concat(random_pet.asg_name.*.id, [""]), 0) : "",
+        var.recreate_asg_when_lt_changes ? element(concat(random_pet.asg_name.*.id, [""]), 0) : "",
       ],
     ),
   )}-"
-  launch_configuration = var.create_lc ? element(aws_launch_configuration.this.*.name, 0) : var.launch_configuration
-  vpc_zone_identifier  = var.vpc_zone_identifier
-  max_size             = var.max_size
-  min_size             = var.min_size
-  desired_capacity     = var.desired_capacity
+  vpc_zone_identifier = var.vpc_zone_identifier
+  max_size            = var.max_size
+  min_size            = var.min_size
+  desired_capacity    = var.desired_capacity
 
   load_balancers            = var.load_balancers
   health_check_grace_period = var.health_check_grace_period
@@ -160,12 +176,17 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
     default_result          = var.initial_lifecycle_hook_default_result
   }
 
+  launch_template {
+    id      = var.create_lt ? element(concat(aws_launch_template.this.*.id, [""]), 0) : var.launch_template
+    version = "$Latest"
+  }
+
   tags = concat(
     [
       {
-        "key"                 = "Name"
-        "value"               = var.name
-        "propagate_at_launch" = true
+        key                 = "Name"
+        value               = var.name
+        propagate_at_launch = true
       },
     ],
     var.tags,
@@ -178,13 +199,13 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
 }
 
 resource "random_pet" "asg_name" {
-  count = var.recreate_asg_when_lc_changes ? 1 : 0
+  count = var.recreate_asg_when_lt_changes ? 1 : 0
 
   separator = "-"
   length    = 2
 
   keepers = {
-    # Generate a new pet name each time we switch launch configuration
-    lc_name = var.create_lc ? element(concat(aws_launch_configuration.this.*.name, [""]), 0) : var.launch_configuration
+    # Generate a new pet name each time we switch launch template
+    lt_name = var.create_lt ? element(concat(aws_launch_template.this.*.name, [""]), 0) : var.launch_template
   }
 }

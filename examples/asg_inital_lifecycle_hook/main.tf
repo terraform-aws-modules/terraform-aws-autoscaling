@@ -47,7 +47,7 @@ data "aws_ami" "amazon_linux" {
 }
 
 ######
-# Launch configuration and autoscaling group
+# Launch template and autoscaling group
 ######
 module "example" {
   source = "../../"
@@ -67,33 +67,40 @@ module "example" {
 }
 EOF
 
-
-  # Launch configuration
+  # Launch template
   #
-  # launch_configuration = "my-existing-launch-configuration" # Use the existing launch configuration
-  # create_lc = false # disables creation of launch configuration
-  lc_name = "example-lc"
+  # launch_template = "my-existing-launch-template" # Use the existing launch template
+  # create_lt = false # disables creation of launch template
+  lt_name = "example-lt"
 
   image_id                     = data.aws_ami.amazon_linux.id
   instance_type                = "t2.micro"
   security_groups              = [data.aws_security_group.default.id]
   associate_public_ip_address  = true
-  recreate_asg_when_lc_changes = true
+  recreate_asg_when_lt_changes = true
 
-  ebs_block_device = [
+  block_device_mappings = [
     {
-      device_name           = "/dev/xvdz"
-      volume_type           = "gp2"
-      volume_size           = "50"
-      delete_on_termination = true
+      # Root block device
+      device_name = "/dev/xvda"
+
+      ebs = [
+        {
+          volume_type = "gp2"
+          volume_size = 50
+        },
+      ]
     },
-  ]
-
-  root_block_device = [
     {
-      volume_size           = "50"
-      volume_type           = "gp2"
-      delete_on_termination = true
+      # EBS Block Device
+      device_name = "/dev/xvdz"
+
+      ebs = [
+        {
+          volume_type = "gp2"
+          volume_size = 50
+        },
+      ]
     },
   ]
 
@@ -124,4 +131,3 @@ EOF
     extra_tag2 = "extra_value2"
   }
 }
-

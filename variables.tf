@@ -1,5 +1,5 @@
-variable "create_lc" {
-  description = "Whether to create launch configuration"
+variable "create_lt" {
+  description = "Whether to create launch template"
   type        = bool
   default     = true
 }
@@ -58,8 +58,8 @@ variable "initial_lifecycle_hook_role_arn" {
   default     = ""
 }
 
-variable "recreate_asg_when_lc_changes" {
-  description = "Whether to recreate an autoscaling group when launch configuration changes"
+variable "recreate_asg_when_lt_changes" {
+  description = "Whether to recreate an autoscaling group when launch template changes"
   type        = bool
   default     = false
 }
@@ -69,8 +69,8 @@ variable "name" {
   type        = string
 }
 
-variable "lc_name" {
-  description = "Creates a unique name for launch configuration beginning with the specified prefix"
+variable "lt_name" {
+  description = "Creates a unique name for launch template beginning with the specified prefix"
   type        = string
   default     = ""
 }
@@ -81,13 +81,13 @@ variable "asg_name" {
   default     = ""
 }
 
-variable "launch_configuration" {
-  description = "The name of the launch configuration to use (if it is created outside of this module)"
+variable "launch_template" {
+  description = "The name of the launch template to use (if it is created outside of this module)"
   type        = string
   default     = ""
 }
 
-# Launch configuration
+# Launch template
 variable "image_id" {
   description = "The EC2 image ID to launch"
   type        = string
@@ -113,7 +113,7 @@ variable "key_name" {
 }
 
 variable "security_groups" {
-  description = "A list of security group IDs to assign to the launch configuration"
+  description = "A list of security group IDs to assign to the launch template"
   type        = list(string)
   default     = []
 }
@@ -142,22 +142,10 @@ variable "ebs_optimized" {
   default     = false
 }
 
-variable "root_block_device" {
-  description = "Customize details about the root block device of the instance"
-  type        = list(map(string))
-  default     = []
-}
-
-variable "ebs_block_device" {
-  description = "Additional EBS block devices to attach to the instance"
-  type        = list(map(string))
-  default     = []
-}
-
-variable "ephemeral_block_device" {
-  description = "Customize Ephemeral (also known as 'Instance Store') volumes on the instance"
-  type        = list(map(string))
-  default     = []
+variable "block_device_mappings" {
+  description = "Mappings of block devices, see https://www.terraform.io/docs/providers/aws/r/launch_template.html#block-devices"
+  type        = list(any)
+  default     = [{}]
 }
 
 variable "spot_price" {
@@ -229,7 +217,7 @@ variable "target_group_arns" {
 }
 
 variable "termination_policies" {
-  description = "A list of policies to decide how the instances in the auto scale group should be terminated. The allowed values are OldestInstance, NewestInstance, OldestLaunchConfiguration, ClosestToNextInstanceHour, Default"
+  description = "A list of policies to decide how the instances in the auto scale group should be terminated. The allowed values are OldestInstance, NewestInstance, OldestLaunchTemplate, ClosestToNextInstanceHour, Default"
   type        = list(string)
   default     = ["Default"]
 }
