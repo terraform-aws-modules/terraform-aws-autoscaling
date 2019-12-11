@@ -4,7 +4,7 @@ Terraform module which creates Auto Scaling resources on AWS.
 
 These types of resources are supported:
 
-* [Launch Configuration](https://www.terraform.io/docs/providers/aws/r/launch_configuration.html)
+* [Launch Template](https://www.terraform.io/docs/providers/aws/r/launch_template.html)
 * [Auto Scaling Group](https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html)
 
 ## Terraform versions
@@ -22,8 +22,8 @@ module "asg" {
   
   name = "service"
 
-  # Launch configuration
-  lc_name = "example-lc"
+  # Launch template
+  lt_name = "example-lt"
 
   image_id        = "ami-ebd02392"
   instance_type   = "t2.micro"
@@ -76,15 +76,15 @@ module "asg" {
 
 ## Conditional creation
 
-Normally this module creates both Auto Scaling Group (ASG) and Launch Configuration (LC), and connect them together.
+Normally this module creates both Auto Scaling Group (ASG) and Launch Template (LT), and connect them together.
 It is possible to customize this behaviour passing different parameters to this module:
-1. To create ASG, but not LC. Associate ASG with an existing LC:
+1. To create ASG, but not LT. Associate ASG with an existing LT:
 ```hcl
-create_lc = false
-launch_configuration = "existing-launch-configuration"
+create_lt = false
+launch_template = "existing-launch-template"
 ```
 
-1. To create LC, but not ASG. Outputs may produce errors.
+1. To create LT, but not ASG. Outputs may produce errors.
 ```hcl
 create_asg = false
 ```
@@ -101,7 +101,7 @@ initial_lifecycle_hook_notification_metadata =<<EOF
 }
 EOF
 ```
-1. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to use this way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
+1. To disable creation of both resources (LT and ASG) you can specify both arguments `create_lt = false` and `create_asg = false`. Sometimes you need to use this way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
 
 ## Tags
 
@@ -111,7 +111,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 
 * [Auto Scaling Group without ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2)
 * [Auto Scaling Group with ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_elb)
-* [Auto Scaling Group with external Launch Configuration](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2_external_launch_configuration)
+* [Auto Scaling Group with external Launch Template](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2_external_launch_template)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
