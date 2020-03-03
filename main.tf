@@ -49,6 +49,10 @@ resource "aws_launch_configuration" "this" {
       encrypted             = lookup(root_block_device.value, "encrypted", null)
     }
   }
+  
+  network_interfaces {
+    delete_on_termination = true
+  }
 
   lifecycle {
     create_before_destroy = true
