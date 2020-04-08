@@ -114,13 +114,6 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 * [Auto Scaling Group with external Launch Configuration](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2_external_launch_configuration)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-## Providers
-
-| Name | Version |
-|------|---------|
-| aws | n/a |
-| null | n/a |
-| random | n/a |
 
 ## Inputs
 
