@@ -114,61 +114,70 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 * [Auto Scaling Group with external Launch Configuration](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2_external_launch_configuration)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | n/a |
+| null | n/a |
+| random | n/a |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| asg\_name | Creates a unique name for autoscaling group beginning with the specified prefix | string | `""` | no |
-| associate\_public\_ip\_address | Associate a public ip address with an instance in a VPC | bool | `"false"` | no |
-| create\_asg | Whether to create autoscaling group | bool | `"true"` | no |
-| create\_asg\_with\_initial\_lifecycle\_hook | Create an ASG with initial lifecycle hook | bool | `"false"` | no |
-| create\_lc | Whether to create launch configuration | bool | `"true"` | no |
-| default\_cooldown | The amount of time, in seconds, after a scaling activity completes before another scaling activity can start | number | `"300"` | no |
-| desired\_capacity | The number of Amazon EC2 instances that should be running in the group | string | n/a | yes |
-| ebs\_block\_device | Additional EBS block devices to attach to the instance | list(map(string)) | `[]` | no |
-| ebs\_optimized | If true, the launched EC2 instance will be EBS-optimized | bool | `"false"` | no |
-| enable\_monitoring | Enables/disables detailed monitoring. This is enabled by default. | bool | `"true"` | no |
-| enabled\_metrics | A list of metrics to collect. The allowed values are GroupMinSize, GroupMaxSize, GroupDesiredCapacity, GroupInServiceInstances, GroupPendingInstances, GroupStandbyInstances, GroupTerminatingInstances, GroupTotalInstances | list(string) | `[ "GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances" ]` | no |
-| ephemeral\_block\_device | Customize Ephemeral (also known as 'Instance Store') volumes on the instance | list(map(string)) | `[]` | no |
-| force\_delete | Allows deleting the autoscaling group without waiting for all instances in the pool to terminate. You can force an autoscaling group to delete even if it's in the process of scaling a resource. Normally, Terraform drains all the instances before deleting the group. This bypasses that behavior and potentially leaves resources dangling | bool | `"false"` | no |
-| health\_check\_grace\_period | Time (in seconds) after instance comes into service before checking health | number | `"300"` | no |
-| health\_check\_type | Controls how health checking is done. Values are - EC2 and ELB | string | n/a | yes |
-| iam\_instance\_profile | The IAM instance profile to associate with launched instances | string | `""` | no |
-| image\_id | The EC2 image ID to launch | string | `""` | no |
-| initial\_lifecycle\_hook\_default\_result | Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The value for this parameter can be either CONTINUE or ABANDON | string | `"ABANDON"` | no |
-| initial\_lifecycle\_hook\_heartbeat\_timeout | Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. When the lifecycle hook times out, Auto Scaling performs the action defined in the DefaultResult parameter | string | `"60"` | no |
-| initial\_lifecycle\_hook\_lifecycle\_transition | The instance state to which you want to attach the initial lifecycle hook | string | `""` | no |
-| initial\_lifecycle\_hook\_name | The name of initial lifecycle hook | string | `""` | no |
-| initial\_lifecycle\_hook\_notification\_metadata | Contains additional information that you want to include any time Auto Scaling sends a message to the notification target | string | `""` | no |
-| initial\_lifecycle\_hook\_notification\_target\_arn | The ARN of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook. This ARN target can be either an SQS queue or an SNS topic | string | `""` | no |
-| initial\_lifecycle\_hook\_role\_arn | The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target | string | `""` | no |
-| instance\_type | The size of instance to launch | string | `""` | no |
-| key\_name | The key name that should be used for the instance | string | `""` | no |
-| launch\_configuration | The name of the launch configuration to use (if it is created outside of this module) | string | `""` | no |
-| lc\_name | Creates a unique name for launch configuration beginning with the specified prefix | string | `""` | no |
-| load\_balancers | A list of elastic load balancer names to add to the autoscaling group names | list(string) | `[]` | no |
-| max\_size | The maximum size of the auto scale group | string | n/a | yes |
-| metrics\_granularity | The granularity to associate with the metrics to collect. The only valid value is 1Minute | string | `"1Minute"` | no |
-| min\_elb\_capacity | Setting this causes Terraform to wait for this number of instances to show up healthy in the ELB only on creation. Updates will not wait on ELB instance number changes | number | `"0"` | no |
-| min\_size | The minimum size of the auto scale group | string | n/a | yes |
-| name | Creates a unique name beginning with the specified prefix | string | n/a | yes |
-| placement\_group | The name of the placement group into which you'll launch your instances, if any | string | `""` | no |
-| placement\_tenancy | The tenancy of the instance. Valid values are 'default' or 'dedicated' | string | `"default"` | no |
-| protect\_from\_scale\_in | Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events. | bool | `"false"` | no |
-| recreate\_asg\_when\_lc\_changes | Whether to recreate an autoscaling group when launch configuration changes | bool | `"false"` | no |
-| root\_block\_device | Customize details about the root block device of the instance | list(map(string)) | `[]` | no |
-| security\_groups | A list of security group IDs to assign to the launch configuration | list(string) | `[]` | no |
-| service\_linked\_role\_arn | The ARN of the service-linked role that the ASG will use to call other AWS services. | string | `""` | no |
-| spot\_price | The price to use for reserving spot instances | string | `""` | no |
-| suspended\_processes | A list of processes to suspend for the AutoScaling Group. The allowed values are Launch, Terminate, HealthCheck, ReplaceUnhealthy, AZRebalance, AlarmNotification, ScheduledActions, AddToLoadBalancer. Note that if you suspend either the Launch or Terminate process types, it can prevent your autoscaling group from functioning properly. | list(string) | `[]` | no |
-| tags | A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch. | list(map(string)) | `[]` | no |
-| tags\_as\_map | A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws_autoscaling_group requires. | map(string) | `{}` | no |
-| target\_group\_arns | A list of aws_alb_target_group ARNs, for use with Application Load Balancing | list(string) | `[]` | no |
-| termination\_policies | A list of policies to decide how the instances in the auto scale group should be terminated. The allowed values are OldestInstance, NewestInstance, OldestLaunchConfiguration, ClosestToNextInstanceHour, Default | list(string) | `[ "Default" ]` | no |
-| user\_data | The user data to provide when launching the instance | string | `" "` | no |
-| vpc\_zone\_identifier | A list of subnet IDs to launch resources in | list(string) | n/a | yes |
-| wait\_for\_capacity\_timeout | A maximum duration that Terraform should wait for ASG instances to be healthy before timing out. (See also Waiting for Capacity below.) Setting this to '0' causes Terraform to skip all Capacity Waiting behavior. | string | `"10m"` | no |
-| wait\_for\_elb\_capacity | Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over min_elb_capacity behavior. | number | `"null"` | no |
+|------|-------------|------|---------|:-----:|
+| asg\_name | Creates a unique name for autoscaling group beginning with the specified prefix | `string` | `""` | no |
+| associate\_public\_ip\_address | Associate a public ip address with an instance in a VPC | `bool` | `false` | no |
+| create\_asg | Whether to create autoscaling group | `bool` | `true` | no |
+| create\_asg\_with\_initial\_lifecycle\_hook | Create an ASG with initial lifecycle hook | `bool` | `false` | no |
+| create\_lc | Whether to create launch configuration | `bool` | `true` | no |
+| default\_cooldown | The amount of time, in seconds, after a scaling activity completes before another scaling activity can start | `number` | `300` | no |
+| desired\_capacity | The number of Amazon EC2 instances that should be running in the group | `string` | n/a | yes |
+| ebs\_block\_device | Additional EBS block devices to attach to the instance | `list(map(string))` | `[]` | no |
+| ebs\_optimized | If true, the launched EC2 instance will be EBS-optimized | `bool` | `false` | no |
+| enable\_monitoring | Enables/disables detailed monitoring. This is enabled by default. | `bool` | `true` | no |
+| enabled\_metrics | A list of metrics to collect. The allowed values are GroupMinSize, GroupMaxSize, GroupDesiredCapacity, GroupInServiceInstances, GroupPendingInstances, GroupStandbyInstances, GroupTerminatingInstances, GroupTotalInstances | `list(string)` | <pre>[<br>  "GroupMinSize",<br>  "GroupMaxSize",<br>  "GroupDesiredCapacity",<br>  "GroupInServiceInstances",<br>  "GroupPendingInstances",<br>  "GroupStandbyInstances",<br>  "GroupTerminatingInstances",<br>  "GroupTotalInstances"<br>]</pre> | no |
+| ephemeral\_block\_device | Customize Ephemeral (also known as 'Instance Store') volumes on the instance | `list(map(string))` | `[]` | no |
+| force\_delete | Allows deleting the autoscaling group without waiting for all instances in the pool to terminate. You can force an autoscaling group to delete even if it's in the process of scaling a resource. Normally, Terraform drains all the instances before deleting the group. This bypasses that behavior and potentially leaves resources dangling | `bool` | `false` | no |
+| health\_check\_grace\_period | Time (in seconds) after instance comes into service before checking health | `number` | `300` | no |
+| health\_check\_type | Controls how health checking is done. Values are - EC2 and ELB | `string` | n/a | yes |
+| iam\_instance\_profile | The IAM instance profile to associate with launched instances | `string` | `""` | no |
+| image\_id | The EC2 image ID to launch | `string` | `""` | no |
+| initial\_lifecycle\_hook\_default\_result | Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The value for this parameter can be either CONTINUE or ABANDON | `string` | `"ABANDON"` | no |
+| initial\_lifecycle\_hook\_heartbeat\_timeout | Defines the amount of time, in seconds, that can elapse before the lifecycle hook times out. When the lifecycle hook times out, Auto Scaling performs the action defined in the DefaultResult parameter | `string` | `"60"` | no |
+| initial\_lifecycle\_hook\_lifecycle\_transition | The instance state to which you want to attach the initial lifecycle hook | `string` | `""` | no |
+| initial\_lifecycle\_hook\_name | The name of initial lifecycle hook | `string` | `""` | no |
+| initial\_lifecycle\_hook\_notification\_metadata | Contains additional information that you want to include any time Auto Scaling sends a message to the notification target | `string` | `""` | no |
+| initial\_lifecycle\_hook\_notification\_target\_arn | The ARN of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook. This ARN target can be either an SQS queue or an SNS topic | `string` | `""` | no |
+| initial\_lifecycle\_hook\_role\_arn | The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target | `string` | `""` | no |
+| instance\_type | The size of instance to launch | `string` | `""` | no |
+| key\_name | The key name that should be used for the instance | `string` | `""` | no |
+| launch\_configuration | The name of the launch configuration to use (if it is created outside of this module) | `string` | `""` | no |
+| lc\_name | Creates a unique name for launch configuration beginning with the specified prefix | `string` | `""` | no |
+| load\_balancers | A list of elastic load balancer names to add to the autoscaling group names | `list(string)` | `[]` | no |
+| max\_instance\_lifetime | The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 604800 and 31536000 seconds. | `number` | `0` | no |
+| max\_size | The maximum size of the auto scale group | `string` | n/a | yes |
+| metrics\_granularity | The granularity to associate with the metrics to collect. The only valid value is 1Minute | `string` | `"1Minute"` | no |
+| min\_elb\_capacity | Setting this causes Terraform to wait for this number of instances to show up healthy in the ELB only on creation. Updates will not wait on ELB instance number changes | `number` | `0` | no |
+| min\_size | The minimum size of the auto scale group | `string` | n/a | yes |
+| name | Creates a unique name beginning with the specified prefix | `string` | n/a | yes |
+| placement\_group | The name of the placement group into which you'll launch your instances, if any | `string` | `""` | no |
+| placement\_tenancy | The tenancy of the instance. Valid values are 'default' or 'dedicated' | `string` | `"default"` | no |
+| protect\_from\_scale\_in | Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events. | `bool` | `false` | no |
+| recreate\_asg\_when\_lc\_changes | Whether to recreate an autoscaling group when launch configuration changes | `bool` | `false` | no |
+| root\_block\_device | Customize details about the root block device of the instance | `list(map(string))` | `[]` | no |
+| security\_groups | A list of security group IDs to assign to the launch configuration | `list(string)` | `[]` | no |
+| service\_linked\_role\_arn | The ARN of the service-linked role that the ASG will use to call other AWS services. | `string` | `""` | no |
+| spot\_price | The price to use for reserving spot instances | `string` | `""` | no |
+| suspended\_processes | A list of processes to suspend for the AutoScaling Group. The allowed values are Launch, Terminate, HealthCheck, ReplaceUnhealthy, AZRebalance, AlarmNotification, ScheduledActions, AddToLoadBalancer. Note that if you suspend either the Launch or Terminate process types, it can prevent your autoscaling group from functioning properly. | `list(string)` | `[]` | no |
+| tags | A list of tag blocks. Each element should have keys named key, value, and propagate\_at\_launch. | `list(map(string))` | `[]` | no |
+| tags\_as\_map | A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws\_autoscaling\_group requires. | `map(string)` | `{}` | no |
+| target\_group\_arns | A list of aws\_alb\_target\_group ARNs, for use with Application Load Balancing | `list(string)` | `[]` | no |
+| termination\_policies | A list of policies to decide how the instances in the auto scale group should be terminated. The allowed values are OldestInstance, NewestInstance, OldestLaunchConfiguration, ClosestToNextInstanceHour, Default | `list(string)` | <pre>[<br>  "Default"<br>]</pre> | no |
+| user\_data | The user data to provide when launching the instance | `string` | `" "` | no |
+| vpc\_zone\_identifier | A list of subnet IDs to launch resources in | `list(string)` | n/a | yes |
+| wait\_for\_capacity\_timeout | A maximum duration that Terraform should wait for ASG instances to be healthy before timing out. (See also Waiting for Capacity below.) Setting this to '0' causes Terraform to skip all Capacity Waiting behavior. | `string` | `"10m"` | no |
+| wait\_for\_elb\_capacity | Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over min\_elb\_capacity behavior. | `number` | n/a | yes |
 
 ## Outputs
 
