@@ -1,6 +1,30 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+
+<a name="v3.5.0"></a>
+## [v3.5.0] - 2020-04-10
+
+- feat: Added max_instance_lifetime option for Auto Scaling Group ([#98](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/98))
+- Updated aws_ec2 example with service_linked_role_arn
+- Adds service_linked_role ([#77](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/77))
+- Updated pre-commit hooks
+- added encrypted option to root_block_device ([#78](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/78))
+- Updated pre-commit hooks
+- Fixed example (health_check to map of strings) ([#73](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/73))
+- Update for Terraform 0.12 ([#68](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/68))
+
+
+<a name="v2.12.0"></a>
+## [v2.12.0] - 2019-11-08
+
+- Added support for service_linked_role_arn (based on [#70](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/70))
+- Corrected create launch configuration flag
 
 
 <a name="v3.4.0"></a>
@@ -12,14 +36,12 @@
 <a name="v3.3.0"></a>
 ## [v3.3.0] - 2019-11-08
 
-- Updated CHANGELOG
 - Adds service_linked_role ([#77](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/77))
 
 
 <a name="v3.2.0"></a>
 ## [v3.2.0] - 2019-11-08
 
-- Updated CHANGELOG
 - Updated pre-commit hooks
 - added encrypted option to root_block_device ([#78](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/78))
 
@@ -27,31 +49,26 @@
 <a name="v3.1.0"></a>
 ## [v3.1.0] - 2019-08-21
 
-- Updated CHANGELOG
 - Updated pre-commit hooks
 - Fixed example (health_check to map of strings) ([#73](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/73))
-- Updated CHANGELOG
 - Update for Terraform 0.12 ([#68](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/68))
 
 
 <a name="v2.11.0"></a>
 ## [v2.11.0] - 2019-06-08
 
-- Updated CHANGELOG
 - Corrected create launch configuration flag
 
 
 <a name="v3.0.0"></a>
 ## [v3.0.0] - 2019-06-08
 
-- Updated CHANGELOG
 - Update for Terraform 0.12 ([#68](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/68))
 
 
 <a name="v2.10.0"></a>
 ## [v2.10.0] - 2019-06-08
 
-- Updated CHANGELOG
 
 
 <a name="v2.9.1"></a>
@@ -162,7 +179,6 @@
 <a name="v1.0.3"></a>
 ## [v1.0.3] - 2017-10-04
 
-- Merge pull request [#5](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/5) from kospant/master
 - target_group_arns should be a list (workaround for issue: https://github.com/hashicorp/terraform/issues/13869)
 - target_group_arns should be a list (workaround for issue: https://github.com/hashicorp/terraform/issues/13869)
 
@@ -176,7 +192,6 @@
 <a name="v1.0.1"></a>
 ## [v1.0.1] - 2017-09-26
 
-- Merge pull request [#2](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/2) from thanandorn/bugfix/lb_list_type
 - TF: Correct list all the way down
 - TF: Fix passing list from main to ASG submodule
 
@@ -188,7 +203,9 @@
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.4.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.5.0...HEAD
+[v3.5.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.12.0...v3.5.0
+[v2.12.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.4.0...v2.12.0
 [v3.4.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.3.0...v3.4.0
 [v3.3.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.2.0...v3.3.0
 [v3.2.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.1.0...v3.2.0
