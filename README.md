@@ -114,10 +114,27 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 * [Auto Scaling Group with external Launch Configuration](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2_external_launch_configuration)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | ~> 0.12.6 |
+| aws | ~> 2.41.0 |
+| null | ~> 2.1.2 |
+| random | ~> 2.2.1 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | ~> 2.41.0 |
+| null | ~> 2.1.2 |
+| random | ~> 2.2.1 |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | asg\_name | Creates a unique name for autoscaling group beginning with the specified prefix | `string` | `""` | no |
 | associate\_public\_ip\_address | Associate a public ip address with an instance in a VPC | `bool` | `false` | no |
 | create\_asg | Whether to create autoscaling group | `bool` | `true` | no |
@@ -169,7 +186,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | user\_data | The user data to provide when launching the instance | `string` | `" "` | no |
 | vpc\_zone\_identifier | A list of subnet IDs to launch resources in | `list(string)` | n/a | yes |
 | wait\_for\_capacity\_timeout | A maximum duration that Terraform should wait for ASG instances to be healthy before timing out. (See also Waiting for Capacity below.) Setting this to '0' causes Terraform to skip all Capacity Waiting behavior. | `string` | `"10m"` | no |
-| wait\_for\_elb\_capacity | Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over min\_elb\_capacity behavior. | `number` | n/a | yes |
+| wait\_for\_elb\_capacity | Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over min\_elb\_capacity behavior. | `number` | `null` | no |
 
 ## Outputs
 
