@@ -119,17 +119,13 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | Name | Version |
 |------|---------|
 | terraform | ~> 0.12.6 |
-| aws | ~> 2.41.0 |
-| null | ~> 2.1.2 |
-| random | ~> 2.2.1 |
+| aws | ~> 2.41 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | ~> 2.41.0 |
-| null | ~> 2.1.2 |
-| random | ~> 2.2.1 |
+| aws | ~> 2.41 |
 
 ## Inputs
 
