@@ -23,6 +23,7 @@ resource "aws_launch_configuration" "this" {
       delete_on_termination = lookup(ebs_block_device.value, "delete_on_termination", null)
       device_name           = ebs_block_device.value.device_name
       encrypted             = lookup(ebs_block_device.value, "encrypted", null)
+      kms_key_id            = lookup(ebs_block_device.value, "kms_key_id", null)
       iops                  = lookup(ebs_block_device.value, "iops", null)
       no_device             = lookup(ebs_block_device.value, "no_device", null)
       snapshot_id           = lookup(ebs_block_device.value, "snapshot_id", null)
@@ -47,6 +48,7 @@ resource "aws_launch_configuration" "this" {
       volume_size           = lookup(root_block_device.value, "volume_size", null)
       volume_type           = lookup(root_block_device.value, "volume_type", null)
       encrypted             = lookup(root_block_device.value, "encrypted", null)
+      kms_key_id            = lookup(root_block_device.value, "kms_key_id", null)
     }
   }
 
