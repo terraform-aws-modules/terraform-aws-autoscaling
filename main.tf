@@ -179,7 +179,6 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
 }
 
 resource "random_pet" "asg_name" {
-  count = var.recreate_asg_when_lc_changes ? 1 : 0
 
   separator = "-"
   length    = 2
