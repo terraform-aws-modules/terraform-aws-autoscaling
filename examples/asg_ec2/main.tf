@@ -98,7 +98,6 @@ module "example" {
   max_size                  = 1
   desired_capacity          = 0
   wait_for_capacity_timeout = 0
-  service_linked_role_arn   = aws_iam_service_linked_role.autoscaling.arn
 
   tags = [
     {
