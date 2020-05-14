@@ -29,7 +29,15 @@ No requirements.
 
 ## Inputs
 
+<<<<<<< HEAD
 No input.
+=======
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| asg\_name | n/a | `any` | n/a | yes |
+| lc\_name | n/a | `any` | n/a | yes |
+| vpc\_name | n/a | `any` | n/a | yes |
+>>>>>>> Run pre-commit
 
 ## Outputs
 

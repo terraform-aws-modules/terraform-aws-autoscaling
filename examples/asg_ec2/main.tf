@@ -1,47 +1,34 @@
 provider "aws" {
-  region = "eu-west-1"
-
-  # Make it faster by skipping something
-  skip_get_ec2_platforms      = true
-  skip_metadata_api_check     = true
-  skip_region_validation      = true
-  skip_credentials_validation = true
-  skip_requesting_account_id  = true
+  region = "us-east-2"
 }
+
 
 ##############################################################
 # Data sources to get VPC, subnets and security group details
 ##############################################################
-data "aws_vpc" "default" {
-  default = true
-}
+module "vpc" {
+  source = "github.com/youse-seguradora/terraform-aws-vpc"
 
-data "aws_subnet_ids" "all" {
-  vpc_id = data.aws_vpc.default.id
+  name = var.vpc_name
+
+  cidr = "192.168.253.0/24"
+
+  azs                    = ["us-east-1a"]
+  compute_public_subnets = ["192.168.253.0/24"]
 }
 
 data "aws_security_group" "default" {
-  vpc_id = data.aws_vpc.default.id
+  vpc_id = module.vpc.vpc_id
   name   = "default"
 }
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
-
   filter {
     name = "name"
-
     values = [
       "amzn-ami-hvm-*-x86_64-gp2",
-    ]
-  }
-
-  filter {
-    name = "owner-alias"
-
-    values = [
-      "amazon",
     ]
   }
 }
@@ -70,13 +57,13 @@ EOF
 module "example" {
   source = "../../"
 
-  name = "example-with-ec2"
+  name = example-with-ec2
 
   # Launch configuration
   #
   # launch_configuration = "my-existing-launch-configuration" # Use the existing launch configuration
   # create_lc = false # disables creation of launch configuration
-  lc_name = "example-lc"
+  lc_name = var.lc_name
 
   image_id                     = data.aws_ami.amazon_linux.id
   instance_type                = "t2.micro"
@@ -90,22 +77,22 @@ module "example" {
     {
       device_name           = "/dev/xvdz"
       volume_type           = "gp2"
-      volume_size           = "50"
+      volume_size           = "8"
       delete_on_termination = true
     },
   ]
 
   root_block_device = [
     {
-      volume_size           = "50"
+      volume_size           = "8"
       volume_type           = "gp2"
       delete_on_termination = true
     },
   ]
 
   # Auto scaling group
-  asg_name                  = "example-asg"
-  vpc_zone_identifier       = data.aws_subnet_ids.all.ids
+  asg_name                  = var.asg_name
+  vpc_zone_identifier       = module.vpc.public_subnets
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
