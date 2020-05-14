@@ -9,7 +9,7 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestSimpleAlb(t *testing.T) {
+func TestASG(t *testing.T) {
 	t.Parallel()
 
 	expectedName := fmt.Sprintf("vpc-terratest-%s", strings.ToLower(random.UniqueId()))
