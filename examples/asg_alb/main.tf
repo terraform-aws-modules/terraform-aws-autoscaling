@@ -8,12 +8,12 @@ provider "aws" {
 module "vpc" {
   source = "github.com/youse-seguradora/terraform-aws-vpc"
 
-  name = "teste"
+  name = var.vpc_name
 
   cidr = "10.120.0.0/24"
 
   azs                    = ["us-east-2a"]
-  compute_public_subnets = ["10.120.0.2.0/24"]
+  compute_public_subnets = ["10.120.2.0/24"]
 }
 
 data "aws_security_group" "default" {
@@ -38,7 +38,7 @@ data "aws_ami" "amazon_linux" {
 module "example_asg" {
   source = "../../"
 
-  name = "example-with-elb"
+  name = var.asg_name
 
 
   lc_name = var.lc_name
