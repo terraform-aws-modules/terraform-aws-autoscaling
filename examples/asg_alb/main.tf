@@ -12,8 +12,8 @@ module "vpc" {
 
   cidr = "10.120.0.0/16"
 
-  azs                    = ["us-east-2a"]
-  compute_public_subnets = ["10.120.2.0/24"]
+  azs                    = ["us-east-2a", "us-east-2b"]
+  compute_public_subnets = ["10.120.2.0/24", "10.120.3.0/24"]
 }
 
 data "aws_security_group" "default" {
@@ -38,7 +38,7 @@ data "aws_ami" "amazon_linux" {
 module "example_asg" {
   source = "../../"
 
-  name = var.asg_name
+  name = "example-with-elb"
 
 
   lc_name = var.lc_name
