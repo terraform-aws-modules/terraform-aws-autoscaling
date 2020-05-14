@@ -17,12 +17,30 @@ $ terraform apply
 Note that this example may create resources which cost money. Run `terraform destroy` when you don't need these resources.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | n/a |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| alb\_name | n/a | `any` | n/a | yes |
+| asg\_name | n/a | `any` | n/a | yes |
+| lc\_name | n/a | `any` | n/a | yes |
+| vpc\_name | n/a | `any` | n/a | yes |
+
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | this\_autoscaling\_group\_id | The autoscaling group id |
-| this\_elb\_dns\_name | DNS Name of the ELB |
 | this\_launch\_configuration\_id | The ID of the launch configuration |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

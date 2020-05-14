@@ -10,9 +10,4 @@ output "this_autoscaling_group_id" {
   value       = module.example_asg.this_autoscaling_group_id
 }
 
-# ELB DNS name
-output "this_elb_dns_name" {
-  description = "DNS Name of the ELB"
-  value       = module.elb.this_elb_dns_name
-}
 

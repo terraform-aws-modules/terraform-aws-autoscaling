@@ -2,7 +2,6 @@ provider "aws" {
   region = "us-east-2"
 }
 
-
 ##############################################################
 # Data sources to get VPC, subnets and security group details
 ##############################################################
@@ -11,10 +10,10 @@ module "vpc" {
 
   name = var.vpc_name
 
-  cidr = "192.168.253.0/24"
+  cidr = "10.120.0.0/16"
 
-  azs                    = ["us-east-2a"]
-  compute_public_subnets = ["192.168.253.0/24"]
+  azs                    = ["us-east-2a", "us-east-2b"]
+  compute_public_subnets = ["10.120.2.0/24", "10.120.3.0/24"]
 }
 
 data "aws_security_group" "default" {
@@ -36,22 +35,18 @@ data "aws_ami" "amazon_linux" {
 ######
 # Launch configuration and autoscaling group
 ######
-module "example" {
+module "example_asg" {
   source = "../../"
 
-  name = "example-with-ec2"
+  name = "example-with-elb"
 
-  # Launch configuration
-  #
-  # launch_configuration = "my-existing-launch-configuration" # Use the existing launch configuration
-  # create_lc = false # disables creation of launch configuration
+
   lc_name = var.lc_name
 
-  image_id                     = data.aws_ami.amazon_linux.id
-  instance_type                = "t2.micro"
-  security_groups              = [data.aws_security_group.default.id]
-  associate_public_ip_address  = true
-  recreate_asg_when_lc_changes = true
+  image_id          = data.aws_ami.amazon_linux.id
+  instance_type     = "t2.micro"
+  security_groups   = [data.aws_security_group.default.id]
+  target_group_arns = module.alb.target_group_arns
 
   ebs_block_device = [
     {
@@ -64,9 +59,8 @@ module "example" {
 
   root_block_device = [
     {
-      volume_size           = "8"
-      volume_type           = "gp2"
-      delete_on_termination = true
+      volume_size = "8"
+      volume_type = "gp2"
     },
   ]
 
@@ -91,9 +85,37 @@ module "example" {
       propagate_at_launch = true
     },
   ]
+}
 
-  tags_as_map = {
-    extra_tag1 = "extra_value1"
-    extra_tag2 = "extra_value2"
-  }
+######
+# ELB
+######
+module "alb" {
+  source = "github.com/youse-seguradora/terraform-aws-alb"
+
+
+  name = var.alb_name
+
+  load_balancer_type = "application"
+
+  vpc_id          = module.vpc.vpc_id
+  subnets         = module.vpc.public_subnets
+  security_groups = [data.aws_security_group.default.id]
+
+  target_groups = [
+    {
+      name_prefix      = "test"
+      backend_protocol = "HTTP"
+      backend_port     = 80
+      target_type      = "instance"
+    }
+  ]
+
+  http_tcp_listeners = [
+    {
+      port               = 80
+      protocol           = "HTTP"
+      target_group_index = 0
+    }
+  ]
 }
