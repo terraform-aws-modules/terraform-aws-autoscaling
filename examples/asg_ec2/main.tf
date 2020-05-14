@@ -13,7 +13,7 @@ module "vpc" {
 
   cidr = "192.168.253.0/24"
 
-  azs                    = ["us-east-1a"]
+  azs                    = ["us-east-2a"]
   compute_public_subnets = ["192.168.253.0/24"]
 }
 
@@ -50,7 +50,7 @@ resource "aws_iam_service_linked_role" "autoscaling" {
 module "example" {
   source = "../../"
 
-  name = example-with-ec2
+  name = "example-with-ec2"
 
   # Launch configuration
   #
