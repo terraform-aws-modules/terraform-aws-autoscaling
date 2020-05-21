@@ -52,6 +52,16 @@ resource "aws_launch_template" "this" {
     tenancy = var.spot_price == "" ? "default" : var.placement_tenancy
   }
 
+  tag_specifications {
+    resource_type = "instance"
+    tags          = var.tags_as_map
+  }
+
+  tag_specifications {
+    resource_type = "volume"
+    tags          = var.tags_as_map
+  }
+
   # Create block when var.spot_price is set, else make it run on-demand to mimic behaviour of v3.x
   dynamic "instance_market_options" {
     for_each = var.spot_price != "" ? [var.spot_price] : []
