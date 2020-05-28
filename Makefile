@@ -14,7 +14,7 @@ help:
 
 .PHONY: test
 test: ## Execute tests
-	@docker-compose -p ${JOB_NAME}_${BUILD_NUMBER} up --exit-code-from go
+	@circleci local execute --job terratest
 
 .PHONY: clean
 clean:

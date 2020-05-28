@@ -19,7 +19,7 @@ Terraform 0.11. Pin module version to `~> v2.0`. Submit pull-requests to `terraf
 module "asg" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "~> 3.0"
-  
+
   name = "service"
 
   # Launch configuration
@@ -125,7 +125,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 
 | Name | Version |
 |------|---------|
-| aws | >= 2.41, < 4.0 |
+| aws | ~> 2.41 |
 | null | n/a |
 | random | n/a |
 
@@ -157,7 +157,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | initial\_lifecycle\_hook\_notification\_metadata | Contains additional information that you want to include any time Auto Scaling sends a message to the notification target | `string` | `""` | no |
 | initial\_lifecycle\_hook\_notification\_target\_arn | The ARN of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook. This ARN target can be either an SQS queue or an SNS topic | `string` | `""` | no |
 | initial\_lifecycle\_hook\_role\_arn | The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target | `string` | `""` | no |
-| instance\_type | The size of instance to launch | `string` | `""` | no |
+| instance\_type | The size of instance to launch | `string` | n/a | yes |
 | key\_name | The key name that should be used for the instance | `string` | `""` | no |
 | launch\_configuration | The name of the launch configuration to use (if it is created outside of this module) | `string` | `""` | no |
 | lc\_name | Creates a unique name for launch configuration beginning with the specified prefix | `string` | `""` | no |
@@ -175,7 +175,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | root\_block\_device | Customize details about the root block device of the instance | `list(map(string))` | `[]` | no |
 | security\_groups | A list of security group IDs to assign to the launch configuration | `list(string)` | `[]` | no |
 | service\_linked\_role\_arn | The ARN of the service-linked role that the ASG will use to call other AWS services. | `string` | `""` | no |
-| spot\_price | The price to use for reserving spot instances | `string` | `""` | no |
+| spot\_price | The price to use for reserving spot instances | `string` | `null` | no |
 | suspended\_processes | A list of processes to suspend for the AutoScaling Group. The allowed values are Launch, Terminate, HealthCheck, ReplaceUnhealthy, AZRebalance, AlarmNotification, ScheduledActions, AddToLoadBalancer. Note that if you suspend either the Launch or Terminate process types, it can prevent your autoscaling group from functioning properly. | `list(string)` | `[]` | no |
 | tags | A list of tag blocks. Each element should have keys named key, value, and propagate\_at\_launch. | `list(map(string))` | `[]` | no |
 | tags\_as\_map | A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws\_autoscaling\_group requires. | `map(string)` | `{}` | no |
