@@ -1,0 +1,98 @@
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@1.0.0
+
+commands:
+  semtag:
+    description: "Getting SEMTAG"
+    steps:
+      - run:
+          name: Getting SEMTAG
+          command: |
+            sudo curl -o /bin/semtag https://raw.githubusercontent.com/pnikosis/semtag/v0.1.0/semtag
+            sudo chmod +x /bin/semtag
+            semtag --version
+
+jobs:
+  validate:
+    docker:
+      - image: hashicorp/terraform:0.12.26
+    steps:
+      - checkout
+      - run:
+          name: terraform init
+          command: find . -type f -name "*.tf" -exec dirname {} \;|sort -u | while read m; do (cd "$m" && terraform init -input=false -backend=false) || exit 1; done
+      - run:
+          name: Validate Terraform configurations
+          command: find . -name ".terraform" -prune -o -type f -name "*.tf" -exec dirname {} \;|sort -u | while read m; do (cd "$m" && terraform validate && echo "√ $m") || exit 1 ; done
+          environment:
+            AWS_DEFAULT_REGION: us-east-2
+      - run:
+          name: Check if Terraform configurations are properly formatted
+          command: if [[ -n "$(terraform fmt -write=false)" ]]; then echo "Some terraform files need be formatted, run 'terraform fmt' to fix"; exit 1; fi
+      - run:
+          name: Install tflint
+          command: wget -O /tmp/tflint.zip https://github.com/wata727/tflint/releases/download/v0.16.1/tflint_linux_amd64.zip && unzip /tmp/tflint.zip -d /usr/local/bin
+      - run:
+          name: Check Terraform configurations with tflint
+          command: tflint
+  terratest:
+    docker:
+      - image: circleci/golang:1.14.1-stretch
+    steps:
+      - checkout
+      - aws-cli/setup:
+          aws-access-key-id: AWS_BRA_DEV2_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_BRA_DEV2_SECRET_ACCESS_KEY
+          configure-default-region: false
+          profile-name: cicd
+      - run:
+          name: Install Terraform
+          command: |
+            if ! [ -x "$(command -v terraform)" ]; then
+              wget -O /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip
+              sudo unzip /tmp/terraform.zip -d /usr/local/bin;
+              terraform --version
+            fi;
+      - restore_cache:
+          keys:
+            - v1-pkg-cache
+      - run:
+          name: Running GOLang test
+          command: |
+            cd test
+            go test -timeout 1h
+      - save_cache:
+          key: v1-pkg-cache
+          paths:
+            - "/go/pkg"
+  tag:
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - checkout
+      - semtag
+      - run:
+          name: Generate Git TAG
+          command: |
+            if [ "$CIRCLE_BRANCH" = "master" ]; then
+              semtag getlast
+              semtag final -s patch
+            fi
+
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - validate
+      - terratest:
+          context: aws-bra-dev2
+      - tag:
+          requires:
+            - validate
+            - terratest
+          filters:
+            branches:
+              only:
+                - master
