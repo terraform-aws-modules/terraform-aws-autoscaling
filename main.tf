@@ -12,6 +12,7 @@ resource "aws_launch_configuration" "this" {
   security_groups             = var.security_groups
   associate_public_ip_address = var.associate_public_ip_address
   user_data                   = var.user_data
+  user_data_base64            = var.user_data_base64
   enable_monitoring           = var.enable_monitoring
   spot_price                  = var.spot_price
   placement_tenancy           = var.spot_price == "" ? var.placement_tenancy : ""
