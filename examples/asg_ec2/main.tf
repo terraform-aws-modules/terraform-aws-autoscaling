@@ -27,7 +27,7 @@ data "aws_security_group" "default" {
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
-  owners      = ["137112412989"] # Amazon
+  owners      = ["amazon"]
 
   filter {
     name = "name"
@@ -57,6 +57,13 @@ resource "aws_iam_service_linked_role" "autoscaling" {
   }
 }
 
+locals {
+  user_data = <<EOF
+#!/bin/bash
+echo "Hello Terraform!"
+EOF
+}
+
 ######
 # Launch configuration and autoscaling group
 ######
@@ -76,6 +83,8 @@ module "example" {
   security_groups              = [data.aws_security_group.default.id]
   associate_public_ip_address  = true
   recreate_asg_when_lc_changes = true
+
+  user_data_base64 = base64encode(local.user_data)
 
   ebs_block_device = [
     {
