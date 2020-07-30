@@ -190,3 +190,17 @@ resource "random_pet" "asg_name" {
     lc_name = var.create_lc ? element(concat(aws_launch_configuration.this.*.name, [""]), 0) : var.launch_configuration
   }
 }
+
+resource "aws_ecs_capacity_provider" "this" {
+  count = var.create_cp ? 1 : 0
+  name = coalesce(var.cp_name, var.name)
+
+  auto_scaling_group_provider {
+    auto_scaling_group_arn         = aws_autoscaling_group.this.this_autoscaling_group_arn
+    managed_termination_protection = "ENABLED"
+
+    managed_scaling {
+      status                    = "DISABLED"
+    }
+  }
+}
