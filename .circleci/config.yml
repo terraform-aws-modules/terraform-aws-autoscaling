@@ -42,8 +42,8 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          aws-access-key-id: AWS_BRA_DEV2_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_BRA_DEV2_SECRET_ACCESS_KEY
+          aws-access-key-id: AWS_BRA_DEV_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_BRA_DEV_SECRET_ACCESS_KEY
           configure-default-region: false
           profile-name: cicd
       - run:
@@ -80,14 +80,13 @@ jobs:
               semtag final -s patch
             fi
 
-
 workflows:
   version: 2
   build:
     jobs:
       - validate
       - terratest:
-          context: aws-bra-dev2
+          context: aws-bra-dev
       - tag:
           requires:
             - validate
