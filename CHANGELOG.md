@@ -7,6 +7,14 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v3.6.0"></a>
+## [v3.6.0] - 2020-08-13
+
+- feat: aws-provider version bump to >= 2.41, < 4.0 ([#115](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/115))
+- feat: base64 encoded user_data ([#107](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/107))
+- fix: Changed owner to amazon in examples ([#105](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/105))
+
+
 <a name="v3.5.0"></a>
 ## [v3.5.0] - 2020-04-10
 
@@ -203,7 +211,8 @@ All notable changes to this project will be documented in this file.
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.5.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.6.0...HEAD
+[v3.6.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.5.0...v3.6.0
 [v3.5.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v2.12.0...v3.5.0
 [v2.12.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.4.0...v2.12.0
 [v3.4.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.3.0...v3.4.0
