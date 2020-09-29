@@ -118,14 +118,14 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 
 | Name | Version |
 |------|---------|
-| terraform | ~> 0.12.6 |
-| aws | ~> 2.41 |
+| terraform | >= 0.12.6, < 0.14 |
+| aws | >= 2.41, < 4.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | ~> 2.41 |
+| aws | >= 2.41, < 4.0 |
 | null | n/a |
 | random | n/a |
 
@@ -181,7 +181,8 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | tags\_as\_map | A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws\_autoscaling\_group requires. | `map(string)` | `{}` | no |
 | target\_group\_arns | A list of aws\_alb\_target\_group ARNs, for use with Application Load Balancing | `list(string)` | `[]` | no |
 | termination\_policies | A list of policies to decide how the instances in the auto scale group should be terminated. The allowed values are OldestInstance, NewestInstance, OldestLaunchConfiguration, ClosestToNextInstanceHour, Default | `list(string)` | <pre>[<br>  "Default"<br>]</pre> | no |
-| user\_data | The user data to provide when launching the instance | `string` | `" "` | no |
+| user\_data | The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user\_data\_base64 instead. | `string` | `null` | no |
+| user\_data\_base64 | Can be used instead of user\_data to pass base64-encoded binary data directly. Use this instead of user\_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption. | `string` | `null` | no |
 | vpc\_zone\_identifier | A list of subnet IDs to launch resources in | `list(string)` | n/a | yes |
 | wait\_for\_capacity\_timeout | A maximum duration that Terraform should wait for ASG instances to be healthy before timing out. (See also Waiting for Capacity below.) Setting this to '0' causes Terraform to skip all Capacity Waiting behavior. | `string` | `"10m"` | no |
 | wait\_for\_elb\_capacity | Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over min\_elb\_capacity behavior. | `number` | `null` | no |

@@ -1,88 +1,82 @@
 provider "aws" {
-  region  = "us-east-2"
-  profile = "cicd"
+  region = "eu-west-1"
 }
-
 
 ##############################################################
 # Data sources to get VPC, subnets and security group details
 ##############################################################
-module "vpc" {
-  source = "github.com/youse-seguradora/terraform-aws-vpc"
+data "aws_vpc" "default" {
+  default = true
+}
 
-  name = var.vpc_name
-
-  cidr = "192.168.253.0/24"
-
-  azs                    = ["us-east-2a"]
-  compute_public_subnets = ["192.168.253.0/24"]
+data "aws_subnet_ids" "all" {
+  vpc_id = data.aws_vpc.default.id
 }
 
 data "aws_security_group" "default" {
-  vpc_id = module.vpc.vpc_id
+  vpc_id = data.aws_vpc.default.id
   name   = "default"
 }
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
+
   filter {
     name = "name"
+
     values = [
       "amzn-ami-hvm-*-x86_64-gp2",
     ]
   }
-}
 
-locals {
-  user_data = <<EOF
-#!/bin/bash
-echo "Hello Terraform!"
-EOF
+  filter {
+    name = "owner-alias"
+
+    values = [
+      "amazon",
+    ]
+  }
 }
 
 ######
 # Launch configuration and autoscaling group
 ######
-module "example" {
+module "example_asg" {
   source = "../../"
 
-  name = "example-with-ec2"
+  name = "example-with-elb"
 
   # Launch configuration
   #
   # launch_configuration = "my-existing-launch-configuration" # Use the existing launch configuration
   # create_lc = false # disables creation of launch configuration
-  lc_name = var.lc_name
+  lc_name = "example-lc"
 
-  image_id                     = data.aws_ami.amazon_linux.id
-  instance_type                = "t2.micro"
-  security_groups              = [data.aws_security_group.default.id]
-  associate_public_ip_address  = true
-  recreate_asg_when_lc_changes = true
-
-  user_data_base64 = base64encode(local.user_data)
+  image_id        = data.aws_ami.amazon_linux.id
+  instance_type   = "t2.micro"
+  security_groups = [data.aws_security_group.default.id]
+  load_balancers  = [module.elb.this_elb_id]
 
   ebs_block_device = [
     {
       device_name           = "/dev/xvdz"
       volume_type           = "gp2"
-      volume_size           = "8"
+      volume_size           = "50"
       delete_on_termination = true
     },
   ]
 
   root_block_device = [
     {
-      volume_size           = "8"
-      volume_type           = "gp2"
-      delete_on_termination = true
+      volume_size = "50"
+      volume_type = "gp2"
     },
   ]
 
   # Auto scaling group
-  asg_name                  = var.asg_name
-  vpc_zone_identifier       = module.vpc.public_subnets
+  asg_name                  = "example-asg"
+  vpc_zone_identifier       = data.aws_subnet_ids.all.ids
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
@@ -101,9 +95,39 @@ module "example" {
       propagate_at_launch = true
     },
   ]
+}
 
-  tags_as_map = {
-    extra_tag1 = "extra_value1"
-    extra_tag2 = "extra_value2"
+######
+# ELB
+######
+module "elb" {
+  source = "terraform-aws-modules/elb/aws"
+
+  name = "elb-example"
+
+  subnets         = data.aws_subnet_ids.all.ids
+  security_groups = [data.aws_security_group.default.id]
+  internal        = false
+
+  listener = [
+    {
+      instance_port     = "80"
+      instance_protocol = "HTTP"
+      lb_port           = "80"
+      lb_protocol       = "HTTP"
+    },
+  ]
+
+  health_check = {
+    target              = "HTTP:80/"
+    interval            = 30
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+  }
+
+  tags = {
+    Owner       = "user"
+    Environment = "dev"
   }
 }

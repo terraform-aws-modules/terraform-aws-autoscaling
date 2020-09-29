@@ -1,44 +1,49 @@
 provider "aws" {
-  region  = "us-east-2"
-  profile = "cicd"
-}
+  region = "eu-west-1"
 
+  # Make it faster by skipping something
+  skip_get_ec2_platforms      = true
+  skip_metadata_api_check     = true
+  skip_region_validation      = true
+  skip_credentials_validation = true
+  skip_requesting_account_id  = true
+}
 
 ##############################################################
 # Data sources to get VPC, subnets and security group details
 ##############################################################
-module "vpc" {
-  source = "github.com/youse-seguradora/terraform-aws-vpc"
+data "aws_vpc" "default" {
+  default = true
+}
 
-  name = var.vpc_name
-
-  cidr = "192.168.253.0/24"
-
-  azs                    = ["us-east-2a"]
-  compute_public_subnets = ["192.168.253.0/24"]
+data "aws_subnet_ids" "all" {
+  vpc_id = data.aws_vpc.default.id
 }
 
 data "aws_security_group" "default" {
-  vpc_id = module.vpc.vpc_id
+  vpc_id = data.aws_vpc.default.id
   name   = "default"
 }
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
+
   filter {
     name = "name"
+
     values = [
       "amzn-ami-hvm-*-x86_64-gp2",
     ]
   }
-}
 
-locals {
-  user_data = <<EOF
-#!/bin/bash
-echo "Hello Terraform!"
-EOF
+  filter {
+    name = "owner-alias"
+
+    values = [
+      "amazon",
+    ]
+  }
 }
 
 ######
@@ -47,13 +52,27 @@ EOF
 module "example" {
   source = "../../"
 
-  name = "example-with-ec2"
+  name = "example-with-ec2-lifecycle-hook"
+
+  create_asg_with_initial_lifecycle_hook = true
+
+  initial_lifecycle_hook_name                 = "ExampleLifeCycleHook"
+  initial_lifecycle_hook_lifecycle_transition = "autoscaling:EC2_INSTANCE_TERMINATING"
+  initial_lifecycle_hook_default_result       = "CONTINUE"
+
+  # This could be a rendered data resource
+  initial_lifecycle_hook_notification_metadata = <<EOF
+{
+  "foo": "bar"
+}
+EOF
+
 
   # Launch configuration
   #
   # launch_configuration = "my-existing-launch-configuration" # Use the existing launch configuration
   # create_lc = false # disables creation of launch configuration
-  lc_name = var.lc_name
+  lc_name = "example-lc"
 
   image_id                     = data.aws_ami.amazon_linux.id
   instance_type                = "t2.micro"
@@ -61,28 +80,26 @@ module "example" {
   associate_public_ip_address  = true
   recreate_asg_when_lc_changes = true
 
-  user_data_base64 = base64encode(local.user_data)
-
   ebs_block_device = [
     {
       device_name           = "/dev/xvdz"
       volume_type           = "gp2"
-      volume_size           = "8"
+      volume_size           = "50"
       delete_on_termination = true
     },
   ]
 
   root_block_device = [
     {
-      volume_size           = "8"
+      volume_size           = "50"
       volume_type           = "gp2"
       delete_on_termination = true
     },
   ]
 
   # Auto scaling group
-  asg_name                  = var.asg_name
-  vpc_zone_identifier       = module.vpc.public_subnets
+  asg_name                  = "example-asg"
+  vpc_zone_identifier       = data.aws_subnet_ids.all.ids
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
@@ -107,3 +124,4 @@ module "example" {
     extra_tag2 = "extra_value2"
   }
 }
+
