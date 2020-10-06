@@ -109,7 +109,7 @@ module "example" {
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
-  desired_capacity          = 0
+  desired_capacity          = 1
   wait_for_capacity_timeout = 0
   service_linked_role_arn   = aws_iam_service_linked_role.autoscaling.arn
 
@@ -124,6 +124,16 @@ module "example" {
       value               = "megasecret"
       propagate_at_launch = true
     },
+    {
+      key                 = "foo"
+      value               = ""
+      propagate_at_launch = true
+    },
+    {
+      key                 = "bar"
+      value               = ""
+      propagate_at_launch = true
+    }
   ]
 
   tags_as_map = {

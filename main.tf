@@ -96,17 +96,14 @@ resource "aws_autoscaling_group" "this" {
   service_linked_role_arn   = var.service_linked_role_arn
   max_instance_lifetime     = var.max_instance_lifetime
 
-  tags = concat(
-    [
-      {
-        "key"                 = "Name"
-        "value"               = var.name
-        "propagate_at_launch" = true
-      },
-    ],
-    var.tags,
-    local.tags_asg_format,
-  )
+  dynamic "tag" {
+    for_each = local.tags
+    content {
+      key                 = tag.value["key"]
+      value               = tag.value["value"]
+      propagate_at_launch = tag.value["propagate_at_launch"]
+    }
+  }
 
   lifecycle {
     create_before_destroy = true
@@ -162,17 +159,14 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
     default_result          = var.initial_lifecycle_hook_default_result
   }
 
-  tags = concat(
-    [
-      {
-        "key"                 = "Name"
-        "value"               = var.name
-        "propagate_at_launch" = true
-      },
-    ],
-    var.tags,
-    local.tags_asg_format,
-  )
+  dynamic "tag" {
+    for_each = local.tags
+    content {
+      key                 = tag.value["key"]
+      value               = tag.value["value"]
+      propagate_at_launch = tag.value["propagate_at_launch"]
+    }
+  }
 
   lifecycle {
     create_before_destroy = true
