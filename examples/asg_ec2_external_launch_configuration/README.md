@@ -33,9 +33,6 @@ No input.
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| this\_autoscaling\_group\_id | The autoscaling group id |
-| this\_launch\_configuration\_id | The ID of the launch configuration |
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

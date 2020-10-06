@@ -138,6 +138,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | create\_asg | Whether to create autoscaling group | `bool` | `true` | no |
 | create\_asg\_with\_initial\_lifecycle\_hook | Create an ASG with initial lifecycle hook | `bool` | `false` | no |
 | create\_lc | Whether to create launch configuration | `bool` | `true` | no |
+| create\_scaling\_policy | Whether to create scaling policy | `bool` | `true` | no |
 | default\_cooldown | The amount of time, in seconds, after a scaling activity completes before another scaling activity can start | `number` | `300` | no |
 | desired\_capacity | The number of Amazon EC2 instances that should be running in the group | `string` | n/a | yes |
 | ebs\_block\_device | Additional EBS block devices to attach to the instance | `list(map(string))` | `[]` | no |
@@ -173,6 +174,11 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | protect\_from\_scale\_in | Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events. | `bool` | `false` | no |
 | recreate\_asg\_when\_lc\_changes | Whether to recreate an autoscaling group when launch configuration changes | `bool` | `false` | no |
 | root\_block\_device | Customize details about the root block device of the instance | `list(map(string))` | `[]` | no |
+| scaling\_adjustment\_type | Specifies whether the adjustment is an absolute number or a percentage of the current capacity. Valid values are ChangeInCapacity, ExactCapacity, and PercentChangeInCapacity | `string` | `"ChangeInCapacity"` | no |
+| scaling\_estimated\_instance\_warmup | The estimated time, in seconds, until a newly launched instance will contribute CloudWatch metrics. Without a value, AWS will default to the group's specified cooldown period | `string` | `null` | no |
+| scaling\_policy\_name | The name used by scaling policy | `string` | n/a | yes |
+| scaling\_policy\_type | The policy type, for now only supports TargetTrackingScaling | `string` | `"TargetTrackingScaling"` | no |
+| scaling\_target\_tracking\_predefined | The name and the target value of the predefined metric | `map(number)` | <pre>{<br>  "ASGAverageCPUUtilization": 85<br>}</pre> | no |
 | security\_groups | A list of security group IDs to assign to the launch configuration | `list(string)` | `[]` | no |
 | service\_linked\_role\_arn | The ARN of the service-linked role that the ASG will use to call other AWS services. | `string` | `""` | no |
 | spot\_price | The price to use for reserving spot instances | `string` | `null` | no |
