@@ -190,3 +190,25 @@ resource "random_pet" "asg_name" {
     lc_name = var.create_lc ? element(concat(aws_launch_configuration.this.*.name, [""]), 0) : var.launch_configuration
   }
 }
+
+resource "aws_autoscaling_policy" "this_target_tracking_predefined" {
+  count = var.create_scaling_policy && var.scaling_policy_type == "TargetTrackingScaling" ? 1 : 0
+
+  name                      = var.scaling_policy_name
+  autoscaling_group_name    = local.this_autoscaling_group_name
+  adjustment_type           = var.scaling_adjustment_type
+  policy_type               = var.scaling_policy_type
+  estimated_instance_warmup = var.scaling_estimated_instance_warmup
+
+  dynamic "target_tracking_configuration" {
+    for_each = var.scaling_target_tracking_predefined
+
+    content {
+      predefined_metric_specification {
+        predefined_metric_type = target_tracking_configuration.key
+      }
+
+      target_value = target_tracking_configuration.value
+    }
+  }
+}

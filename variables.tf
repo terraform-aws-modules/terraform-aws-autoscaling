@@ -320,3 +320,39 @@ variable "max_instance_lifetime" {
   default     = 0
 }
 
+variable "create_scaling_policy" {
+  description = "Whether to create scaling policy"
+  type        = bool
+  default     = true
+}
+
+variable "scaling_policy_name" {
+  description = "The name used by scaling policy"
+  type        = string
+}
+
+variable "scaling_adjustment_type" {
+  description = "Specifies whether the adjustment is an absolute number or a percentage of the current capacity. Valid values are ChangeInCapacity, ExactCapacity, and PercentChangeInCapacity"
+  type        = string
+  default     = "ChangeInCapacity"
+}
+
+variable "scaling_policy_type" {
+  description = "The policy type, for now only supports TargetTrackingScaling"
+  type        = string
+  default     = "TargetTrackingScaling"
+}
+
+variable "scaling_estimated_instance_warmup" {
+  description = "The estimated time, in seconds, until a newly launched instance will contribute CloudWatch metrics. Without a value, AWS will default to the group's specified cooldown period"
+  type        = string
+  default     = null
+}
+
+variable "scaling_target_tracking_predefined" {
+  description = "The name and the target value of the predefined metric"
+  type        = map(number)
+  default = {
+    "ASGAverageCPUUtilization" : 85
+  }
+}
