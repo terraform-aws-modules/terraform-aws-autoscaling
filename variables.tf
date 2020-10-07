@@ -333,3 +333,8 @@ variable "max_instance_lifetime" {
   default     = 0
 }
 
+variable "http_tokens" {
+  description = "http tokens"
+  type = string
+  default = "optional"
+}
