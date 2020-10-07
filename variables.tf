@@ -4,6 +4,12 @@ variable "create_lc" {
   default     = true
 }
 
+variable "create_lt" {
+  description = "launch template instead launch configuration"
+  type        = bool
+  default     = false
+}
+
 variable "create_asg" {
   description = "Whether to create autoscaling group"
   type        = bool
@@ -155,6 +161,12 @@ variable "root_block_device" {
 }
 
 variable "ebs_block_device" {
+  description = "Additional EBS block devices to attach to the instance"
+  type        = list(map(string))
+  default     = []
+}
+
+variable "block_device_mappings"  {
   description = "Additional EBS block devices to attach to the instance"
   type        = list(map(string))
   default     = []
