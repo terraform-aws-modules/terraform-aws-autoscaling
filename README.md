@@ -11,8 +11,6 @@ These types of resources are supported:
 
 Terraform 0.12. Pin module version to `~> v3.0`. Submit pull-requests to `master` branch.
 
-Terraform 0.11. Pin module version to `~> v2.0`. Submit pull-requests to `terraform011` branch.
-
 ## Usage
 
 ```hcl
@@ -118,16 +116,18 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.6, < 0.14 |
-| aws | >= 2.41, < 4.0 |
+| terraform | >= 0.12.6 |
+| aws | >= 2.41 |
+| null | >= 2.0 |
+| random | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2.41, < 4.0 |
-| null | n/a |
-| random | n/a |
+| aws | >= 2.41 |
+| null | >= 2.0 |
+| random | >= 2.0 |
 
 ## Inputs
 
