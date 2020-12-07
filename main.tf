@@ -61,14 +61,13 @@ resource "aws_launch_configuration" "this" {
 ####################
 
 resource "aws_launch_template" "this" {
-  count         = var.create_lt ? 1 : 0
-  name          = "lt-${var.name}"
-  user_data     = var.user_data
-  image_id      = var.image_id
-  instance_type = var.instance_type
-  key_name      = var.key_name
-  #vpc_security_group_ids      = var.security_groups
-  ebs_optimized = var.ebs_optimized
+  count                  = var.create_lt ? 1 : 0
+  name                   = "lt-${var.name}"
+  user_data              = var.user_data_base64 != null ? var.user_data_base64 : (var.user_data != null ? base64encode(var.user_data) : null)
+  image_id               = var.image_id
+  instance_type          = var.instance_type
+  key_name               = var.key_name
+  ebs_optimized          = var.ebs_optimized
 
   metadata_options {
     http_endpoint               = "enabled"
@@ -142,7 +141,7 @@ resource "aws_launch_template" "this" {
 # Autoscaling group with launch template
 ####################
 resource "aws_autoscaling_group" "this_with_launchtemplate" {
-  count = var.create_asg && false == var.create_asg_with_initial_lifecycle_hook && (var.create_lt || var.launch_template_id != "")? 1 : 0
+  count = var.create_asg && false == var.create_asg_with_initial_lifecycle_hook && (var.create_lt || var.launch_template_id != "") ? 1 : 0
 
   name_prefix = "${join(
     "-",
