@@ -61,14 +61,14 @@ resource "aws_launch_configuration" "this" {
 ####################
 
 resource "aws_launch_template" "this" {
-  count = var.create_lt ? 1 : 0
-  name = "lt-${var.name}"
-  user_data                   = var.user_data
-  image_id                    = var.image_id
-  instance_type               = var.instance_type
-  key_name                    = var.key_name
+  count         = var.create_lt ? 1 : 0
+  name          = "lt-${var.name}"
+  user_data     = var.user_data
+  image_id      = var.image_id
+  instance_type = var.instance_type
+  key_name      = var.key_name
   #vpc_security_group_ids      = var.security_groups
-  ebs_optimized               = var.ebs_optimized
+  ebs_optimized = var.ebs_optimized
 
   metadata_options {
     http_endpoint               = "enabled"
@@ -83,13 +83,13 @@ resource "aws_launch_template" "this" {
   }
   network_interfaces {
     associate_public_ip_address = var.associate_public_ip_address
-    security_groups = var.security_groups
+    security_groups             = var.security_groups
   }
   dynamic "block_device_mappings" {
     for_each = var.block_device_mappings
     content {
-      device_name           = block_device_mappings.value.device_name
-      no_device             = lookup(block_device_mappings.value, "no_device", null)
+      device_name = block_device_mappings.value.device_name
+      no_device   = lookup(block_device_mappings.value, "no_device", null)
       ebs {
         delete_on_termination = lookup(block_device_mappings.value, "delete_on_termination", null)
         encrypted             = lookup(block_device_mappings.value, "encrypted", null)
@@ -100,7 +100,7 @@ resource "aws_launch_template" "this" {
       }
     }
   }
-/*
+  /*
   capacity_reservation_specification {
     capacity_reservation_preference = "open"
   }
@@ -155,15 +155,16 @@ resource "aws_autoscaling_group" "this_with_launchtemplate" {
   )}-"
 
   launch_template {
-      id      = var.create_lt ? element(concat(aws_launch_template.this.*.id, [""]), 0) : null
-      version = "$Latest"
-    }
+    id      = var.create_lt ? element(concat(aws_launch_template.this.*.id, [""]), 0) : null
+    version = "$Latest"
+  }
 
 
-  vpc_zone_identifier  = var.vpc_zone_identifier
-  max_size             = var.max_size
-  min_size             = var.min_size
-  desired_capacity     = var.desired_capacity
+  vpc_zone_identifier = var.vpc_zone_identifier
+  max_size            = var.max_size
+  min_size            = var.min_size
+  desired_capacity    = var.desired_capacity
+  capacity_rebalance  = var.capacity_rebalance
 
   load_balancers            = var.load_balancers
   health_check_grace_period = var.health_check_grace_period
@@ -221,10 +222,11 @@ resource "aws_autoscaling_group" "this" {
 
 
 
-  vpc_zone_identifier  = var.vpc_zone_identifier
-  max_size             = var.max_size
-  min_size             = var.min_size
-  desired_capacity     = var.desired_capacity
+  vpc_zone_identifier = var.vpc_zone_identifier
+  max_size            = var.max_size
+  min_size            = var.min_size
+  desired_capacity    = var.desired_capacity
+  capacity_rebalance  = var.capacity_rebalance
 
   load_balancers            = var.load_balancers
   health_check_grace_period = var.health_check_grace_period
@@ -279,6 +281,7 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
   max_size             = var.max_size
   min_size             = var.min_size
   desired_capacity     = var.desired_capacity
+  capacity_rebalance   = var.capacity_rebalance
 
   load_balancers            = var.load_balancers
   health_check_grace_period = var.health_check_grace_period

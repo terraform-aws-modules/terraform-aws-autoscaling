@@ -166,7 +166,7 @@ variable "ebs_block_device" {
   default     = []
 }
 
-variable "block_device_mappings"  {
+variable "block_device_mappings" {
   description = "Additional EBS block devices to attach to the instance"
   type        = list(map(string))
   default     = []
@@ -334,7 +334,13 @@ variable "max_instance_lifetime" {
 }
 
 variable "http_tokens" {
-  description = "http tokens"
-  type = string
-  default = "optional"
+  description = "Whether or not the metadata service requires session tokens, also referred to as Instance Metadata Service Version 2."
+  type        = string
+  default     = "optional"
+}
+
+variable "capacity_rebalance" {
+  description = "Indicates whether capacity rebalance is enabled."
+  type        = bool
+  default     = true
 }
