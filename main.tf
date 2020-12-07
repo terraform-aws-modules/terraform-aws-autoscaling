@@ -100,42 +100,6 @@ resource "aws_launch_template" "this" {
       }
     }
   }
-  /*
-  capacity_reservation_specification {
-    capacity_reservation_preference = "open"
-  }
-  cpu_options {
-    core_count       = 4
-    threads_per_core = 2
-  }
-  credit_specification {
-    cpu_credits = "standard"
-  }
-  disable_api_termination = true
-  ebs_optimized = true
-
-  instance_initiated_shutdown_behavior = "terminate"
-  instance_market_options {
-    market_type = "spot"
-  }
-  kernel_id = "test"
-  license_specification {
-    license_configuration_arn = "arn:aws:license-manager:eu-west-1:123456789012:license-configuration:lic-0123456789abcdef0123456789abcdef"
-  }
-
-
-  placement {
-    availability_zone = "us-west-2a"
-  }
-  ram_disk_id = "test"
-  vpc_security_group_ids = ["sg-12345678"]
-  tag_specifications {
-    resource_type = "instance"
-    tags = {
-      Name = "test"
-    }
-  }
-} */
 }
 
 ####################

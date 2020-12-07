@@ -2,19 +2,19 @@ locals {
   this_launch_configuration_id   = var.launch_configuration == "" && var.create_lc ? concat(aws_launch_configuration.this.*.id, [""])[0] : var.launch_configuration
   this_launch_configuration_name = var.launch_configuration == "" && var.create_lc ? concat(aws_launch_configuration.this.*.name, [""])[0] : ""
 
-  this_autoscaling_group_id                        = concat(aws_autoscaling_group.this.*.id, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.id, [""])[0]
-  this_autoscaling_group_name                      = concat(aws_autoscaling_group.this.*.name, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.name, [""])[0]
-  this_autoscaling_group_arn                       = concat(aws_autoscaling_group.this.*.arn, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.arn, [""])[0]
-  this_autoscaling_group_min_size                  = concat(aws_autoscaling_group.this.*.min_size, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.min_size, [""])[0]
-  this_autoscaling_group_max_size                  = concat(aws_autoscaling_group.this.*.max_size, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.max_size, [""])[0]
-  this_autoscaling_group_desired_capacity          = concat(aws_autoscaling_group.this.*.desired_capacity, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.desired_capacity, [""])[0]
-  this_autoscaling_group_default_cooldown          = concat(aws_autoscaling_group.this.*.default_cooldown, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.default_cooldown, [""])[0]
-  this_autoscaling_group_health_check_grace_period = concat(aws_autoscaling_group.this.*.health_check_grace_period, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.health_check_grace_period, [""])[0]
-  this_autoscaling_group_health_check_type         = concat(aws_autoscaling_group.this.*.health_check_type, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.health_check_type, [""])[0]
-  this_autoscaling_group_availability_zones        = concat(aws_autoscaling_group.this.*.availability_zones, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.availability_zones, [""])[0]
-  this_autoscaling_group_vpc_zone_identifier       = concat(aws_autoscaling_group.this.*.vpc_zone_identifier, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.vpc_zone_identifier, [""])[0]
-  this_autoscaling_group_load_balancers            = concat(aws_autoscaling_group.this.*.load_balancers, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.load_balancers, [""])[0]
-  this_autoscaling_group_target_group_arns         = concat(aws_autoscaling_group.this.*.target_group_arns, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.target_group_arns, [""])[0]
+  this_autoscaling_group_id                        = concat(aws_autoscaling_group.this.*.id, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.id, aws_autoscaling_group.this_with_launchtemplate.*.id, [""])[0]
+  this_autoscaling_group_name                      = concat(aws_autoscaling_group.this.*.name, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.name, aws_autoscaling_group.this_with_launchtemplate.*.name, [""])[0]
+  this_autoscaling_group_arn                       = concat(aws_autoscaling_group.this.*.arn, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.arn, aws_autoscaling_group.this_with_launchtemplate.*.arn, [""])[0]
+  this_autoscaling_group_min_size                  = concat(aws_autoscaling_group.this.*.min_size, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.min_size, aws_autoscaling_group.this_with_launchtemplate.*.min_size, [""])[0]
+  this_autoscaling_group_max_size                  = concat(aws_autoscaling_group.this.*.max_size, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.max_size, aws_autoscaling_group.this_with_launchtemplate.*.max_size, [""])[0]
+  this_autoscaling_group_desired_capacity          = concat(aws_autoscaling_group.this.*.desired_capacity, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.desired_capacity, aws_autoscaling_group.this_with_launchtemplate.*.desired_capacity, [""])[0]
+  this_autoscaling_group_default_cooldown          = concat(aws_autoscaling_group.this.*.default_cooldown, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.default_cooldown, aws_autoscaling_group.this_with_launchtemplate.*.default_cooldown, [""])[0]
+  this_autoscaling_group_health_check_grace_period = concat(aws_autoscaling_group.this.*.health_check_grace_period, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.health_check_grace_period, aws_autoscaling_group.this_with_launchtemplate.*.health_check_grace_period, [""])[0]
+  this_autoscaling_group_health_check_type         = concat(aws_autoscaling_group.this.*.health_check_type, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.health_check_type, aws_autoscaling_group.this_with_launchtemplate.*.health_check_type, [""])[0]
+  this_autoscaling_group_availability_zones        = concat(aws_autoscaling_group.this.*.availability_zones, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.availability_zones, aws_autoscaling_group.this_with_launchtemplate.*.availability_zones, [""])[0]
+  this_autoscaling_group_vpc_zone_identifier       = concat(aws_autoscaling_group.this.*.vpc_zone_identifier, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.vpc_zone_identifier, aws_autoscaling_group.this_with_launchtemplate.*.vpc_zone_identifier, [""])[0]
+  this_autoscaling_group_load_balancers            = concat(aws_autoscaling_group.this.*.load_balancers, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.load_balancers, aws_autoscaling_group.this_with_launchtemplate.*.load_balancers, [""])[0]
+  this_autoscaling_group_target_group_arns         = concat(aws_autoscaling_group.this.*.target_group_arns, aws_autoscaling_group.this_with_initial_lifecycle_hook.*.target_group_arns, aws_autoscaling_group.this_with_launchtemplate.*.target_group_arns, [""])[0]
 }
 
 output "this_launch_configuration_id" {
