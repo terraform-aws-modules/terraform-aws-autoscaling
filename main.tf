@@ -83,6 +83,7 @@ resource "aws_launch_template" "this" {
   network_interfaces {
     associate_public_ip_address = var.associate_public_ip_address
     security_groups             = var.security_groups
+    delete_on_termination       = var.delete_interfaces_on_termination
   }
   dynamic "block_device_mappings" {
     for_each = var.block_device_mappings

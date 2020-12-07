@@ -340,13 +340,19 @@ variable "max_instance_lifetime" {
 }
 
 variable "http_tokens" {
-  description = "Whether or not the metadata service requires session tokens, also referred to as Instance Metadata Service Version 2."
+  description = "Whether or not the metadata service requires session tokens, also referred to as Instance Metadata Service Version 2. (Launch template only.)"
   type        = string
   default     = "optional"
 }
 
 variable "capacity_rebalance" {
   description = "Indicates whether capacity rebalance is enabled."
+  type        = bool
+  default     = true
+}
+
+variable "delete_interfaces_on_termination" {
+  description = "Whether the network interface should be destroyed on instance termination. (Launch template only.)"
   type        = bool
   default     = true
 }
