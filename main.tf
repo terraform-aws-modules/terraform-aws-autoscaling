@@ -155,7 +155,7 @@ resource "aws_autoscaling_group" "this_with_launchtemplate" {
   )}-"
 
   launch_template {
-    id      = var.create_lt ? element(concat(aws_launch_template.this.*.id, [""]), 0) : null
+    id      = var.create_lt ? element(concat(aws_launch_template.this.*.id, [""]), 0) : var.launch_template_id
     version = "$Latest"
   }
 
@@ -219,8 +219,6 @@ resource "aws_autoscaling_group" "this" {
   )}-"
 
   launch_configuration = var.create_lc ? element(concat(aws_launch_configuration.this.*.name, [""]), 0) : var.launch_configuration
-
-
 
   vpc_zone_identifier = var.vpc_zone_identifier
   max_size            = var.max_size

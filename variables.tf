@@ -93,6 +93,12 @@ variable "launch_configuration" {
   default     = ""
 }
 
+variable "launch_template_id" {
+  description = "The id of the launch template to use (if it is created outside of this module)"
+  type        = string
+  default     = ""
+}
+
 # Launch configuration
 variable "image_id" {
   description = "The EC2 image ID to launch"
