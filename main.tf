@@ -142,7 +142,7 @@ resource "aws_launch_template" "this" {
 # Autoscaling group with launch template
 ####################
 resource "aws_autoscaling_group" "this_with_launchtemplate" {
-  count = var.create_asg && false == var.create_asg_with_initial_lifecycle_hook && var.create_lt ? 1 : 0
+  count = var.create_asg && false == var.create_asg_with_initial_lifecycle_hook && (var.create_lt || var.launch_template_id != "")? 1 : 0
 
   name_prefix = "${join(
     "-",
@@ -206,7 +206,7 @@ resource "aws_autoscaling_group" "this_with_launchtemplate" {
 # Autoscaling group with launch configuration
 ####################
 resource "aws_autoscaling_group" "this" {
-  count = var.create_asg && false == var.create_asg_with_initial_lifecycle_hook && var.create_lc ? 1 : 0
+  count = var.create_asg && false == var.create_asg_with_initial_lifecycle_hook && (var.create_lc || var.launch_configuration != "") ? 1 : 0
 
   name_prefix = "${join(
     "-",
