@@ -93,7 +93,7 @@ variable "launch_configuration" {
   default     = ""
 }
 
-variable "launch_template_id" {
+variable "launch_template" {
   description = "The id of the launch template to use (if it is created outside of this module)"
   type        = string
   default     = ""
