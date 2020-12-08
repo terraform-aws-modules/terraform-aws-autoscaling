@@ -339,10 +339,16 @@ variable "max_instance_lifetime" {
   default     = 0
 }
 
-variable "http_tokens" {
+variable "metadata_http_tokens" {
   description = "Whether or not the metadata service requires session tokens, also referred to as Instance Metadata Service Version 2. (Launch template only.)"
   type        = string
   default     = "optional"
+}
+
+variable "metadata_hop_limit" {
+  description = "The desired HTTP PUT response hop limit for instance metadata requests. (Launch template only.)"
+  type        = number
+  default     = 1
 }
 
 variable "capacity_rebalance" {

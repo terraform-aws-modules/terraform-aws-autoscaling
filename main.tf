@@ -71,8 +71,8 @@ resource "aws_launch_template" "this" {
 
   metadata_options {
     http_endpoint               = "enabled"
-    http_tokens                 = var.http_tokens
-    http_put_response_hop_limit = 1
+    http_tokens                 = var.metadata_http_tokens
+    http_put_response_hop_limit = var.metadata_hop_limit
   }
   monitoring {
     enabled = var.enable_monitoring
