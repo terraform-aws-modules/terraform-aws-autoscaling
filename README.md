@@ -135,10 +135,14 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 |------|-------------|------|---------|:--------:|
 | asg\_name | Creates a unique name for autoscaling group beginning with the specified prefix | `string` | `""` | no |
 | associate\_public\_ip\_address | Associate a public ip address with an instance in a VPC | `bool` | `false` | no |
+| block\_device\_mappings | Additional EBS block devices to attach to the instance | `list(map(string))` | `[]` | no |
+| capacity\_rebalance | Indicates whether capacity rebalance is enabled. | `bool` | `true` | no |
 | create\_asg | Whether to create autoscaling group | `bool` | `true` | no |
 | create\_asg\_with\_initial\_lifecycle\_hook | Create an ASG with initial lifecycle hook | `bool` | `false` | no |
 | create\_lc | Whether to create launch configuration | `bool` | `true` | no |
+| create\_lt | launch template instead launch configuration | `bool` | `false` | no |
 | default\_cooldown | The amount of time, in seconds, after a scaling activity completes before another scaling activity can start | `number` | `300` | no |
+| delete\_interfaces\_on\_termination | Whether the network interface should be destroyed on instance termination. (Launch template only.) | `bool` | `true` | no |
 | desired\_capacity | The number of Amazon EC2 instances that should be running in the group | `string` | n/a | yes |
 | ebs\_block\_device | Additional EBS block devices to attach to the instance | `list(map(string))` | `[]` | no |
 | ebs\_optimized | If true, the launched EC2 instance will be EBS-optimized | `bool` | `false` | no |
@@ -160,10 +164,13 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | instance\_type | The size of instance to launch | `string` | `""` | no |
 | key\_name | The key name that should be used for the instance | `string` | `""` | no |
 | launch\_configuration | The name of the launch configuration to use (if it is created outside of this module) | `string` | `""` | no |
+| launch\_template | The id of the launch template to use (if it is created outside of this module) | `string` | `""` | no |
 | lc\_name | Creates a unique name for launch configuration beginning with the specified prefix | `string` | `""` | no |
 | load\_balancers | A list of elastic load balancer names to add to the autoscaling group names | `list(string)` | `[]` | no |
 | max\_instance\_lifetime | The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 604800 and 31536000 seconds. | `number` | `0` | no |
 | max\_size | The maximum size of the auto scale group | `string` | n/a | yes |
+| metadata\_hop\_limit | The desired HTTP PUT response hop limit for instance metadata requests. (Launch template only.) | `number` | `1` | no |
+| metadata\_http\_tokens | Whether or not the metadata service requires session tokens, also referred to as Instance Metadata Service Version 2. (Launch template only.) | `string` | `"optional"` | no |
 | metrics\_granularity | The granularity to associate with the metrics to collect. The only valid value is 1Minute | `string` | `"1Minute"` | no |
 | min\_elb\_capacity | Setting this causes Terraform to wait for this number of instances to show up healthy in the ELB only on creation. Updates will not wait on ELB instance number changes | `number` | `0` | no |
 | min\_size | The minimum size of the auto scale group | `string` | n/a | yes |
@@ -206,6 +213,8 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | this\_autoscaling\_group\_vpc\_zone\_identifier | The VPC zone identifier |
 | this\_launch\_configuration\_id | The ID of the launch configuration |
 | this\_launch\_configuration\_name | The name of the launch configuration |
+| this\_launch\_template\_id | The ID of the launch template |
+| this\_launch\_template\_name | The name of the launch template |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

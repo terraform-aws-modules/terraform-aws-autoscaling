@@ -59,7 +59,6 @@ resource "aws_launch_configuration" "this" {
 ##################
 # Launch template
 ##################
-
 resource "aws_launch_template" "this" {
   count         = var.create_lt ? 1 : 0
   name          = "lt-${var.name}"
