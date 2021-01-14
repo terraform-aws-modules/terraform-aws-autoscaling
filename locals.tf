@@ -1,4 +1,16 @@
 locals {
+  tags = concat(
+    [
+      {
+        "key"                 = "Name"
+        "value"               = var.name
+        "propagate_at_launch" = true
+      },
+    ],
+    var.tags,
+    local.tags_asg_format,
+  )
+
   tags_asg_format = null_resource.tags_as_list_of_maps.*.triggers
 }
 
