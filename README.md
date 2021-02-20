@@ -129,6 +129,19 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | null | >= 2.0 |
 | random | >= 2.0 |
 
+## Modules
+
+No Modules.
+
+## Resources
+
+| Name |
+|------|
+| [aws_autoscaling_group](https://registry.terraform.io/providers/hashicorp/aws/2.41/docs/resources/autoscaling_group) |
+| [aws_launch_configuration](https://registry.terraform.io/providers/hashicorp/aws/2.41/docs/resources/launch_configuration) |
+| [null_resource](https://registry.terraform.io/providers/hashicorp/null/2.0/docs/resources/resource) |
+| [random_pet](https://registry.terraform.io/providers/hashicorp/random/2.0/docs/resources/pet) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -206,7 +219,6 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | this\_autoscaling\_group\_vpc\_zone\_identifier | The VPC zone identifier |
 | this\_launch\_configuration\_id | The ID of the launch configuration |
 | this\_launch\_configuration\_name | The name of the launch configuration |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Authors
