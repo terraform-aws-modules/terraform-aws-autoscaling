@@ -1,6 +1,7 @@
 #######################
 # Launch configuration
 #######################
+
 resource "aws_launch_configuration" "this" {
   count = var.create_lc ? 1 : 0
 
@@ -59,6 +60,7 @@ resource "aws_launch_configuration" "this" {
 ####################
 # Autoscaling group
 ####################
+
 resource "aws_autoscaling_group" "this" {
   count = var.create_asg && false == var.create_asg_with_initial_lifecycle_hook ? 1 : 0
 
@@ -113,6 +115,7 @@ resource "aws_autoscaling_group" "this" {
 ################################################
 # Autoscaling group with initial lifecycle hook
 ################################################
+
 resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
   count = var.create_asg && var.create_asg_with_initial_lifecycle_hook ? 1 : 0
 
