@@ -7,6 +7,12 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v3.9.0"></a>
+## [v3.9.0] - 2021-02-20
+
+- chore: update documentation based on latest `terraform-docs` which includes module and resource sections ([#129](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/129))
+
+
 <a name="v3.8.0"></a>
 ## [v3.8.0] - 2020-11-24
 
@@ -223,7 +229,8 @@ All notable changes to this project will be documented in this file.
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.8.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.9.0...HEAD
+[v3.9.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.8.0...v3.9.0
 [v3.8.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.7.0...v3.8.0
 [v3.7.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.6.0...v3.7.0
 [v3.6.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v3.5.0...v3.6.0
