@@ -139,6 +139,7 @@ No Modules.
 |------|
 | [aws_autoscaling_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) |
 | [aws_launch_configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration) |
+| [aws_launch_template](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) |
 | [null_resource](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) |
 | [random_pet](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) |
 
