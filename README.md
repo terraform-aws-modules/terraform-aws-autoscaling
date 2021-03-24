@@ -131,7 +131,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 
 ## Modules
 
-No Modules.
+No modules.
 
 ## Resources
 

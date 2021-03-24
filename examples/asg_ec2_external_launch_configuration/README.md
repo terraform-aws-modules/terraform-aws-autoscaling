@@ -21,20 +21,20 @@ Note that this example may create resources which cost money. Run `terraform des
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.6 |
-| aws | >= 2.41 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.6 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.41 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2.41 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.41 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| example | ../../ |  |
+| <a name="module_example"></a> [example](#module\_example) | ../../ |  |
 
 ## Resources
 
@@ -47,12 +47,12 @@ Note that this example may create resources which cost money. Run `terraform des
 
 ## Inputs
 
-No input.
+No inputs.
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| this\_autoscaling\_group\_id | The autoscaling group id |
-| this\_launch\_configuration\_id | The ID of the launch configuration |
+| <a name="output_this_autoscaling_group_id"></a> [this\_autoscaling\_group\_id](#output\_this\_autoscaling\_group\_id) | The autoscaling group id |
+| <a name="output_this_launch_configuration_id"></a> [this\_launch\_configuration\_id](#output\_this\_launch\_configuration\_id) | The ID of the launch configuration |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
