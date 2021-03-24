@@ -34,7 +34,7 @@ Note that this example may create resources which cost money. Run `terraform des
 
 | Name | Source | Version |
 |------|--------|---------|
-| elb | terraform-aws-modules/elb/aws |  |
+| elb | terraform-aws-modules/elb/aws | 2.4.0 |
 | example_asg | ../../ |  |
 
 ## Resources
