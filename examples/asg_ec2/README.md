@@ -48,7 +48,7 @@ Note that this example may create resources which cost money. Run `terraform des
 
 ## Inputs
 
-No input.
+No inputs.
 
 ## Outputs
 
