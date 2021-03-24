@@ -170,6 +170,8 @@ No Modules.
 | initial\_lifecycle\_hook\_notification\_metadata | Contains additional information that you want to include any time Auto Scaling sends a message to the notification target | `string` | `""` | no |
 | initial\_lifecycle\_hook\_notification\_target\_arn | The ARN of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook. This ARN target can be either an SQS queue or an SNS topic | `string` | `""` | no |
 | initial\_lifecycle\_hook\_role\_arn | The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target | `string` | `""` | no |
+| instance\_refresh\_minimum\_health\_percentage | The amount of capacity in the Auto Scaling group that must remain healthy during an instance refresh to allow the operation to continue, as a percentage of the desired capacity of the Auto Scaling group. | `number` | `50` | no |
+| instance\_refresh\_triggers | Set of additional property names that will trigger an Instance Refresh. A refresh will always be triggered by a change in any of launch\_configuration, launch\_template, or mixed\_instances\_policy | `list(string)` | <pre>["tag"]</pre> | no |
 | instance\_type | The size of instance to launch | `string` | `""` | no |
 | key\_name | The key name that should be used for the instance | `string` | `""` | no |
 | launch\_configuration | The name of the launch configuration to use (if it is created outside of this module) | `string` | `""` | no |
