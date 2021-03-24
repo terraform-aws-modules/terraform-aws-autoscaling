@@ -96,6 +96,14 @@ resource "aws_autoscaling_group" "this" {
   service_linked_role_arn   = var.service_linked_role_arn
   max_instance_lifetime     = var.max_instance_lifetime
 
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = var.instance_refresh_minimum_health_percentage
+    }
+    triggers = var.instance_refresh_triggers
+  }
+
   dynamic "tag" {
     for_each = local.tags
     content {
