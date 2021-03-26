@@ -333,3 +333,8 @@ variable "instance_refresh_triggers" {
   type        = list(string)
 }
 
+variable "instance_refresh_enabled" {
+  description = "If true an Instance Refresh will start when the Auto Scaling Group is updated"
+  default     = false
+  type        = bool
+}
