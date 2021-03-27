@@ -98,12 +98,19 @@ resource "aws_autoscaling_group" "this" {
 
   dynamic "instance_refresh" {
     for_each = var.instance_refresh_enabled ? [1] : []
+
     content {
       strategy = "Rolling"
-      preferences {
-        min_healthy_percentage = var.instance_refresh_minimum_health_percentage
-      }
       triggers = var.instance_refresh_triggers
+
+      dynamic "preferences" {
+        for_each = ((var.instance_refresh_min_healthy_percentage != null) || (var.instance_refresh_warmup != null)) ? [1] : []
+
+        content {
+          instance_warmup        = var.instance_refresh_warmup
+          min_healthy_percentage = var.instance_refresh_min_healthy_percentage
+        }
+      }
     }
   }
 
