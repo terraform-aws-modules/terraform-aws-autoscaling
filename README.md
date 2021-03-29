@@ -52,6 +52,11 @@ module "asg" {
   desired_capacity          = 1
   wait_for_capacity_timeout = 0
 
+  # Run Instance Refresh when ASG is updated.
+  instance_refresh_enabled = true
+  instance_refresh_triggers = [ "tag" ]
+  instance_refresh_min_healthy_percentage = 60
+
   tags = [
     {
       key                 = "Environment"
@@ -117,7 +122,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.6 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.41 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.22 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | >= 2.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.0 |
 
@@ -125,7 +130,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.41 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.22 |
 | <a name="provider_null"></a> [null](#provider\_null) | >= 2.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | >= 2.0 |
 
@@ -171,9 +176,10 @@ No modules.
 | <a name="input_initial_lifecycle_hook_notification_metadata"></a> [initial\_lifecycle\_hook\_notification\_metadata](#input\_initial\_lifecycle\_hook\_notification\_metadata) | Contains additional information that you want to include any time Auto Scaling sends a message to the notification target | `string` | `""` | no |
 | <a name="input_initial_lifecycle_hook_notification_target_arn"></a> [initial\_lifecycle\_hook\_notification\_target\_arn](#input\_initial\_lifecycle\_hook\_notification\_target\_arn) | The ARN of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook. This ARN target can be either an SQS queue or an SNS topic | `string` | `""` | no |
 | <a name="input_initial_lifecycle_hook_role_arn"></a> [initial\_lifecycle\_hook\_role\_arn](#input\_initial\_lifecycle\_hook\_role\_arn) | The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target | `string` | `""` | no |
-| <a name="input_instance_refresh_enabled"></a> [instance\_refresh\_enabled](#input\_instance\_refresh\_enabled) | If true an Instance Refresh will start when the Auto Scaling Group is updated | `bool` | `false` | no |
-| <a name="input_instance_refresh_minimum_health_percentage"></a> [instance\_refresh\_minimum\_health\_percentage](#input\_instance\_refresh\_minimum\_health\_percentage) | The amount of capacity in the Auto Scaling group that must remain healthy during an instance refresh to allow the operation to continue, as a percentage of the desired capacity of the Auto Scaling group. | `number` | `50` | no |
-| <a name="input_instance_refresh_triggers"></a> [instance\_refresh\_triggers](#input\_instance\_refresh\_triggers) | Set of additional property names that will trigger an Instance Refresh. A refresh will always be triggered by a change in any of launch\_configuration, launch\_template, or mixed\_instances\_policy | `list(string)` | <pre>[<br>  "tag"<br>]</pre> | no |
+| <a name="input_instance_refresh_enabled"></a> [instance\_refresh\_enabled](#input\_instance\_refresh\_enabled) | If true an Instance Refresh will start when the Auto Scaling Group is updated. | `bool` | `false` | no |
+| <a name="input_instance_refresh_min_healthy_percentage"></a> [instance\_refresh\_min\_healthy\_percentage](#input\_instance\_refresh\_min\_healthy\_percentage) | The amount of capacity in the Auto Scaling group that must remain healthy during an instance refresh to allow the operation to continue, as a percentage of the desired capacity of the Auto Scaling group. | `number` | `null` | no |
+| <a name="input_instance_refresh_triggers"></a> [instance\_refresh\_triggers](#input\_instance\_refresh\_triggers) | Set of additional property names that will trigger an Instance Refresh. A refresh will always be triggered by a change in any of launch\_configuration, launch\_template, or mixed\_instances\_policy | `list(string)` | `null` | no |
+| <a name="input_instance_refresh_warmup"></a> [instance\_refresh\_warmup](#input\_instance\_refresh\_warmup) | Set of additional property warmup for Instance Refresh trigger when the Auto Scaling Group is updated. | `number` | `null` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The size of instance to launch | `string` | `""` | no |
 | <a name="input_key_name"></a> [key\_name](#input\_key\_name) | The key name that should be used for the instance | `string` | `""` | no |
 | <a name="input_launch_configuration"></a> [launch\_configuration](#input\_launch\_configuration) | The name of the launch configuration to use (if it is created outside of this module) | `string` | `""` | no |

@@ -321,20 +321,26 @@ variable "max_instance_lifetime" {
   default     = 0
 }
 
-variable "instance_refresh_minimum_health_percentage" {
+variable "instance_refresh_min_healthy_percentage" {
   description = "The amount of capacity in the Auto Scaling group that must remain healthy during an instance refresh to allow the operation to continue, as a percentage of the desired capacity of the Auto Scaling group."
-  default     = 50
   type        = number
+  default     = null
 }
 
 variable "instance_refresh_triggers" {
   description = "Set of additional property names that will trigger an Instance Refresh. A refresh will always be triggered by a change in any of launch_configuration, launch_template, or mixed_instances_policy"
-  default     = ["tag"]
   type        = list(string)
+  default     = null
+}
+
+variable "instance_refresh_warmup" {
+  description = "Set of additional property warmup for Instance Refresh trigger when the Auto Scaling Group is updated."
+  type        = number
+  default     = null
 }
 
 variable "instance_refresh_enabled" {
-  description = "If true an Instance Refresh will start when the Auto Scaling Group is updated"
-  default     = false
+  description = "If true an Instance Refresh will start when the Auto Scaling Group is updated."
   type        = bool
+  default     = false
 }
