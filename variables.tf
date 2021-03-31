@@ -191,6 +191,12 @@ variable "mixed_instances_policy" {
   default     = {}
 }
 
+variable "delete_timeout" {
+  description = "Delete timeout to wait for destroying autoscaling group"
+  type        = string
+  default     = null
+}
+
 variable "tags" {
   description = "A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch"
   type        = list(map(string))

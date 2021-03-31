@@ -418,6 +418,10 @@ resource "aws_autoscaling_group" "this" {
     }
   }
 
+  timeouts {
+    delete = var.delete_timeout
+  }
+
   tags = local.tags
 
   lifecycle {
