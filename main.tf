@@ -133,21 +133,24 @@ resource "aws_launch_template" "this" {
       no_device    = lookup(block_device_mappings.value, "no_device", null)
       virtual_name = lookup(block_device_mappings.value, "virtual_name", null)
 
-      ebs {
-        delete_on_termination = lookup(block_device_mappings.value, "delete_on_termination", null)
-        encrypted             = lookup(block_device_mappings.value, "encrypted", null)
-        kms_key_id            = lookup(block_device_mappings.value, "kms_key_id", null)
-        iops                  = lookup(block_device_mappings.value, "iops", null)
-        throughput            = lookup(block_device_mappings.value, "throughput", null)
-        snapshot_id           = lookup(block_device_mappings.value, "snapshot_id", null)
-        volume_size           = lookup(block_device_mappings.value, "volume_size", null)
-        volume_type           = lookup(block_device_mappings.value, "volume_type", null)
+      dynamic "ebs" {
+        for_each = flatten(list(lookup(block_device_mappings.value, "ebs", [])))
+        content {
+          delete_on_termination = lookup(ebs.value, "delete_on_termination", null)
+          encrypted             = lookup(ebs.value, "encrypted", null)
+          kms_key_id            = lookup(ebs.value, "kms_key_id", null)
+          iops                  = lookup(ebs.value, "iops", null)
+          throughput            = lookup(ebs.value, "throughput", null)
+          snapshot_id           = lookup(ebs.value, "snapshot_id", null)
+          volume_size           = lookup(ebs.value, "volume_size", null)
+          volume_type           = lookup(ebs.value, "volume_type", null)
+        }
       }
     }
   }
 
   dynamic "capacity_reservation_specification" {
-    for_each = var.capacity_reservation_specification
+    for_each = var.capacity_reservation_specification != null ? [var.capacity_reservation_specification] : []
     content {
       capacity_reservation_preference = lookup(capacity_reservation_specification.value, "capacity_reservation_preference", null)
 
@@ -161,63 +164,63 @@ resource "aws_launch_template" "this" {
   }
 
   dynamic "cpu_options" {
-    for_each = var.cpu_options
+    for_each = var.cpu_options != null ? [var.cpu_options] : []
     content {
-      core_count       = var.cpu_core_count
-      threads_per_core = var.cpu_threads_per_core
+      core_count       = cpu_options.value.core_count
+      threads_per_core = cpu_options.value.threads_per_core
     }
   }
 
   dynamic "credit_specification" {
-    for_each = var.credit_specification
+    for_each = var.credit_specification != null ? [var.credit_specification] : []
     content {
       cpu_credits = credit_specification.value.cpu_credits
     }
   }
 
   dynamic "elastic_gpu_specifications" {
-    for_each = var.elastic_gpu_specifications
+    for_each = var.elastic_gpu_specifications != null ? [var.elastic_gpu_specifications] : []
     content {
       type = elastic_gpu_specifications.value.type
     }
   }
 
   dynamic "elastic_inference_accelerator" {
-    for_each = var.elastic_inference_accelerator
+    for_each = var.elastic_inference_accelerator != null ? [var.elastic_inference_accelerator] : []
     content {
       type = elastic_inference_accelerator.value.type
     }
   }
 
   dynamic "enclave_options" {
-    for_each = var.enclave_options
+    for_each = var.enclave_options != null ? [var.enclave_options] : []
     content {
       enabled = enclave_options.value.enabled
     }
   }
 
   dynamic "hibernation_options" {
-    for_each = var.hibernation_options
+    for_each = var.hibernation_options != null ? [var.hibernation_options] : []
     content {
       configured = hibernation_options.value.configured
     }
   }
 
   dynamic "iam_instance_profile" {
-    for_each = var.iam_instance_profile
+    for_each = var.iam_instance_profile_name != null || var.iam_instance_profile_arn != null ? [1] : []
     content {
-      name = lookup(iam_instance_profile.value, "name", null)
-      arn  = lookup(iam_instance_profile.value, "arn", null)
+      name = var.iam_instance_profile_name
+      arn  = var.iam_instance_profile_arn
     }
   }
 
   dynamic "instance_market_options" {
-    for_each = var.instance_market_options
+    for_each = var.instance_market_options != null ? [var.instance_market_options] : []
     content {
       market_type = instance_market_options.value.market_type
 
       dynamic "spot_options" {
-        for_each = lookup(instance_market_options.value, "spot_options", [])
+        for_each = lookup(instance_market_options.value, "spot_options", null) != null ? [instance_market_options.value.spot_options] : []
         content {
           block_duration_minutes         = spot_options.value.block_duration_minutes
           instance_interruption_behavior = lookup(spot_options.value, "instance_interruption_behavior", null)
@@ -230,7 +233,7 @@ resource "aws_launch_template" "this" {
   }
 
   dynamic "license_specification" {
-    for_each = var.license_specifications
+    for_each = var.license_specifications != null ? [var.license_specifications] : []
     content {
       license_configuration_arn = license_specifications.value.license_configuration_arn
     }
@@ -245,8 +248,11 @@ resource "aws_launch_template" "this" {
     }
   }
 
-  monitoring {
-    enabled = var.enable_monitoring
+  dynamic "monitoring" {
+    for_each = var.enable_monitoring != null ? [1] : []
+    content {
+      enabled = var.enable_monitoring
+    }
   }
 
   dynamic "network_interfaces" {
@@ -257,19 +263,19 @@ resource "aws_launch_template" "this" {
       delete_on_termination        = lookup(network_interfaces.value, "delete_on_termination", null)
       description                  = lookup(network_interfaces.value, "description", null)
       device_index                 = lookup(network_interfaces.value, "device_index", null)
-      ipv4_addresses               = lookup(network_interfaces.value, "ipv4_addresses", null)
+      ipv4_addresses               = lookup(network_interfaces.value, "ipv4_addresses", null) != null ? network_interfaces.value.ipv4_addresses : []
       ipv4_address_count           = lookup(network_interfaces.value, "ipv4_address_count", null)
-      ipv6_addresses               = lookup(network_interfaces.value, "ipv6_addresses", null)
+      ipv6_addresses               = lookup(network_interfaces.value, "ipv6_addresses", null) != null ? network_interfaces.value.ipv6_addresses : []
       ipv6_address_count           = lookup(network_interfaces.value, "ipv6_address_count", null)
       network_interface_id         = lookup(network_interfaces.value, "network_interface_id", null)
       private_ip_address           = lookup(network_interfaces.value, "private_ip_address", null)
-      security_groups              = lookup(network_interfaces.value, "security_groups", null)
+      security_groups              = lookup(network_interfaces.value, "security_groups", null) != null ? network_interfaces.value.security_groups : []
       subnet_id                    = lookup(network_interfaces.value, "subnet_id", null)
     }
   }
 
   dynamic "placement" {
-    for_each = var.placement
+    for_each = var.placement != null ? [var.placement] : []
     content {
       affinity          = lookup(placement.value, "affinity", null)
       availability_zone = lookup(placement.value, "availability_zone", null)

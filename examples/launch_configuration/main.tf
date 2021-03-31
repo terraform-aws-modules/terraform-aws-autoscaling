@@ -96,6 +96,25 @@ resource "aws_iam_service_linked_role" "autoscaling" {
 }
 
 ################################################################################
+# Disabled
+################################################################################
+
+module "disabled" {
+  source = "../../"
+
+  create_asg = false
+
+  # # Autoscaling group
+  # name = "disabled-${local.name}"
+
+  # image_id      = data.aws_ami.amazon_linux.id
+  # instance_type = "t3.micro"
+
+  # tags        = local.tags
+  # tags_as_map = local.tags_as_map
+}
+
+################################################################################
 # Default
 ################################################################################
 

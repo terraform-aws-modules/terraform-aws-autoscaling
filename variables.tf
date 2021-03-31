@@ -52,11 +52,13 @@ variable "vpc_zone_identifier" {
 variable "min_size" {
   description = "The minimum size of the autoscaling group"
   type        = number
+  default     = null
 }
 
 variable "max_size" {
   description = "The maximum size of the autoscaling group"
   type        = number
+  default     = null
 }
 
 variable "desired_capacity" {
@@ -219,6 +221,12 @@ variable "ebs_optimized" {
   default     = null
 }
 
+variable "iam_instance_profile_name" {
+  description = "The name attribute of the IAM instance profile to associate with launched instances"
+  type        = string
+  default     = null
+}
+
 variable "image_id" {
   description = "The AMI from which to launch the instance"
   type        = string
@@ -229,12 +237,6 @@ variable "instance_type" {
   description = "The type of the instance to launch"
   type        = string
   default     = ""
-}
-
-variable "iam_instance_profile_name" {
-  description = "The name attribute of the IAM instance profile to associate with launched instances"
-  type        = string
-  default     = null
 }
 
 variable "key_name" {
@@ -409,84 +411,84 @@ variable "ram_disk_id" {
 
 variable "block_device_mappings" {
   description = "(LT) Specify volumes to attach to the instance besides the volumes specified by the AMI"
-  type        = list(map(any))
+  type        = list(any)
   default     = []
 }
 
 variable "capacity_reservation_specification" {
   description = "(LT) Targeting for EC2 capacity reservations"
-  type        = map(any)
-  default     = {}
+  type        = any
+  default     = null
 }
 
 variable "cpu_options" {
   description = "(LT) The CPU options for the instance"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "credit_specification" {
   description = "(LT) Customize the credit specification of the instance"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "elastic_gpu_specifications" {
   description = "(LT) The elastic GPU to attach to the instance"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "elastic_inference_accelerator" {
   description = "(LT) Configuration block containing an Elastic Inference Accelerator to attach to the instance"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "enclave_options" {
   description = "(LT) Enable Nitro Enclaves on launched instances"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "hibernation_options" {
   description = "(LT) The hibernation options for the instance"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
-variable "iam_instance_profile" {
-  description = "(LT) The IAM Instance Profile to launch the instance with"
-  type        = map(string)
-  default     = {}
+variable "iam_instance_profile_arn" {
+  description = "(LT) The IAM Instance Profile ARN to launch the instance with"
+  type        = string
+  default     = null
 }
 
 variable "instance_market_options" {
   description = "(LT) The market (purchasing) option for the instance"
-  type        = map(any)
-  default     = {}
+  type        = any
+  default     = null
 }
 
 variable "license_specifications" {
   description = "(LT) A list of license specifications to associate with"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "network_interfaces" {
   description = "(LT) Customize network interfaces to be attached at instance boot time"
-  type        = list(map(string))
+  type        = list(any)
   default     = []
 }
 
 variable "placement" {
   description = "(LT) The placement of the instance"
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "tag_specifications" {
   description = "(LT) The tags to apply to the resources during launch"
-  type        = map(string)
-  default     = {}
+  type        = list(any)
+  default     = []
 }
