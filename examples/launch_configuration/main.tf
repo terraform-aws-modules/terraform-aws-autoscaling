@@ -58,13 +58,21 @@ module "vpc" {
   tags = local.tags_as_map
 }
 
-module "security_group" {
+module "asg_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3"
 
   name        = local.name
   description = "A security group"
   vpc_id      = module.vpc.vpc_id
+
+  computed_ingress_with_source_security_group_id = [
+    {
+      rule                     = "http-80-tcp"
+      source_security_group_id = module.alb_http_sg.this_security_group_id
+    }
+  ]
+  number_of_computed_ingress_with_source_security_group_id = 1
 
   egress_rules = ["all-all"]
 
@@ -95,6 +103,76 @@ resource "aws_iam_service_linked_role" "autoscaling" {
   }
 }
 
+resource "aws_iam_instance_profile" "ssm" {
+  name = "complete-${local.name}"
+  role = aws_iam_role.ssm.name
+  tags = local.tags_as_map
+}
+
+resource "aws_iam_role" "ssm" {
+  name = "complete-${local.name}"
+  tags = local.tags_as_map
+
+  assume_role_policy = <<-EOT
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": "sts:AssumeRole",
+        "Principal": {
+          "Service": "ec2.amazonaws.com"
+        },
+        "Effect": "Allow",
+        "Sid": ""
+      }
+    ]
+  }
+  EOT
+}
+
+module "alb_http_sg" {
+  source  = "terraform-aws-modules/security-group/aws//modules/http-80"
+  version = "~> 3"
+
+  name        = "${local.name}-alb-http"
+  vpc_id      = module.vpc.vpc_id
+  description = "Security group for ${local.name}"
+
+  ingress_cidr_blocks = ["0.0.0.0/0"]
+
+  tags = local.tags_as_map
+}
+
+module "alb" {
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 5"
+
+  name = local.name
+
+  vpc_id          = module.vpc.vpc_id
+  subnets         = module.vpc.public_subnets
+  security_groups = [module.alb_http_sg.this_security_group_id]
+
+  http_tcp_listeners = [
+    {
+      port               = 80
+      protocol           = "HTTP"
+      target_group_index = 0
+    }
+  ]
+
+  target_groups = [
+    {
+      name             = local.name
+      backend_protocol = "HTTP"
+      backend_port     = 80
+      target_type      = "instance"
+    },
+  ]
+
+  tags = local.tags_as_map
+}
+
 ################################################################################
 # Disabled
 ################################################################################
@@ -104,14 +182,8 @@ module "disabled" {
 
   create_asg = false
 
-  # # Autoscaling group
-  # name = "disabled-${local.name}"
-
-  # image_id      = data.aws_ami.amazon_linux.id
-  # instance_type = "t3.micro"
-
-  # tags        = local.tags
-  # tags_as_map = local.tags_as_map
+  # Autoscaling group
+  name = "disabled-${local.name}"
 }
 
 ################################################################################
@@ -181,7 +253,7 @@ module "complete" {
   source = "../../"
 
   # Autoscaling group
-  name            = local.name
+  name            = "complete-${local.name}"
   use_name_prefix = false
 
   min_size                  = 0
@@ -197,15 +269,18 @@ module "complete" {
   use_lc    = true
   create_lc = true
 
-  ebs_optimized = true
-  image_id      = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
-  user_data     = local.user_data
+  image_id          = data.aws_ami.amazon_linux.id
+  instance_type     = "t3.micro"
+  user_data         = local.user_data
+  ebs_optimized     = true
+  enable_monitoring = true
 
-  security_groups             = [module.security_group.this_security_group_id]
+  iam_instance_profile_arn    = aws_iam_instance_profile.ssm.arn
+  security_groups             = [module.asg_sg.this_security_group_id]
   associate_public_ip_address = true
 
-  spot_price = "0.014"
+  spot_price        = "0.014"
+  target_group_arns = module.alb.target_group_arns
 
   ebs_block_device = [
     {
