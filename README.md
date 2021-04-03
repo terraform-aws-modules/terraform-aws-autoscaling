@@ -4,12 +4,9 @@ Terraform module which creates Auto Scaling resources on AWS.
 
 These types of resources are supported:
 
-* [Launch Configuration](https://www.terraform.io/docs/providers/aws/r/launch_configuration.html)
-* [Auto Scaling Group](https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html)
-
-## Terraform versions
-
-Terraform 0.12. Pin module version to `~> v3.0`. Submit pull-requests to `master` branch.
+- [Auto Scaling Group](https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html)
+- [Launch Configuration](https://www.terraform.io/docs/providers/aws/r/launch_configuration.html)
+- [Launch Template](https://www.terraform.io/docs/providers/aws/r/launch_template.html)
 
 ## Usage
 
@@ -17,7 +14,7 @@ Terraform 0.12. Pin module version to `~> v3.0`. Submit pull-requests to `master
 module "asg" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "~> 3.0"
-  
+
   name = "service"
 
   # Launch configuration
@@ -76,18 +73,22 @@ module "asg" {
 
 Normally this module creates both Auto Scaling Group (ASG) and Launch Configuration (LC), and connect them together.
 It is possible to customize this behaviour passing different parameters to this module:
+
 1. To create ASG, but not LC. Associate ASG with an existing LC:
+
 ```hcl
 create_lc = false
 launch_configuration = "existing-launch-configuration"
 ```
 
 1. To create LC, but not ASG. Outputs may produce errors.
+
 ```hcl
 create_asg = false
 ```
 
 1. To create ASG with initial lifecycle hook
+
 ```hcl
 create_asg_with_initial_lifecycle_hook = true
 
@@ -99,6 +100,7 @@ initial_lifecycle_hook_notification_metadata =<<EOF
 }
 EOF
 ```
+
 1. To disable creation of both resources (LC and ASG) you can specify both arguments `create_lc = false` and `create_asg = false`. Sometimes you need to use this way to create resources in modules conditionally but Terraform does not allow to use `count` inside `module` block.
 
 ## Tags
@@ -107,9 +109,9 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 
 ## Examples
 
-* [Auto Scaling Group without ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2)
-* [Auto Scaling Group with ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_elb)
-* [Auto Scaling Group with external Launch Configuration](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2_external_launch_configuration)
+- [Auto Scaling Group without ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2)
+- [Auto Scaling Group with ELB](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_elb)
+- [Auto Scaling Group with external Launch Configuration](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/asg_ec2_external_launch_configuration)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -117,15 +119,14 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.26 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.41 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.30 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | >= 2.0 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.41 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.30 |
 | <a name="provider_null"></a> [null](#provider\_null) | >= 2.0 |
 
 ## Modules
@@ -198,7 +199,7 @@ No modules.
 | <a name="input_metrics_granularity"></a> [metrics\_granularity](#input\_metrics\_granularity) | The granularity to associate with the metrics to collect. The only valid value is `1Minute` | `string` | `null` | no |
 | <a name="input_min_elb_capacity"></a> [min\_elb\_capacity](#input\_min\_elb\_capacity) | Setting this causes Terraform to wait for this number of instances to show up healthy in the ELB only on creation. Updates will not wait on ELB instance number changes | `number` | `null` | no |
 | <a name="input_min_size"></a> [min\_size](#input\_min\_size) | The minimum size of the autoscaling group | `number` | `null` | no |
-| <a name="input_mixed_instances_policy"></a> [mixed\_instances\_policy](#input\_mixed\_instances\_policy) | Configuration block containing settings to define launch targets for Auto Scaling groups | `map(any)` | `{}` | no |
+| <a name="input_mixed_instances_policy"></a> [mixed\_instances\_policy](#input\_mixed\_instances\_policy) | Configuration block containing settings to define launch targets for Auto Scaling groups | `any` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name used across the resources created | `string` | n/a | yes |
 | <a name="input_network_interfaces"></a> [network\_interfaces](#input\_network\_interfaces) | (LT) Customize network interfaces to be attached at instance boot time | `list(any)` | `[]` | no |
 | <a name="input_placement"></a> [placement](#input\_placement) | (LT) The placement of the instance | `map(string)` | `null` | no |
@@ -219,6 +220,7 @@ No modules.
 | <a name="input_update_default_version"></a> [update\_default\_version](#input\_update\_default\_version) | (LT) Whether to update Default Version each update. Conflicts with `default_version` | `string` | `null` | no |
 | <a name="input_use_lc"></a> [use\_lc](#input\_use\_lc) | Determines whether to use a launch configuration in the autoscaling group or not | `bool` | `false` | no |
 | <a name="input_use_lt"></a> [use\_lt](#input\_use\_lt) | Determines whether to use a launch template in the autoscaling group or not | `bool` | `false` | no |
+| <a name="input_use_mixed_instances_policy"></a> [use\_mixed\_instances\_policy](#input\_use\_mixed\_instances\_policy) | Determines whether to use a mixed instances policy in the autoscaling group or not | `bool` | `false` | no |
 | <a name="input_use_name_prefix"></a> [use\_name\_prefix](#input\_use\_name\_prefix) | Determines whether to use `name` as is or create a unique name beginning with the `name` as the prefix | `bool` | `true` | no |
 | <a name="input_user_data"></a> [user\_data](#input\_user\_data) | (LC) The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see `user_data_base64` instead | `string` | `null` | no |
 | <a name="input_user_data_base64"></a> [user\_data\_base64](#input\_user\_data\_base64) | The Base64-encoded user data to provide when launching the instance | `string` | `null` | no |

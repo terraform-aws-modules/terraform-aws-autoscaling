@@ -10,7 +10,7 @@ provider "aws" {
 }
 
 locals {
-  name   = "example-instance-refresh"
+  name   = "example-mixed-instances-policy"
   region = "eu-west-1"
 
   tags = [
@@ -21,7 +21,7 @@ locals {
     },
     {
       key                 = "foo"
-      value               = ""
+      value               = "bar"
       propagate_at_launch = true
     },
   ]
@@ -66,54 +66,39 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
-################################################################################
-# Launch configuration
-################################################################################
-
-module "launch_configuration" {
+module "complete" {
   source = "../../"
 
   # Autoscaling group
-  name = "lc-${local.name}"
+  name = local.name
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
-  max_size            = 1
-  desired_capacity    = 1
+  max_size            = 5
+  desired_capacity    = 4
 
-  instance_refresh = {
-    strategy = "Rolling"
-    preferences = {
-      min_healthy_percentage = 50
+  image_id           = data.aws_ami.amazon_linux.id
+  instance_type      = "t3.micro"
+  capacity_rebalance = true
+
+  initial_lifecycle_hooks = [
+    {
+      name                 = "ExampleStartupLifeCycleHook"
+      default_result       = "CONTINUE"
+      heartbeat_timeout    = 60
+      lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
+      # This could be a rendered data resource
+      notification_metadata = jsonencode({ "hello" = "world" })
+    },
+    {
+      name                 = "ExampleTerminationLifeCycleHook"
+      default_result       = "CONTINUE"
+      heartbeat_timeout    = 180
+      lifecycle_transition = "autoscaling:EC2_INSTANCE_TERMINATING"
+      # This could be a rendered data resource
+      notification_metadata = jsonencode({ "goodbye" = "world" })
     }
-    triggers = ["tag"]
-  }
-
-  # Launch configuration
-  use_lc    = true
-  create_lc = true
-
-  image_id      = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
-
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
-}
-
-################################################################################
-# Launch template
-################################################################################
-
-module "launch_template" {
-  source = "../../"
-
-  # Autoscaling group
-  name = "lt-${local.name}"
-
-  vpc_zone_identifier = module.vpc.private_subnets
-  min_size            = 0
-  max_size            = 1
-  desired_capacity    = 1
+  ]
 
   instance_refresh = {
     strategy = "Rolling"
@@ -124,11 +109,29 @@ module "launch_template" {
   }
 
   # Launch template
-  use_lt    = true
-  create_lt = true
+  create_lt              = true
+  update_default_version = true
 
-  image_id      = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
+  # Mixed instances
+  use_mixed_instances_policy = true
+  mixed_instances_policy = {
+    instances_distribution = {
+      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = 10
+      spot_allocation_strategy                 = "capacity-optimized"
+    }
+
+    override = [
+      {
+        instance_type     = "t3.nano"
+        weighted_capacity = "2"
+      },
+      {
+        instance_type     = "t3.medium"
+        weighted_capacity = "1"
+      },
+    ]
+  }
 
   tags        = local.tags
   tags_as_map = local.tags_as_map

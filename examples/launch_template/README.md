@@ -1,8 +1,12 @@
-# Auto Scaling Group without ELB example
+# Auto Scaling Group with Launch Template Example
 
-Configuration in this directory creates Launch Configuration and Auto Scaling Group.
+Configuration in this directory creates autoscaling groups using launch templates.
 
-Data sources are used to discover existing VPC resources (VPC, subnet and security group) as well as AMI details.
+There are four different setups shown in this example project:
+- `disabled` - demonstrates how to completely disable creating of both the autoscaling group and launch template (no resources will be created)
+- `default` - demonstrates the bare minimum amount of information required to create an autoscaling group from a launch template, relying mostly on default values
+- `external` - demonstrates how to create an autoscaling group using an externally created launch template
+- `complete` - demonstrates the vast majority of the functionality available for creating an autoscaling group using a launch template
 
 ## Usage
 
@@ -22,13 +26,13 @@ Note that this example may create resources which cost money. Run `terraform des
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.26 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.41 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.30 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.41 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.30 |
 
 ## Modules
 

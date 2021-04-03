@@ -264,6 +264,33 @@ module "complete" {
   vpc_zone_identifier       = module.vpc.private_subnets
   service_linked_role_arn   = aws_iam_service_linked_role.autoscaling.arn
 
+  initial_lifecycle_hooks = [
+    {
+      name                 = "ExampleStartupLifeCycleHook"
+      default_result       = "CONTINUE"
+      heartbeat_timeout    = 60
+      lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
+      # This could be a rendered data resource
+      notification_metadata = jsonencode({ "hello" = "world" })
+    },
+    {
+      name                 = "ExampleTerminationLifeCycleHook"
+      default_result       = "CONTINUE"
+      heartbeat_timeout    = 180
+      lifecycle_transition = "autoscaling:EC2_INSTANCE_TERMINATING"
+      # This could be a rendered data resource
+      notification_metadata = jsonencode({ "goodbye" = "world" })
+    }
+  ]
+
+  instance_refresh = {
+    strategy = "Rolling"
+    preferences = {
+      min_healthy_percentage = 50
+    }
+    triggers = ["tag"]
+  }
+
   # Launch template
   lt_name                = "complete-${local.name}"
   description            = "Complete launch template example"

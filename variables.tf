@@ -187,10 +187,16 @@ variable "instance_refresh" {
   default     = null
 }
 
+variable "use_mixed_instances_policy" {
+  description = "Determines whether to use a mixed instances policy in the autoscaling group or not"
+  type        = bool
+  default     = false
+}
+
 variable "mixed_instances_policy" {
   description = "Configuration block containing settings to define launch targets for Auto Scaling groups"
-  type        = map(any)
-  default     = {}
+  type        = any
+  default     = null
 }
 
 variable "delete_timeout" {
