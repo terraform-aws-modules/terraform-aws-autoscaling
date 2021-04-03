@@ -363,13 +363,13 @@ resource "aws_autoscaling_group" "this" {
   }
 
   dynamic "instance_refresh" {
-    for_each = var.instance_refresh
+    for_each = var.instance_refresh != null ? [var.instance_refresh] : []
     content {
       strategy = instance_refresh.value.strategy
       triggers = lookup(instance_refresh.value, "triggers", null)
 
       dynamic "preferences" {
-        for_each = lookup(instance_refresh.value, "preferences", [])
+        for_each = lookup(instance_refresh.value, "preferences", null) != null ? [instance_refresh.value.preferences] : []
         content {
           instance_warmup        = lookup(preferences.value, "instance_warmup", null)
           min_healthy_percentage = lookup(preferences.value, "min_healthy_percentage", null)

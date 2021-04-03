@@ -10,7 +10,7 @@ provider "aws" {
 }
 
 locals {
-  name   = "example-initial-lifecycle-hook"
+  name   = "example-instance-refresh"
   region = "eu-west-1"
 
   tags = [
@@ -81,24 +81,13 @@ module "launch_configuration" {
   max_size            = 1
   desired_capacity    = 1
 
-  initial_lifecycle_hooks = [
-    {
-      name                 = "ExampleStartupLifeCycleHook"
-      default_result       = "CONTINUE"
-      heartbeat_timeout    = 60
-      lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
-      # This could be a rendered data resource
-      notification_metadata = jsonencode({ "hello" = "world" })
-    },
-    {
-      name                 = "ExampleTerminationLifeCycleHook"
-      default_result       = "CONTINUE"
-      heartbeat_timeout    = 180
-      lifecycle_transition = "autoscaling:EC2_INSTANCE_TERMINATING"
-      # This could be a rendered data resource
-      notification_metadata = jsonencode({ "goodbye" = "world" })
+  instance_refresh = {
+    strategy = "Rolling"
+    preferences = {
+      min_healthy_percentage = 50
     }
-  ]
+    triggers = ["tag"]
+  }
 
   # Launch configuration
   use_lc    = true
@@ -126,24 +115,13 @@ module "launch_template" {
   max_size            = 1
   desired_capacity    = 1
 
-  initial_lifecycle_hooks = [
-    {
-      name                 = "ExampleStartupLifeCycleHook"
-      default_result       = "CONTINUE"
-      heartbeat_timeout    = 60
-      lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
-      # This could be a rendered data resource
-      notification_metadata = jsonencode({ "hello" = "world" })
-    },
-    {
-      name                 = "ExampleTerminationLifeCycleHook"
-      default_result       = "CONTINUE"
-      heartbeat_timeout    = 180
-      lifecycle_transition = "autoscaling:EC2_INSTANCE_TERMINATING"
-      # This could be a rendered data resource
-      notification_metadata = jsonencode({ "goodbye" = "world" })
+  instance_refresh = {
+    strategy = "Rolling"
+    preferences = {
+      min_healthy_percentage = 50
     }
-  ]
+    triggers = ["tag"]
+  }
 
   # Launch template
   use_lt    = true

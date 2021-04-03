@@ -183,8 +183,8 @@ variable "initial_lifecycle_hooks" {
 
 variable "instance_refresh" {
   description = "If this block is configured, start an Instance Refresh when this Auto Scaling Group is updated"
-  type        = map(any)
-  default     = {}
+  type        = any
+  default     = null
 }
 
 variable "mixed_instances_policy" {
