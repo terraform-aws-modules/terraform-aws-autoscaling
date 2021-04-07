@@ -33,7 +33,7 @@ output "launch_template_arn" {
 
 output "launch_template_latest_version" {
   description = "The latest version of the launch template"
-  value       = element(concat(aws_launch_template.this.*.name, [""]), 0)
+  value       = element(concat(aws_launch_template.this.*.latest_version, [""]), 0)
 }
 
 ################################################################################
