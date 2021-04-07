@@ -134,7 +134,7 @@ resource "aws_launch_template" "this" {
       virtual_name = lookup(block_device_mappings.value, "virtual_name", null)
 
       dynamic "ebs" {
-        for_each = flatten(list(lookup(block_device_mappings.value, "ebs", [])))
+        for_each = flatten([lookup(block_device_mappings.value, "ebs", [])])
         content {
           delete_on_termination = lookup(ebs.value, "delete_on_termination", null)
           encrypted             = lookup(ebs.value, "encrypted", null)
@@ -291,7 +291,7 @@ resource "aws_launch_template" "this" {
     for_each = var.tag_specifications
     content {
       resource_type = tag_specifications.value.resource_type
-      tags          = lookup(tag_specifications.value, "tags", var.tags_as_map)
+      tags          = tag_specifications.value.tags
     }
   }
 

@@ -183,6 +183,20 @@ The following combinations are supported to conditionally create resources and/o
   create_asg = false
 ```
 
+- Create only a launch configuration:
+
+```hcl
+  create_asg = false
+  create_lc  = true
+```
+
+- Create only a launch template:
+
+```hcl
+  create_asg = false
+  create_lt  = true
+```
+
 - Create both the autoscaling group and launch configuration:
 
 ```hcl
