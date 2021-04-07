@@ -251,9 +251,7 @@ There are two ways to specify tags for auto-scaling group in this module - `tags
 
 ## Examples
 
-- [Autoscaling Group w/ Launch Configuration](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/launch_configuration)
-- [Autoscaling Group w/ Launch Template](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/launch_template)
-- [Autoscaling Group w/ Mixed Instances Policy](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/mixed_instances_policy)
+- [Complete](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/complete)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
