@@ -1,12 +1,12 @@
 # Upgrade from v3.x to v4.x
 
-If you have a question regarding this upgrade process, please check code in `examples` directory:
+If you have any questions regarding this upgrade process, please consult the `examples` directory:
 
 - [Complete](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/complete)
 
-If you find a bug, please open an issue in this repository including configuration to reproduce.
+If you find a bug, please open an issue with supporting configuration to reproduce.
 
-:warning: Note - due to the nature of the default use of `name_prefix`, nearly al paths to upgrade will require recreating the resources provisioned by the module. For most use cases this should be ok as autoscaling groups are intended to be ephemeral, but nonetheless, please be aware.
+:warning: Note - due to the nature of the default use of `name_prefix`, nearly all paths to upgrade will require recreating the resources provisioned by the module. For most use cases this should be ok as autoscaling groups are intended to be ephemeral; nonetheless, please be aware.
 
 For most users, you will need to add the following variables and their appropriate values:
 
@@ -17,7 +17,7 @@ For most users, you will need to add the following variables and their appropria
   create_lc = true
 ```
 
-If you are using an eternally created launch configuration:
+If you are using an externally created launch configuration:
 
 ```hcl
   lc_name   = "externally-created"
@@ -30,16 +30,16 @@ If you are using an eternally created launch configuration:
 
 1. Removed variables:
 
-    - `recreate_asg_when_lc_changes`
-    - `asg_name`
+   - `recreate_asg_when_lc_changes`
+   - `asg_name`
 
 2. Renamed variables:
 
-    - See below for initial lifecycle hook variable changes
+   - See below for initial lifecycle hook variable changes
 
 3. Renamed outputs:
 
-    - `this_<remaining-name>` => `<remaining-name>` (remove leading `this_`)
+   - `this_<remaining-name>` => `<remaining-name>` (remove leading `this_`)
 
 ### Initial lifecycle hook
 
