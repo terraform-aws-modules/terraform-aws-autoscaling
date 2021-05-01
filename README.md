@@ -2,12 +2,6 @@
 
 Terraform module which creates Auto Scaling resources on AWS.
 
-These types of resources are supported:
-
-- [Auto Scaling Group](https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html)
-- [Launch Configuration](https://www.terraform.io/docs/providers/aws/r/launch_configuration.html)
-- [Launch Template](https://www.terraform.io/docs/providers/aws/r/launch_template.html)
-
 Available features
 
 - Autoscaling group with launch configuration - either created by the module or utilizing an existing launch configuration
@@ -395,7 +389,7 @@ No modules.
 
 ## Authors
 
-Currently maintained by [Anton Babenko](https://github.com/antonbabenko) and [these awesome contributors](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/graphs/contributors).
+Module is maintained by [Anton Babenko](https://github.com/antonbabenko) with help from [these awesome contributors](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/graphs/contributors).
 
 ## License
 
