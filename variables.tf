@@ -217,6 +217,12 @@ variable "tags_as_map" {
   default     = {}
 }
 
+variable "propagate_name" {
+  description = "Determines whether to propagate the ASG Name tag or not"
+  type        = bool
+  default     = true
+}
+
 ################################################################################
 # Common - launch configuration or launch template
 ################################################################################
