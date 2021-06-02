@@ -105,6 +105,7 @@ No inputs.
 | <a name="output_complete_lt_autoscaling_group_name"></a> [complete\_lt\_autoscaling\_group\_name](#output\_complete\_lt\_autoscaling\_group\_name) | The autoscaling group name |
 | <a name="output_complete_lt_autoscaling_group_target_group_arns"></a> [complete\_lt\_autoscaling\_group\_target\_group\_arns](#output\_complete\_lt\_autoscaling\_group\_target\_group\_arns) | List of Target Group ARNs that apply to this AutoScaling Group |
 | <a name="output_complete_lt_autoscaling_group_vpc_zone_identifier"></a> [complete\_lt\_autoscaling\_group\_vpc\_zone\_identifier](#output\_complete\_lt\_autoscaling\_group\_vpc\_zone\_identifier) | The VPC zone identifier |
+| <a name="output_complete_lt_autoscaling_schedule_arns"></a> [complete\_lt\_autoscaling\_schedule\_arns](#output\_complete\_lt\_autoscaling\_schedule\_arns) | ARNs of autoscaling group schedules |
 | <a name="output_complete_lt_launch_template_arn"></a> [complete\_lt\_launch\_template\_arn](#output\_complete\_lt\_launch\_template\_arn) | The ARN of the launch template |
 | <a name="output_complete_lt_launch_template_id"></a> [complete\_lt\_launch\_template\_id](#output\_complete\_lt\_launch\_template\_id) | The ID of the launch template |
 | <a name="output_complete_lt_launch_template_latest_version"></a> [complete\_lt\_launch\_template\_latest\_version](#output\_complete\_lt\_launch\_template\_latest\_version) | The latest version of the launch template |

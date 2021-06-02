@@ -506,6 +506,31 @@ module "complete_lt" {
 
   tags        = local.tags
   tags_as_map = local.tags_as_map
+
+  # Autoscaling Schedule
+  schedules = {
+    night = {
+      min_size         = 0
+      max_size         = 0
+      desired_capacity = 0
+      recurrence       = "0 18 * * 1-5" # Mon-Fri in the evening
+    }
+
+    morning = {
+      min_size         = 0
+      max_size         = 1
+      desired_capacity = 1
+      recurrence       = "0 7 * * 1-5" # Mon-Fri in the morning
+    }
+
+    go-offline-to-celebrate-new-year = {
+      min_size         = 0
+      max_size         = 0
+      desired_capacity = 0
+      start_time       = "2031-12-31T10:00:00Z" # Should be in the future
+      end_time         = "2032-01-01T16:00:00Z"
+    }
+  }
 }
 
 # Launch configuration

@@ -429,3 +429,23 @@ resource "aws_autoscaling_group" "this" {
     create_before_destroy = true
   }
 }
+
+################################################################################
+# Autoscaling group schedule
+################################################################################
+resource "aws_autoscaling_schedule" "this" {
+  for_each = var.create_asg && var.create_schedule ? var.schedules : {}
+
+  scheduled_action_name  = each.key
+  autoscaling_group_name = aws_autoscaling_group.this[0].name
+
+  min_size         = lookup(each.value, "min_size", null)
+  max_size         = lookup(each.value, "max_size", null)
+  desired_capacity = lookup(each.value, "desired_capacity", null)
+  start_time       = lookup(each.value, "start_time", null)
+  end_time         = lookup(each.value, "end_time", null)
+
+  # [Minute] [Hour] [Day_of_Month] [Month_of_Year] [Day_of_Week]
+  # Cron examples: https://crontab.guru/examples.html
+  recurrence = lookup(each.value, "recurrence", null)
+}
