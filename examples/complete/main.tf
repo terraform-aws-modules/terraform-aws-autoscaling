@@ -527,8 +527,8 @@ module "complete_lt" {
       min_size         = 0
       max_size         = 0
       desired_capacity = 0
-      start_time       = "2021-12-31T10:00:00Z"
-      end_time         = "2022-01-01T16:00:00Z"
+      start_time       = "2031-12-31T10:00:00Z" # Should be in the future
+      end_time         = "2032-01-01T16:00:00Z"
     }
   }
 }
