@@ -104,3 +104,12 @@ output "autoscaling_group_target_group_arns" {
   description = "List of Target Group ARNs that apply to this AutoScaling Group"
   value       = element(concat(aws_autoscaling_group.this.*.target_group_arns, [""]), 0)
 }
+
+################################################################################
+# Autoscaling group schedule
+################################################################################
+
+output "autoscaling_schedule_arns" {
+  description = "ARNs of autoscaling group schedules"
+  value       = { for k, v in aws_autoscaling_schedule.this : k => v.arn }
+}

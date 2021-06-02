@@ -451,6 +451,11 @@ output "complete_lt_autoscaling_group_target_group_arns" {
   value       = module.complete_lt.autoscaling_group_target_group_arns
 }
 
+output "complete_lt_autoscaling_schedule_arns" {
+  description = "ARNs of autoscaling group schedules"
+  value       = module.complete_lt.autoscaling_schedule_arns
+}
+
 # Launch configuration
 output "complete_lc_launch_configuration_id" {
   description = "The ID of the launch configuration"

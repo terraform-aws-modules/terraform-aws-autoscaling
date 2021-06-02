@@ -498,3 +498,19 @@ variable "tag_specifications" {
   type        = list(any)
   default     = []
 }
+
+################################################################################
+# Autoscaling group schedule
+################################################################################
+
+variable "create_schedule" {
+  description = "Determines whether to create autoscaling group schedule or not"
+  type        = bool
+  default     = true
+}
+
+variable "schedules" {
+  description = "Map of autoscaling group schedule to create"
+  type        = map(any)
+  default     = {}
+}
