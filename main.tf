@@ -2,15 +2,16 @@ locals {
   lc_name              = coalesce(var.lc_name, var.name)
   launch_configuration = var.create_lc ? aws_launch_configuration.this[0].name : var.launch_configuration
 
-  lt_name         = coalesce(var.lt_name, var.name)
-  launch_template = var.create_lt ? aws_launch_template.this[0].name : var.launch_template
+  lt_name                 = coalesce(var.lt_name, var.name)
+  launch_template         = var.create_lt ? aws_launch_template.this[0].name : var.launch_template
+  launch_template_version = var.create_lt && var.lt_version == null ? aws_launch_template.this[0].latest_version : var.lt_version
 
   tags = concat(
     [
       {
-        "key"                 = "Name"
-        "value"               = var.name
-        "propagate_at_launch" = true
+        key                 = "Name"
+        value               = var.name
+        propagate_at_launch = true
       },
     ],
     var.tags,
@@ -22,9 +23,9 @@ resource "null_resource" "tags_as_list_of_maps" {
   count = length(keys(var.tags_as_map))
 
   triggers = {
-    "key"                 = keys(var.tags_as_map)[count.index]
-    "value"               = values(var.tags_as_map)[count.index]
-    "propagate_at_launch" = true
+    key                 = keys(var.tags_as_map)[count.index]
+    value               = values(var.tags_as_map)[count.index]
+    propagate_at_launch = true
   }
 }
 
@@ -319,7 +320,7 @@ resource "aws_autoscaling_group" "this" {
 
     content {
       name    = local.launch_template
-      version = var.lt_version
+      version = local.launch_template_version
     }
   }
 
@@ -398,7 +399,7 @@ resource "aws_autoscaling_group" "this" {
       launch_template {
         launch_template_specification {
           launch_template_name = local.launch_template
-          version              = var.lt_version
+          version              = local.launch_template_version
         }
 
         dynamic "override" {
