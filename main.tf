@@ -11,7 +11,7 @@ locals {
       {
         key                 = "Name"
         value               = var.name
-        propagate_at_launch = true
+        propagate_at_launch = var.propagate_name
       },
     ],
     var.tags,

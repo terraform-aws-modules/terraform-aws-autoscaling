@@ -341,6 +341,7 @@ No modules.
 | <a name="input_placement"></a> [placement](#input\_placement) | (LT) The placement of the instance | `map(string)` | `null` | no |
 | <a name="input_placement_group"></a> [placement\_group](#input\_placement\_group) | The name of the placement group into which you'll launch your instances, if any | `string` | `null` | no |
 | <a name="input_placement_tenancy"></a> [placement\_tenancy](#input\_placement\_tenancy) | (LC) The tenancy of the instance. Valid values are `default` or `dedicated` | `string` | `null` | no |
+| <a name="input_propagate_name"></a> [propagate\_name](#input\_propagate\_name) | Determines whether to propagate the ASG Name tag or not | `bool` | `true` | no |
 | <a name="input_protect_from_scale_in"></a> [protect\_from\_scale\_in](#input\_protect\_from\_scale\_in) | Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events. | `bool` | `false` | no |
 | <a name="input_ram_disk_id"></a> [ram\_disk\_id](#input\_ram\_disk\_id) | (LT) The ID of the ram disk | `string` | `null` | no |
 | <a name="input_root_block_device"></a> [root\_block\_device](#input\_root\_block\_device) | (LC) Customize details about the root block device of the instance | `list(map(string))` | `[]` | no |
