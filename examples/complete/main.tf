@@ -697,3 +697,35 @@ module "mixed_instance" {
   tags        = local.tags
   tags_as_map = local.tags_as_map
 }
+
+################################################################################
+# With warm pool
+################################################################################
+
+module "warmed_lt" {
+  source = "../../"
+
+  # Autoscaling group
+  name = "warmed-lt-${local.name}"
+
+  vpc_zone_identifier = module.vpc.private_subnets
+  min_size            = 0
+  max_size            = 1
+  desired_capacity    = 1
+
+  # Launch template
+  use_lt    = true
+  create_lt = true
+
+  image_id      = data.aws_ami.amazon_linux.id
+  instance_type = "t3.micro"
+
+  warm_pool = {
+    pool_state                  = "Stopped"
+    min_size                    = 1
+    max_group_prepared_capacity = 2
+  }
+
+  tags        = local.tags
+  tags_as_map = local.tags_as_map
+}
