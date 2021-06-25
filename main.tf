@@ -420,6 +420,15 @@ resource "aws_autoscaling_group" "this" {
     }
   }
 
+  dynamic "warm_pool" {
+    for_each = var.warm_pool != null ? [var.warm_pool] : []
+    content {
+      pool_state                  = lookup(warm_pool.value, "pool_state", null)
+      min_size                    = lookup(warm_pool.value, "min_size", null)
+      max_group_prepared_capacity = lookup(warm_pool.value, "max_group_prepared_capacity", null)
+    }
+  }
+
   timeouts {
     delete = var.delete_timeout
   }
