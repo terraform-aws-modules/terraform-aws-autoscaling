@@ -7,6 +7,12 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v4.5.0"></a>
+## [v4.5.0] - 2021-08-25
+
+- feat: Added throughput parameter for root and ebs block devices ([#160](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/160))
+
+
 <a name="v4.4.0"></a>
 ## [v4.4.0] - 2021-06-12
 
@@ -265,7 +271,8 @@ All notable changes to this project will be documented in this file.
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.4.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.5.0...HEAD
+[v4.5.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.4.0...v4.5.0
 [v4.4.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.3.0...v4.4.0
 [v4.3.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.2.0...v4.3.0
 [v4.2.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.1.0...v4.2.0
