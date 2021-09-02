@@ -264,7 +264,7 @@ variable "key_name" {
 }
 
 variable "user_data_base64" {
-  description = "The Base64-encoded user data to provide when launching the instance"
+  description = "The Base64-encoded user data to provide when launching the instance. You should use this for Launch Templates instead user_data"
   type        = string
   default     = null
 }
@@ -316,7 +316,7 @@ variable "lc_use_name_prefix" {
 }
 
 variable "user_data" {
-  description = "(LC) The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see `user_data_base64` instead"
+  description = "(LC) The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument nor when using Launch Templates; see `user_data_base64` instead"
   type        = string
   default     = null
 }
