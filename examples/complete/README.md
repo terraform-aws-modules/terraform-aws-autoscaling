@@ -56,6 +56,7 @@ Note that this example may create resources which cost money. Run `terraform des
 | <a name="module_lt_only"></a> [lt\_only](#module\_lt\_only) | ../../ |  |
 | <a name="module_mixed_instance"></a> [mixed\_instance](#module\_mixed\_instance) | ../../ |  |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
+| <a name="module_warmed_lt"></a> [warmed\_lt](#module\_warmed\_lt) | ../../ |  |
 
 ## Resources
 
