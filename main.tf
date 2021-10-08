@@ -456,6 +456,7 @@ resource "aws_autoscaling_schedule" "this" {
   desired_capacity = lookup(each.value, "desired_capacity", null)
   start_time       = lookup(each.value, "start_time", null)
   end_time         = lookup(each.value, "end_time", null)
+  time_zone         = lookup(each.value, "time_zone", null)
 
   # [Minute] [Hour] [Day_of_Month] [Month_of_Year] [Day_of_Week]
   # Cron examples: https://crontab.guru/examples.html
