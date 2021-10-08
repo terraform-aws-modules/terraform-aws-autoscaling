@@ -514,6 +514,7 @@ module "complete_lt" {
       max_size         = 0
       desired_capacity = 0
       recurrence       = "0 18 * * 1-5" # Mon-Fri in the evening
+      time_zone        = "Europe/Rome"
     }
 
     morning = {
