@@ -329,7 +329,7 @@ No modules.
 | <a name="input_lt_name"></a> [lt\_name](#input\_lt\_name) | Name of launch template to be created | `string` | `""` | no |
 | <a name="input_lt_use_name_prefix"></a> [lt\_use\_name\_prefix](#input\_lt\_use\_name\_prefix) | Determines whether to use `lt_name` as is or create a unique name beginning with the `lt_name` as the prefix | `bool` | `true` | no |
 | <a name="input_lt_version"></a> [lt\_version](#input\_lt\_version) | Launch template version. Can be version number, `$Latest`, or `$Default` | `string` | `null` | no |
-| <a name="input_max_instance_lifetime"></a> [max\_instance\_lifetime](#input\_max\_instance\_lifetime) | The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 604800 and 31536000 seconds | `number` | `null` | no |
+| <a name="input_max_instance_lifetime"></a> [max\_instance\_lifetime](#input\_max\_instance\_lifetime) | The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 86400 and 31536000 seconds | `number` | `null` | no |
 | <a name="input_max_size"></a> [max\_size](#input\_max\_size) | The maximum size of the autoscaling group | `number` | `null` | no |
 | <a name="input_metadata_options"></a> [metadata\_options](#input\_metadata\_options) | Customize the metadata options for the instance | `map(string)` | `null` | no |
 | <a name="input_metrics_granularity"></a> [metrics\_granularity](#input\_metrics\_granularity) | The granularity to associate with the metrics to collect. The only valid value is `1Minute` | `string` | `null` | no |
