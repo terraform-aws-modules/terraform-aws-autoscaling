@@ -388,6 +388,9 @@ module "complete_lt" {
   instance_refresh = {
     strategy = "Rolling"
     preferences = {
+      checkpoint_delay       = 600
+      checkpoint_percentages = [35, 70, 100]
+      instance_warmup        = 300
       min_healthy_percentage = 50
     }
     triggers = ["tag"]
@@ -572,6 +575,9 @@ module "complete_lc" {
   instance_refresh = {
     strategy = "Rolling"
     preferences = {
+      checkpoint_delay       = 600
+      checkpoint_percentages = [35, 70, 100]
+      instance_warmup        = 300
       min_healthy_percentage = 50
     }
     triggers = ["tag"]
@@ -665,6 +671,9 @@ module "mixed_instance" {
   instance_refresh = {
     strategy = "Rolling"
     preferences = {
+      checkpoint_delay       = 600
+      checkpoint_percentages = [35, 70, 100]
+      instance_warmup        = 300
       min_healthy_percentage = 50
     }
     triggers = ["tag"]
