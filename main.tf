@@ -376,6 +376,8 @@ resource "aws_autoscaling_group" "this" {
       dynamic "preferences" {
         for_each = lookup(instance_refresh.value, "preferences", null) != null ? [instance_refresh.value.preferences] : []
         content {
+          checkpoint_delay       = lookup(preferences.value, "checkpoint_delay", null)
+          checkpoint_percentages = lookup(preferences.value, "checkpoint_percentages", null)
           instance_warmup        = lookup(preferences.value, "instance_warmup", null)
           min_healthy_percentage = lookup(preferences.value, "min_healthy_percentage", null)
         }
