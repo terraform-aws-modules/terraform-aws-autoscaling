@@ -1,3 +1,14 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [4.8.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.8.0...v4.8.1) (2021-11-15)
+
+
+### Bug Fixes
+
+* update CI/CD process to enable auto-release workflow ([#168](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/168)) ([d0338a8](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/d0338a8163c239a404d72bf9c57377b0eca62f68))
+
 <a name="v4.8.0"></a>
 ## [v4.8.0] - 2021-11-15
 
