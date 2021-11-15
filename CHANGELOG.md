@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v4.8.0"></a>
+## [v4.8.0] - 2021-11-15
+
+- feat: add checkpoint_delay, checkpoint_percent to instance refresh ([#166](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/166))
+- docs: Fixed max_instance_lifetime min value in description ([#165](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/165))
+
+
 <a name="v4.7.0"></a>
 ## [v4.7.0] - 2021-10-08
 
@@ -284,7 +291,8 @@ All notable changes to this project will be documented in this file.
 - Initial commit
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.7.0...HEAD
+[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.8.0...HEAD
+[v4.8.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.7.0...v4.8.0
 [v4.7.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.6.0...v4.7.0
 [v4.6.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.5.0...v4.6.0
 [v4.5.0]: https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.4.0...v4.5.0
