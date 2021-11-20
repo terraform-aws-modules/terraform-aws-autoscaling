@@ -87,7 +87,7 @@ output "autoscaling_group_health_check_type" {
 
 output "autoscaling_group_availability_zones" {
   description = "The availability zones of the autoscale group"
-  value       = try(aws_autoscaling_group.this[0].availability_zones, [""])
+  value       = try(aws_autoscaling_group.this[0].availability_zones, [])
 }
 
 output "autoscaling_group_vpc_zone_identifier" {
@@ -97,12 +97,12 @@ output "autoscaling_group_vpc_zone_identifier" {
 
 output "autoscaling_group_load_balancers" {
   description = "The load balancer names associated with the autoscaling group"
-  value       = try(aws_autoscaling_group.this[0].load_balancers, "")
+  value       = try(aws_autoscaling_group.this[0].load_balancers, [])
 }
 
 output "autoscaling_group_target_group_arns" {
   description = "List of Target Group ARNs that apply to this AutoScaling Group"
-  value       = try(aws_autoscaling_group.this[0].target_group_arns, "")
+  value       = try(aws_autoscaling_group.this[0].target_group_arns, [])
 }
 
 ################################################################################
