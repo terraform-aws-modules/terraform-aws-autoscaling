@@ -87,7 +87,7 @@ output "autoscaling_group_health_check_type" {
 
 output "autoscaling_group_availability_zones" {
   description = "The availability zones of the autoscale group"
-  value       = try(aws_autoscaling_group.this[0].availability_zones, "")
+  value       = try(aws_autoscaling_group.this[0].availability_zones, [""])
 }
 
 output "autoscaling_group_vpc_zone_identifier" {
