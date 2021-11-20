@@ -10,7 +10,7 @@ locals {
 
   tags = distinct(concat(
     [for k, v in data.aws_default_tags.current.tags :
-      { key                 = v
+      { key                 = k
         value               = v
         propagate_at_launch = true
       }
