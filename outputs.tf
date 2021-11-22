@@ -92,7 +92,7 @@ output "autoscaling_group_availability_zones" {
 
 output "autoscaling_group_vpc_zone_identifier" {
   description = "The VPC zone identifier"
-  value       = try(aws_autoscaling_group.this[0].vpc_zone_identifier, "")
+  value       = try(aws_autoscaling_group.this[0].vpc_zone_identifier, [])
 }
 
 output "autoscaling_group_load_balancers" {
