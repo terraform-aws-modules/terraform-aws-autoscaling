@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [4.9.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.8.1...v4.9.0) (2021-11-22)
+
+
+### Features
+
+* add missing attributes to launch template, remove null resource for tag propagation, propagate default tags to instances, allow propagated name to be set independently of ASG ([#169](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/169)) ([f14ca13](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/f14ca13e28c1af150d65a7cd6f9d35d0863e33ae))
+
 ## [4.8.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.8.0...v4.8.1) (2021-11-15)
 
 
