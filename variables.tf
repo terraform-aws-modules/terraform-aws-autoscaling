@@ -19,6 +19,12 @@ variable "use_name_prefix" {
   default     = true
 }
 
+variable "instance_name" {
+  description = "Name that is propogated to launched EC2 instances via a tag - if not provided, defaults to `var.name`"
+  type        = string
+  default     = ""
+}
+
 variable "launch_configuration" {
   description = "Name of an existing launch configuration to be used (created outside of this module)"
   type        = string
@@ -218,7 +224,7 @@ variable "tags_as_map" {
 }
 
 variable "propagate_name" {
-  description = "Determines whether to propagate the ASG Name tag or not"
+  description = "Determines whether to propagate the `var.instance_name`/`var.name` tag to launch instances"
   type        = bool
   default     = true
 }

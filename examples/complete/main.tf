@@ -1,6 +1,12 @@
 provider "aws" {
   region = local.region
 
+  default_tags {
+    tags = {
+      Project = "terraform-aws-autoscaling"
+    }
+  }
+
   # Make it faster by skipping something
   skip_get_ec2_platforms      = true
   skip_metadata_api_check     = true
@@ -21,7 +27,7 @@ locals {
     },
     {
       key                 = "foo"
-      value               = ""
+      value               = "something"
       propagate_at_launch = true
     },
   ]
@@ -357,6 +363,7 @@ module "complete_lt" {
   # Autoscaling group
   name            = "complete-lt-${local.name}"
   use_name_prefix = false
+  instance_name   = "my-instance-name"
 
   min_size                  = 0
   max_size                  = 1
@@ -544,6 +551,7 @@ module "complete_lc" {
   # Autoscaling group
   name            = "complete-lc-${local.name}"
   use_name_prefix = false
+  instance_name   = "my-instance-name"
 
   min_size                  = 0
   max_size                  = 1
