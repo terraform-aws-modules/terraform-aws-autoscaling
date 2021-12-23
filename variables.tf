@@ -8,6 +8,12 @@ variable "create_asg" {
   default     = true
 }
 
+variable "ignore_desired_capacity_changes" {
+  description = "Determines whether the `desired_capacity` value is ignored after initial apply. See README note for more details"
+  type        = bool
+  default     = false
+}
+
 variable "name" {
   description = "Name used across the resources created"
   type        = string
@@ -23,12 +29,6 @@ variable "instance_name" {
   description = "Name that is propogated to launched EC2 instances via a tag - if not provided, defaults to `var.name`"
   type        = string
   default     = ""
-}
-
-variable "launch_configuration" {
-  description = "Name of an existing launch configuration to be used (created outside of this module)"
-  type        = string
-  default     = null
 }
 
 variable "launch_template" {
@@ -235,10 +235,6 @@ variable "warm_pool" {
   default     = null
 }
 
-################################################################################
-# Common - launch configuration or launch template
-################################################################################
-
 variable "ebs_optimized" {
   description = "If true, the launched EC2 instance will be EBS-optimized"
   type        = bool
@@ -270,7 +266,7 @@ variable "key_name" {
 }
 
 variable "user_data_base64" {
-  description = "The Base64-encoded user data to provide when launching the instance. You should use this for Launch Templates instead user_data"
+  description = "The Base64-encoded user data to provide when launching the instance"
   type        = string
   default     = null
 }
@@ -291,76 +287,6 @@ variable "metadata_options" {
   description = "Customize the metadata options for the instance"
   type        = map(string)
   default     = null
-}
-
-################################################################################
-# Launch configuration
-################################################################################
-
-variable "create_lc" {
-  description = "Determines whether to create launch configuration or not"
-  type        = bool
-  default     = false
-}
-
-variable "use_lc" {
-  description = "Determines whether to use a launch configuration in the autoscaling group or not"
-  type        = bool
-  default     = false
-}
-
-variable "lc_name" {
-  description = "Name of launch configuration to be created"
-  type        = string
-  default     = ""
-}
-
-variable "lc_use_name_prefix" {
-  description = "Determines whether to use `lc_name` as is or create a unique name beginning with the `lc_name` as the prefix"
-  type        = bool
-  default     = true
-}
-
-variable "user_data" {
-  description = "(LC) The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument nor when using Launch Templates; see `user_data_base64` instead"
-  type        = string
-  default     = null
-}
-
-variable "associate_public_ip_address" {
-  description = "(LC) Associate a public ip address with an instance in a VPC"
-  type        = bool
-  default     = null
-}
-
-variable "spot_price" {
-  description = "(LC) The maximum price to use for reserving spot instances (defaults to on-demand price)"
-  type        = string
-  default     = null
-}
-
-variable "placement_tenancy" {
-  description = "(LC) The tenancy of the instance. Valid values are `default` or `dedicated`"
-  type        = string
-  default     = null
-}
-
-variable "ebs_block_device" {
-  description = "(LC) Additional EBS block devices to attach to the instance"
-  type        = list(map(string))
-  default     = []
-}
-
-variable "ephemeral_block_device" {
-  description = "(LC) Customize Ephemeral (also known as 'Instance Store') volumes on the instance"
-  type        = list(map(string))
-  default     = []
-}
-
-variable "root_block_device" {
-  description = "(LC) Customize details about the root block device of the instance"
-  type        = list(map(string))
-  default     = []
 }
 
 ################################################################################
@@ -392,127 +318,127 @@ variable "lt_use_name_prefix" {
 }
 
 variable "description" {
-  description = "(LT) Description of the launch template"
+  description = "Description of the launch template"
   type        = string
   default     = null
 }
 
 variable "default_version" {
-  description = "(LT) Default Version of the launch template"
+  description = "Default Version of the launch template"
   type        = string
   default     = null
 }
 
 variable "update_default_version" {
-  description = "(LT) Whether to update Default Version each update. Conflicts with `default_version`"
+  description = "Whether to update Default Version each update. Conflicts with `default_version`"
   type        = string
   default     = null
 }
 
 variable "disable_api_termination" {
-  description = "(LT) If true, enables EC2 instance termination protection"
+  description = "If true, enables EC2 instance termination protection"
   type        = bool
   default     = null
 }
 
 variable "instance_initiated_shutdown_behavior" {
-  description = "(LT) Shutdown behavior for the instance. Can be `stop` or `terminate`. (Default: `stop`)"
+  description = "Shutdown behavior for the instance. Can be `stop` or `terminate`. (Default: `stop`)"
   type        = string
   default     = null
 }
 
 variable "kernel_id" {
-  description = "(LT) The kernel ID"
+  description = "The kernel ID"
   type        = string
   default     = null
 }
 
 variable "ram_disk_id" {
-  description = "(LT) The ID of the ram disk"
+  description = "The ID of the ram disk"
   type        = string
   default     = null
 }
 
 variable "block_device_mappings" {
-  description = "(LT) Specify volumes to attach to the instance besides the volumes specified by the AMI"
+  description = "Specify volumes to attach to the instance besides the volumes specified by the AMI"
   type        = list(any)
   default     = []
 }
 
 variable "capacity_reservation_specification" {
-  description = "(LT) Targeting for EC2 capacity reservations"
+  description = "Targeting for EC2 capacity reservations"
   type        = any
   default     = null
 }
 
 variable "cpu_options" {
-  description = "(LT) The CPU options for the instance"
+  description = "The CPU options for the instance"
   type        = map(string)
   default     = null
 }
 
 variable "credit_specification" {
-  description = "(LT) Customize the credit specification of the instance"
+  description = "Customize the credit specification of the instance"
   type        = map(string)
   default     = null
 }
 
 variable "elastic_gpu_specifications" {
-  description = "(LT) The elastic GPU to attach to the instance"
+  description = "The elastic GPU to attach to the instance"
   type        = map(string)
   default     = null
 }
 
 variable "elastic_inference_accelerator" {
-  description = "(LT) Configuration block containing an Elastic Inference Accelerator to attach to the instance"
+  description = "Configuration block containing an Elastic Inference Accelerator to attach to the instance"
   type        = map(string)
   default     = null
 }
 
 variable "enclave_options" {
-  description = "(LT) Enable Nitro Enclaves on launched instances"
+  description = "Enable Nitro Enclaves on launched instances"
   type        = map(string)
   default     = null
 }
 
 variable "hibernation_options" {
-  description = "(LT) The hibernation options for the instance"
+  description = "The hibernation options for the instance"
   type        = map(string)
   default     = null
 }
 
 variable "iam_instance_profile_arn" {
-  description = "(LT) The IAM Instance Profile ARN to launch the instance with"
+  description = "The IAM Instance Profile ARN to launch the instance with"
   type        = string
   default     = null
 }
 
 variable "instance_market_options" {
-  description = "(LT) The market (purchasing) option for the instance"
+  description = "The market (purchasing) option for the instance"
   type        = any
   default     = null
 }
 
 variable "license_specifications" {
-  description = "(LT) A list of license specifications to associate with"
+  description = "A list of license specifications to associate with"
   type        = map(string)
   default     = null
 }
 
 variable "network_interfaces" {
-  description = "(LT) Customize network interfaces to be attached at instance boot time"
+  description = "Customize network interfaces to be attached at instance boot time"
   type        = list(any)
   default     = []
 }
 
 variable "placement" {
-  description = "(LT) The placement of the instance"
+  description = "The placement of the instance"
   type        = map(string)
   default     = null
 }
 
 variable "tag_specifications" {
-  description = "(LT) The tags to apply to the resources during launch"
+  description = "The tags to apply to the resources during launch"
   type        = list(any)
   default     = []
 }

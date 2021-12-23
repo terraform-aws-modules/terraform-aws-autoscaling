@@ -1,23 +1,4 @@
 ################################################################################
-# Launch configuration
-################################################################################
-
-output "launch_configuration_id" {
-  description = "The ID of the launch configuration"
-  value       = try(aws_launch_configuration.this[0].id, "")
-}
-
-output "launch_configuration_arn" {
-  description = "The ARN of the launch configuration"
-  value       = try(aws_launch_configuration.this[0].arn, "")
-}
-
-output "launch_configuration_name" {
-  description = "The name of the launch configuration"
-  value       = try(aws_launch_configuration.this[0].name, "")
-}
-
-################################################################################
 # Launch template
 ################################################################################
 
@@ -42,67 +23,67 @@ output "launch_template_latest_version" {
 
 output "autoscaling_group_id" {
   description = "The autoscaling group id"
-  value       = try(aws_autoscaling_group.this[0].id, "")
+  value       = try(aws_autoscaling_group.this[0].id, aws_autoscaling_group.idc[0].id, "")
 }
 
 output "autoscaling_group_name" {
   description = "The autoscaling group name"
-  value       = try(aws_autoscaling_group.this[0].name, "")
+  value       = try(aws_autoscaling_group.this[0].name, aws_autoscaling_group.idc[0].name, "")
 }
 
 output "autoscaling_group_arn" {
   description = "The ARN for this AutoScaling Group"
-  value       = try(aws_autoscaling_group.this[0].arn, "")
+  value       = try(aws_autoscaling_group.this[0].arn, aws_autoscaling_group.idc[0].arn, "")
 }
 
 output "autoscaling_group_min_size" {
   description = "The minimum size of the autoscale group"
-  value       = try(aws_autoscaling_group.this[0].min_size, "")
+  value       = try(aws_autoscaling_group.this[0].min_size, aws_autoscaling_group.idc[0].min_size, "")
 }
 
 output "autoscaling_group_max_size" {
   description = "The maximum size of the autoscale group"
-  value       = try(aws_autoscaling_group.this[0].max_size, "")
+  value       = try(aws_autoscaling_group.this[0].max_size, aws_autoscaling_group.idc[0].max_size, "")
 }
 
 output "autoscaling_group_desired_capacity" {
   description = "The number of Amazon EC2 instances that should be running in the group"
-  value       = try(aws_autoscaling_group.this[0].desired_capacity, "")
+  value       = try(aws_autoscaling_group.this[0].desired_capacity, aws_autoscaling_group.idc[0].desired_capacity, "")
 }
 
 output "autoscaling_group_default_cooldown" {
   description = "Time between a scaling activity and the succeeding scaling activity"
-  value       = try(aws_autoscaling_group.this[0].default_cooldown, "")
+  value       = try(aws_autoscaling_group.this[0].default_cooldown, aws_autoscaling_group.idc[0].default_cooldown, "")
 }
 
 output "autoscaling_group_health_check_grace_period" {
   description = "Time after instance comes into service before checking health"
-  value       = try(aws_autoscaling_group.this[0].health_check_grace_period, "")
+  value       = try(aws_autoscaling_group.this[0].health_check_grace_period, aws_autoscaling_group.idc[0].health_check_grace_period, "")
 }
 
 output "autoscaling_group_health_check_type" {
   description = "EC2 or ELB. Controls how health checking is done"
-  value       = try(aws_autoscaling_group.this[0].health_check_type, "")
+  value       = try(aws_autoscaling_group.this[0].health_check_type, aws_autoscaling_group.idc[0].health_check_type, "")
 }
 
 output "autoscaling_group_availability_zones" {
   description = "The availability zones of the autoscale group"
-  value       = try(aws_autoscaling_group.this[0].availability_zones, [])
+  value       = try(aws_autoscaling_group.this[0].availability_zones, aws_autoscaling_group.idc[0].availability_zones, [])
 }
 
 output "autoscaling_group_vpc_zone_identifier" {
   description = "The VPC zone identifier"
-  value       = try(aws_autoscaling_group.this[0].vpc_zone_identifier, [])
+  value       = try(aws_autoscaling_group.this[0].vpc_zone_identifier, aws_autoscaling_group.idc[0].vpc_zone_identifier, [])
 }
 
 output "autoscaling_group_load_balancers" {
   description = "The load balancer names associated with the autoscaling group"
-  value       = try(aws_autoscaling_group.this[0].load_balancers, [])
+  value       = try(aws_autoscaling_group.this[0].load_balancers, aws_autoscaling_group.idc[0].load_balancers, [])
 }
 
 output "autoscaling_group_target_group_arns" {
   description = "List of Target Group ARNs that apply to this AutoScaling Group"
-  value       = try(aws_autoscaling_group.this[0].target_group_arns, [])
+  value       = try(aws_autoscaling_group.this[0].target_group_arns, aws_autoscaling_group.idc[0].target_group_arns, [])
 }
 
 ################################################################################
