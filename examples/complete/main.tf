@@ -186,7 +186,8 @@ module "alb" {
 module "disabled" {
   source = "../../"
 
-  create_asg = false
+  create                 = false
+  create_launch_template = false
 
   # Autoscaling group
   name = "disabled-${local.name}"
@@ -199,8 +200,8 @@ module "disabled" {
 module "launch_template_only" {
   source = "../../"
 
-  create_asg = false
-  name       = "launch-template-only-${local.name}"
+  create = false
+  name   = "launch-template-only-${local.name}"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
@@ -281,6 +282,8 @@ module "complete" {
   use_name_prefix = false
   instance_name   = "my-instance-name"
 
+  ignore_desired_capacity_changes = true
+
   min_size                  = 0
   max_size                  = 1
   desired_capacity          = 1
@@ -320,9 +323,9 @@ module "complete" {
   }
 
   # Launch template
-  launch_template_name   = "complete-${local.name}"
-  description            = "Complete launch template example"
-  update_default_version = true
+  launch_template_name        = "complete-${local.name}"
+  launch_template_description = "Complete launch template example"
+  update_default_version      = true
 
   image_id          = data.aws_ami.amazon_linux.id
   instance_type     = "t3.micro"

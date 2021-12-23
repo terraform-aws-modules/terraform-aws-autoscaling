@@ -39,7 +39,7 @@ resource "aws_launch_template" "this" {
 
   name        = var.launch_template_use_name_prefix ? null : local.launch_template_name
   name_prefix = var.launch_template_use_name_prefix ? "${local.launch_template_name}-" : null
-  description = var.description
+  description = var.launch_template_description
 
   ebs_optimized = var.ebs_optimized
   image_id      = var.image_id
@@ -150,7 +150,7 @@ resource "aws_launch_template" "this" {
       market_type = instance_market_options.value.market_type
 
       dynamic "spot_options" {
-        for_each = can(instance_market_options.value["spot_options"]) ? [instance_market_options.value.spot_options] : []
+        for_each = can(instance_market_options.value.spot_options) ? [instance_market_options.value.spot_options] : []
         content {
           block_duration_minutes         = lookup(spot_options.value, "block_duration_minutes", null)
           instance_interruption_behavior = lookup(spot_options.value, "instance_interruption_behavior", null)
@@ -195,14 +195,14 @@ resource "aws_launch_template" "this" {
       description                  = lookup(network_interfaces.value, "description", null)
       device_index                 = lookup(network_interfaces.value, "device_index", null)
       interface_type               = lookup(network_interfaces.value, "interface_type", null)
-      ipv4_addresses               = can(network_interfaces.value.ipv4_addresses) ? network_interfaces.value.ipv4_addresses : []
+      ipv4_addresses               = try(network_interfaces.value.ipv4_addresses, [])
       ipv4_address_count           = lookup(network_interfaces.value, "ipv4_address_count", null)
-      ipv6_addresses               = can(network_interfaces.value.ipv6_addresses) ? network_interfaces.value.ipv6_addresses : []
+      ipv6_addresses               = try(network_interfaces.value.ipv6_addresses, [])
       ipv6_address_count           = lookup(network_interfaces.value, "ipv6_address_count", null)
       network_interface_id         = lookup(network_interfaces.value, "network_interface_id", null)
       network_card_index           = lookup(network_interfaces.value, "network_card_index", null)
       private_ip_address           = lookup(network_interfaces.value, "private_ip_address", null)
-      security_groups              = can(network_interfaces.value.security_groups.null) ? network_interfaces.value.security_groups : []
+      security_groups              = try(network_interfaces.value.security_groups, [])
       subnet_id                    = lookup(network_interfaces.value, "subnet_id", null)
     }
   }
@@ -241,7 +241,7 @@ resource "aws_launch_template" "this" {
 ################################################################################
 
 resource "aws_autoscaling_group" "this" {
-  count = var.create_asg && !var.ignore_desired_capacity_changes ? 1 : 0
+  count = var.create && !var.ignore_desired_capacity_changes ? 1 : 0
 
   name        = var.use_name_prefix ? null : var.name
   name_prefix = var.use_name_prefix ? "${var.name}-" : null
@@ -336,7 +336,7 @@ resource "aws_autoscaling_group" "this" {
         }
 
         dynamic "override" {
-          for_each = can(mixed_instances_policy.value.override) ? [mixed_instances_policy.value.override] : []
+          for_each = can(mixed_instances_policy.value.override) ? mixed_instances_policy.value.override : []
           content {
             instance_type     = lookup(override.value, "instance_type", null)
             weighted_capacity = lookup(override.value, "weighted_capacity", null)
@@ -378,7 +378,7 @@ resource "aws_autoscaling_group" "this" {
 ################################################################################
 
 resource "aws_autoscaling_group" "idc" {
-  count = var.create_asg && var.ignore_desired_capacity_changes ? 1 : 0
+  count = var.create && var.ignore_desired_capacity_changes ? 1 : 0
 
   name        = var.use_name_prefix ? null : var.name
   name_prefix = var.use_name_prefix ? "${var.name}-" : null
@@ -516,7 +516,7 @@ resource "aws_autoscaling_group" "idc" {
 ################################################################################
 
 resource "aws_autoscaling_schedule" "this" {
-  for_each = var.create_asg && var.create_schedule ? var.schedules : {}
+  for_each = var.create && var.create_schedule ? var.schedules : {}
 
   scheduled_action_name  = each.key
   autoscaling_group_name = try(aws_autoscaling_group.this[0].name, aws_autoscaling_group.idc[0].name)

@@ -2,7 +2,7 @@
 # Autoscaling group
 ################################################################################
 
-variable "create_asg" {
+variable "create" {
   description = "Determines whether to create autoscaling group or not"
   type        = bool
   default     = true
@@ -311,7 +311,7 @@ variable "launch_template_use_name_prefix" {
   default     = true
 }
 
-variable "description" {
+variable "launch_template_description" {
   description = "Description of the launch template"
   type        = string
   default     = null
