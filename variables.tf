@@ -37,7 +37,7 @@ variable "launch_template" {
   default     = null
 }
 
-variable "lt_version" {
+variable "launch_template_version" {
   description = "Launch template version. Can be version number, `$Latest`, or `$Default`"
   type        = string
   default     = null
@@ -293,26 +293,20 @@ variable "metadata_options" {
 # Launch template
 ################################################################################
 
-variable "create_lt" {
+variable "create_launch_template" {
   description = "Determines whether to create launch template or not"
   type        = bool
-  default     = false
+  default     = true
 }
 
-variable "use_lt" {
-  description = "Determines whether to use a launch template in the autoscaling group or not"
-  type        = bool
-  default     = false
-}
-
-variable "lt_name" {
+variable "launch_template_name" {
   description = "Name of launch template to be created"
   type        = string
   default     = ""
 }
 
-variable "lt_use_name_prefix" {
-  description = "Determines whether to use `lt_name` as is or create a unique name beginning with the `lt_name` as the prefix"
+variable "launch_template_use_name_prefix" {
+  description = "Determines whether to use `launch_template_name` as is or create a unique name beginning with the `launch_template_name` as the prefix"
   type        = bool
   default     = true
 }

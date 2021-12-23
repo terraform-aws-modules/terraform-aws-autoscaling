@@ -1,9 +1,9 @@
 data "aws_default_tags" "current" {}
 
 locals {
-  lt_name                 = coalesce(var.lt_name, var.name)
-  launch_template         = var.create_lt ? aws_launch_template.this[0].name : var.launch_template
-  launch_template_version = var.create_lt && var.lt_version == null ? aws_launch_template.this[0].latest_version : var.lt_version
+  launch_template_name    = coalesce(var.launch_template_name, var.name)
+  launch_template         = var.create_launch_template ? aws_launch_template.this[0].name : var.launch_template
+  launch_template_version = var.create_launch_template && var.launch_template_version == null ? aws_launch_template.this[0].latest_version : var.launch_template_version
 
   tags = distinct(concat(
     [for k, v in data.aws_default_tags.current.tags :
@@ -35,10 +35,10 @@ locals {
 ################################################################################
 
 resource "aws_launch_template" "this" {
-  count = var.create_lt ? 1 : 0
+  count = var.create_launch_template ? 1 : 0
 
-  name        = var.lt_use_name_prefix ? null : local.lt_name
-  name_prefix = var.lt_use_name_prefix ? "${local.lt_name}-" : null
+  name        = var.launch_template_use_name_prefix ? null : local.launch_template_name
+  name_prefix = var.launch_template_use_name_prefix ? "${local.launch_template_name}-" : null
   description = var.description
 
   ebs_optimized = var.ebs_optimized
@@ -247,7 +247,7 @@ resource "aws_autoscaling_group" "this" {
   name_prefix = var.use_name_prefix ? "${var.name}-" : null
 
   dynamic "launch_template" {
-    for_each = var.use_lt ? [1] : []
+    for_each = var.use_mixed_instances_policy ? [] : [1]
 
     content {
       name    = local.launch_template
@@ -384,7 +384,7 @@ resource "aws_autoscaling_group" "idc" {
   name_prefix = var.use_name_prefix ? "${var.name}-" : null
 
   dynamic "launch_template" {
-    for_each = var.use_lt ? [1] : []
+    for_each = var.use_mixed_instances_policy ? [] : [1]
 
     content {
       name    = local.launch_template

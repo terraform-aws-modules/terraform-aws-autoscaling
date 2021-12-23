@@ -196,19 +196,16 @@ module "disabled" {
 # Launch template only
 ################################################################################
 
-module "lt_only" {
+module "launch_template_only" {
   source = "../../"
 
   create_asg = false
-  name       = "lt-only-${local.name}"
+  name       = "launch-template-only-${local.name}"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
   max_size            = 1
   desired_capacity    = 1
-
-  # Launch template
-  create_lt = true
 
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
@@ -221,21 +218,16 @@ module "lt_only" {
 # Default
 ################################################################################
 
-# Launch template
-module "default_lt" {
+module "default" {
   source = "../../"
 
   # Autoscaling group
-  name = "default-lt-${local.name}"
+  name = "default-${local.name}"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
   max_size            = 1
   desired_capacity    = 1
-
-  # Launch template
-  use_lt    = true
-  create_lt = true
 
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
@@ -248,7 +240,6 @@ module "default_lt" {
 # External
 ################################################################################
 
-# Launch template
 resource "aws_launch_template" "this" {
   name_prefix   = "external-lt-${local.name}-"
   image_id      = data.aws_ami.amazon_linux.id
@@ -259,11 +250,11 @@ resource "aws_launch_template" "this" {
   }
 }
 
-module "external_lt" {
+module "external" {
   source = "../../"
 
   # Autoscaling group
-  name = "external-lt-${local.name}"
+  name = "external-${local.name}"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
@@ -271,8 +262,8 @@ module "external_lt" {
   desired_capacity    = 1
 
   # Launch template
-  use_lt          = true
-  launch_template = aws_launch_template.this.name
+  create_launch_template = false
+  launch_template        = aws_launch_template.this.name
 
   tags        = local.tags
   tags_as_map = local.tags_as_map
@@ -282,12 +273,11 @@ module "external_lt" {
 # Complete
 ################################################################################
 
-# Launch template
-module "complete_lt" {
+module "complete" {
   source = "../../"
 
   # Autoscaling group
-  name            = "complete-lt-${local.name}"
+  name            = "complete-${local.name}"
   use_name_prefix = false
   instance_name   = "my-instance-name"
 
@@ -330,12 +320,9 @@ module "complete_lt" {
   }
 
   # Launch template
-  lt_name                = "complete-lt-${local.name}"
+  launch_template_name   = "complete-${local.name}"
   description            = "Complete launch template example"
   update_default_version = true
-
-  use_lt    = true
-  create_lt = true
 
   image_id          = data.aws_ami.amazon_linux.id
   instance_type     = "t3.micro"
@@ -519,10 +506,6 @@ module "mixed_instance" {
     triggers = ["tag"]
   }
 
-  # Launch template
-  create_lt              = true
-  update_default_version = true
-
   # Mixed instances
   use_mixed_instances_policy = true
   mixed_instances_policy = {
@@ -552,20 +535,16 @@ module "mixed_instance" {
 # With warm pool
 ################################################################################
 
-module "warmed_lt" {
+module "warm_pool" {
   source = "../../"
 
   # Autoscaling group
-  name = "warmed-lt-${local.name}"
+  name = "warm-pool-${local.name}"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
   max_size            = 1
   desired_capacity    = 1
-
-  # Launch template
-  use_lt    = true
-  create_lt = true
 
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
