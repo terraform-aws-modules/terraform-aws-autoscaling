@@ -113,3 +113,13 @@ output "autoscaling_schedule_arns" {
   description = "ARNs of autoscaling group schedules"
   value       = { for k, v in aws_autoscaling_schedule.this : k => v.arn }
 }
+
+################################################################################
+# Target scaling policy schedule
+################################################################################
+
+output "autoscaling_schedule_arns" {
+  description = "ARNs of target scaling policy schedules"
+  value       = { for k, v in aws_autoscaling_policy.this : k => v.arn }
+}
+
