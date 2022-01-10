@@ -542,6 +542,20 @@ module "complete_lt" {
       end_time         = "2032-01-01T16:00:00Z"
     }
   }
+  # Target scaling policy schedule based on average CPU load
+  create_scaling_policy = true
+  scaling_policies = {
+    avg-cpu-policy-greater-than-50 = {
+      policy_type               = "TargetTrackingScaling"
+      estimated_instance_warmup = 1200
+      target_tracking_configuration = {
+        predefined_metric_specification = {
+          predefined_metric_type = "ASGAverageCPUUtilization"
+        }
+        target_value = 50.0
+      }
+    }
+  }
 }
 
 # Launch configuration
