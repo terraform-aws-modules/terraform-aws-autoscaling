@@ -474,12 +474,12 @@ resource "aws_autoscaling_schedule" "this" {
 }
 
 ################################################################################
-# Target scaling policy schedule
+# Autoscaling Policy
 ################################################################################
 resource "aws_autoscaling_policy" "this" {
-  for_each = var.create_asg && var.create_scaling_policy ? var.scaling_policies : {}
+  for_each = { for k,v in var.scaling_policies : k => v if var.create_asg && var.create_scaling_policy }
 
-  name                      = each.key
+  name                      = lookup(each.value, "name", each.key)
   autoscaling_group_name    = aws_autoscaling_group.this[0].name
 
   adjustment_type           = lookup(each.value, "adjustment_type", null)

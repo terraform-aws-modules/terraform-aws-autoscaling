@@ -8,6 +8,7 @@ Available features
 - Autoscaling group with launch template - either created by the module or utilizing an existing launch template
 - Autoscaling group utilizing mixed instances policy
 - Ability to configure autoscaling groups to set instance refresh configuration and add lifecycle hooks
+- Ability to configure autoscaling policies
 
 ## Usage
 
@@ -220,6 +221,17 @@ The following combinations are supported to conditionally create resources and/o
 ```hcl
   use_lt          = true
   launch_template = aws_launch_template.my_launch_template.name
+```
+
+- Create the autoscaling policies:
+
+```
+  create_scaling_policy = true
+  scaling_policies = {
+    my-policy = {
+      
+    }
+  }
 ```
 
 ## Tags
