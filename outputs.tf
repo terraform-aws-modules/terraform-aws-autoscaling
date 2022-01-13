@@ -122,4 +122,3 @@ output "autoscaling_policies" {
   description = "ARNs of autoscaling policies"
   value       = aws_autoscaling_policy.this
 }
-

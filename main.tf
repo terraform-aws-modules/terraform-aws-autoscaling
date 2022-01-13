@@ -477,10 +477,10 @@ resource "aws_autoscaling_schedule" "this" {
 # Autoscaling Policy
 ################################################################################
 resource "aws_autoscaling_policy" "this" {
-  for_each = { for k,v in var.scaling_policies : k => v if var.create_asg && var.create_scaling_policy }
+  for_each = { for k, v in var.scaling_policies : k => v if var.create_asg && var.create_scaling_policy }
 
-  name                      = lookup(each.value, "name", each.key)
-  autoscaling_group_name    = aws_autoscaling_group.this[0].name
+  name                   = lookup(each.value, "name", each.key)
+  autoscaling_group_name = aws_autoscaling_group.this[0].name
 
   adjustment_type           = lookup(each.value, "adjustment_type", null)
   policy_type               = lookup(each.value, "policy_type", null)
@@ -503,7 +503,7 @@ resource "aws_autoscaling_policy" "this" {
     content {
       target_value     = lookup(target_tracking_configuration.value, "target_value", null)
       disable_scale_in = lookup(target_tracking_configuration.value, "disable_scale_in", null)
-      
+
       dynamic "predefined_metric_specification" {
         for_each = lookup(target_tracking_configuration.value, "predefined_metric_specification", null) != null ? [target_tracking_configuration.value.predefined_metric_specification] : []
         content {
@@ -523,10 +523,10 @@ resource "aws_autoscaling_policy" "this" {
             }
           }
 
-          metric_name      = lookup(customized_metric_specification.value, "metric_name", null)
-          namespace        = lookup(customized_metric_specification.value, "namespace", null)
-          statistic        = lookup(customized_metric_specification.value, "statistic", null)
-          unit             = lookup(customized_metric_specification.value, "unit", null)
+          metric_name = lookup(customized_metric_specification.value, "metric_name", null)
+          namespace   = lookup(customized_metric_specification.value, "namespace", null)
+          statistic   = lookup(customized_metric_specification.value, "statistic", null)
+          unit        = lookup(customized_metric_specification.value, "unit", null)
         }
       }
     }
@@ -543,7 +543,7 @@ resource "aws_autoscaling_policy" "this" {
       dynamic "metric_specification" {
         for_each = lookup(predictive_scaling_configuration.value, "metric_specification", null) != null ? [predictive_scaling_configuration.value.metric_specification] : []
         content {
-          target_value     = lookup(metric_specification.value, "target_value", null)
+          target_value = lookup(metric_specification.value, "target_value", null)
 
           dynamic "predefined_load_metric_specification" {
             for_each = lookup(metric_specification.value, "predefined_load_metric_specification", null) != null ? [metric_specification.value.predefined_load_metric_specification] : []

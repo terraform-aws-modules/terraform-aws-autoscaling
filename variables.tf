@@ -549,4 +549,3 @@ variable "scaling_policies" {
   type        = map(any)
   default     = {}
 }
-
