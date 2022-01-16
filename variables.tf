@@ -541,7 +541,7 @@ variable "schedules" {
 variable "create_scaling_policy" {
   description = "Determines whether to create target scaling policy schedule or not"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "scaling_policies" {

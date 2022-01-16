@@ -226,10 +226,16 @@ The following combinations are supported to conditionally create resources and/o
 - Create the autoscaling policies:
 
 ```
-  create_scaling_policy = true
   scaling_policies = {
     my-policy = {
-      
+      policy_type               = "TargetTrackingScaling"
+      target_tracking_configuration = {
+        predefined_metric_specification = {
+          predefined_metric_type = "ASGAverageCPUUtilization"
+          resource_label         = "MyLabel"
+        }
+        target_value = 50.0
+      }
     }
   }
 ```
@@ -304,7 +310,7 @@ No modules.
 | <a name="input_create_asg"></a> [create\_asg](#input\_create\_asg) | Determines whether to create autoscaling group or not | `bool` | `true` | no |
 | <a name="input_create_lc"></a> [create\_lc](#input\_create\_lc) | Determines whether to create launch configuration or not | `bool` | `false` | no |
 | <a name="input_create_lt"></a> [create\_lt](#input\_create\_lt) | Determines whether to create launch template or not | `bool` | `false` | no |
-| <a name="input_create_scaling_policy"></a> [create\_scaling\_policy](#input\_create\_scaling\_policy) | Determines whether to create target scaling policy schedule or not | `bool` | `false` | no |
+| <a name="input_create_scaling_policy"></a> [create\_scaling\_policy](#input\_create\_scaling\_policy) | Determines whether to create target scaling policy schedule or not | `bool` | `true` | no |
 | <a name="input_create_schedule"></a> [create\_schedule](#input\_create\_schedule) | Determines whether to create autoscaling group schedule or not | `bool` | `true` | no |
 | <a name="input_credit_specification"></a> [credit\_specification](#input\_credit\_specification) | (LT) Customize the credit specification of the instance | `map(string)` | `null` | no |
 | <a name="input_default_cooldown"></a> [default\_cooldown](#input\_default\_cooldown) | The amount of time, in seconds, after a scaling activity completes before another scaling activity can start | `number` | `null` | no |

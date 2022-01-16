@@ -492,7 +492,7 @@ resource "aws_autoscaling_policy" "this" {
   dynamic "step_adjustment" {
     for_each = lookup(each.value, "step_adjustment", null) != null ? [each.value.step_adjustment] : []
     content {
-      scaling_adjustment          = lookup(step_adjustment.value, "scaling_adjustment", null)
+      scaling_adjustment          = step_adjustment.value.scaling_adjustment
       metric_interval_lower_bound = lookup(step_adjustment.value, "metric_interval_lower_bound", null)
       metric_interval_upper_bound = lookup(step_adjustment.value, "metric_interval_upper_bound", null)
     }
@@ -501,13 +501,13 @@ resource "aws_autoscaling_policy" "this" {
   dynamic "target_tracking_configuration" {
     for_each = lookup(each.value, "target_tracking_configuration", null) != null ? [each.value.target_tracking_configuration] : []
     content {
-      target_value     = lookup(target_tracking_configuration.value, "target_value", null)
+      target_value     = target_tracking_configuration.value.target_value
       disable_scale_in = lookup(target_tracking_configuration.value, "disable_scale_in", null)
 
       dynamic "predefined_metric_specification" {
         for_each = lookup(target_tracking_configuration.value, "predefined_metric_specification", null) != null ? [target_tracking_configuration.value.predefined_metric_specification] : []
         content {
-          predefined_metric_type = lookup(predefined_metric_specification.value, "predefined_metric_type", null)
+          predefined_metric_type = predefined_metric_specification.value.predefined_metric_type
         }
       }
 
@@ -523,9 +523,9 @@ resource "aws_autoscaling_policy" "this" {
             }
           }
 
-          metric_name = lookup(customized_metric_specification.value, "metric_name", null)
-          namespace   = lookup(customized_metric_specification.value, "namespace", null)
-          statistic   = lookup(customized_metric_specification.value, "statistic", null)
+          metric_name = customized_metric_specification.value.metric_name
+          namespace   = customized_metric_specification.value.namespace
+          statistic   = customized_metric_specification.value.statistic
           unit        = lookup(customized_metric_specification.value, "unit", null)
         }
       }
@@ -541,31 +541,31 @@ resource "aws_autoscaling_policy" "this" {
       scheduling_buffer_time       = lookup(predictive_scaling_configuration.value, "scheduling_buffer_time", null)
 
       dynamic "metric_specification" {
-        for_each = lookup(predictive_scaling_configuration.value, "metric_specification", null) != null ? [predictive_scaling_configuration.value.metric_specification] : []
+        for_each = lookup(predictive_scaling_configuration.value, "metric_specification", [])
         content {
-          target_value = lookup(metric_specification.value, "target_value", null)
+          target_value = metric_specification.value.target_value
 
           dynamic "predefined_load_metric_specification" {
             for_each = lookup(metric_specification.value, "predefined_load_metric_specification", null) != null ? [metric_specification.value.predefined_load_metric_specification] : []
             content {
-              predefined_metric_type = lookup(predefined_load_metric_specification.value, "predefined_metric_type", null)
-              resource_label         = lookup(predefined_load_metric_specification.value, "resource_label", null)
+              predefined_metric_type = predefined_load_metric_specification.value.predefined_metric_type
+              resource_label         = predefined_load_metric_specification.value.resource_label
             }
           }
 
           dynamic "predefined_metric_pair_specification" {
             for_each = lookup(metric_specification.value, "predefined_metric_pair_specification", null) != null ? [metric_specification.value.predefined_metric_pair_specification] : []
             content {
-              predefined_metric_type = lookup(predefined_metric_pair_specification.value, "predefined_metric_type", null)
-              resource_label         = lookup(predefined_metric_pair_specification.value, "resource_label", null)
+              predefined_metric_type = predefined_metric_pair_specification.value.predefined_metric_type
+              resource_label         = predefined_metric_pair_specification.value.resource_label
             }
           }
 
           dynamic "predefined_scaling_metric_specification" {
             for_each = lookup(metric_specification.value, "predefined_scaling_metric_specification", null) != null ? [metric_specification.value.predefined_scaling_metric_specification] : []
             content {
-              predefined_metric_type = lookup(predefined_scaling_metric_specification.value, "predefined_metric_type", null)
-              resource_label         = lookup(predefined_scaling_metric_specification.value, "resource_label", null)
+              predefined_metric_type = predefined_scaling_metric_specification.value.predefined_metric_type
+              resource_label         = predefined_scaling_metric_specification.value.resource_label
             }
           }
         }

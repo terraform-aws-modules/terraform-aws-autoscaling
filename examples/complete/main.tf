@@ -543,7 +543,6 @@ module "complete_lt" {
     }
   }
   # Target scaling policy schedule based on average CPU load
-  create_scaling_policy = true
   scaling_policies = {
     avg-cpu-policy-greater-than-50 = {
       policy_type               = "TargetTrackingScaling"
@@ -553,6 +552,26 @@ module "complete_lt" {
           predefined_metric_type = "ASGAverageCPUUtilization"
         }
         target_value = 50.0
+      }
+    },
+    predictive-scaling = {
+      policy_type            = "PredictiveScaling"
+      predictive_scaling_config = {
+        metric_specification = {
+          target_value = 32
+          predefined_scaling_metric_specification = {
+            predefined_metric_type = "ASGAverageCPUUtilization"
+            resource_label         = "testLabel"
+          }
+          predefined_load_metric_specification = {
+            predefined_metric_type = "ASGTotalCPUUtilization"
+            resource_label         = "testLabel"
+          }
+        }
+        mode                         = "ForecastAndScale"
+        scheduling_buffer_time       = 10
+        max_capacity_breach_behavior = "IncreaseMaxCapacity"
+        max_capacity_buffer          = 10
       }
     }
   }

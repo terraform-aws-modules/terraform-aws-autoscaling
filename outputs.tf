@@ -120,5 +120,5 @@ output "autoscaling_schedule_arns" {
 
 output "autoscaling_policies" {
   description = "ARNs of autoscaling policies"
-  value       = aws_autoscaling_policy.this
+  value       = { for k, v in aws_autoscaling_policy.this : k => v.arn }
 }
