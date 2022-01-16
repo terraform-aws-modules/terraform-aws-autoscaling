@@ -535,7 +535,7 @@ variable "schedules" {
 
 
 ################################################################################
-# Target scaling policy schedule
+# Autoscaling policy
 ################################################################################
 
 variable "create_scaling_policy" {
@@ -546,6 +546,6 @@ variable "create_scaling_policy" {
 
 variable "scaling_policies" {
   description = "Map of target scaling policy schedule to create"
-  type        = map(any)
+  type        = any
   default     = {}
 }

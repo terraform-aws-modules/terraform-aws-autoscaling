@@ -118,7 +118,7 @@ output "autoscaling_schedule_arns" {
 # Autoscaling Policy
 ################################################################################
 
-output "autoscaling_policies" {
+output "autoscaling_policy_arns" {
   description = "ARNs of autoscaling policies"
   value       = { for k, v in aws_autoscaling_policy.this : k => v.arn }
 }

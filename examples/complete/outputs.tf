@@ -537,6 +537,11 @@ output "complete_lc_autoscaling_group_target_group_arns" {
   value       = module.complete_lc.autoscaling_group_target_group_arns
 }
 
+output "complete_lc_autoscaling_policy_arns" {
+  description = "ARNs of autoscaling policies"
+  value       = module.complete_lt.autoscaling_policy_arns
+}
+
 ################################################################################
 # Mixed instance policy
 ################################################################################

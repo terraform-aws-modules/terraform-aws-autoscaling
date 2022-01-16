@@ -556,7 +556,7 @@ module "complete_lt" {
       }
     },
     predictive-scaling = {
-      policy_type            = "PredictiveScaling"
+      policy_type = "PredictiveScaling"
       predictive_scaling_config = {
         metric_specification = {
           target_value = 32
