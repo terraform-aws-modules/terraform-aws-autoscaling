@@ -8,6 +8,7 @@ Available features
 - Autoscaling group with launch template - either created by the module or utilizing an existing launch template
 - Autoscaling group utilizing mixed instances policy
 - Ability to configure autoscaling groups to set instance refresh configuration and add lifecycle hooks
+- Ability to configure autoscaling policies
 
 ## Usage
 
@@ -222,6 +223,23 @@ The following combinations are supported to conditionally create resources and/o
   launch_template = aws_launch_template.my_launch_template.name
 ```
 
+- Create the autoscaling policies:
+
+```
+  scaling_policies = {
+    my-policy = {
+      policy_type               = "TargetTrackingScaling"
+      target_tracking_configuration = {
+        predefined_metric_specification = {
+          predefined_metric_type = "ASGAverageCPUUtilization"
+          resource_label         = "MyLabel"
+        }
+        target_value = 50.0
+      }
+    }
+  }
+```
+
 ## Tags
 
 There are two ways to specify tags for auto-scaling group in this module - `tags` and `tags_as_map`.
@@ -273,6 +291,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_autoscaling_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
+| [aws_autoscaling_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_policy) | resource |
 | [aws_autoscaling_schedule.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_schedule) | resource |
 | [aws_launch_configuration.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration) | resource |
 | [aws_launch_template.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) | resource |
@@ -291,6 +310,7 @@ No modules.
 | <a name="input_create_asg"></a> [create\_asg](#input\_create\_asg) | Determines whether to create autoscaling group or not | `bool` | `true` | no |
 | <a name="input_create_lc"></a> [create\_lc](#input\_create\_lc) | Determines whether to create launch configuration or not | `bool` | `false` | no |
 | <a name="input_create_lt"></a> [create\_lt](#input\_create\_lt) | Determines whether to create launch template or not | `bool` | `false` | no |
+| <a name="input_create_scaling_policy"></a> [create\_scaling\_policy](#input\_create\_scaling\_policy) | Determines whether to create target scaling policy schedule or not | `bool` | `true` | no |
 | <a name="input_create_schedule"></a> [create\_schedule](#input\_create\_schedule) | Determines whether to create autoscaling group schedule or not | `bool` | `true` | no |
 | <a name="input_credit_specification"></a> [credit\_specification](#input\_credit\_specification) | (LT) Customize the credit specification of the instance | `map(string)` | `null` | no |
 | <a name="input_default_cooldown"></a> [default\_cooldown](#input\_default\_cooldown) | The amount of time, in seconds, after a scaling activity completes before another scaling activity can start | `number` | `null` | no |
@@ -347,6 +367,7 @@ No modules.
 | <a name="input_protect_from_scale_in"></a> [protect\_from\_scale\_in](#input\_protect\_from\_scale\_in) | Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events. | `bool` | `false` | no |
 | <a name="input_ram_disk_id"></a> [ram\_disk\_id](#input\_ram\_disk\_id) | (LT) The ID of the ram disk | `string` | `null` | no |
 | <a name="input_root_block_device"></a> [root\_block\_device](#input\_root\_block\_device) | (LC) Customize details about the root block device of the instance | `list(map(string))` | `[]` | no |
+| <a name="input_scaling_policies"></a> [scaling\_policies](#input\_scaling\_policies) | Map of target scaling policy schedule to create | `any` | `{}` | no |
 | <a name="input_schedules"></a> [schedules](#input\_schedules) | Map of autoscaling group schedule to create | `map(any)` | `{}` | no |
 | <a name="input_security_groups"></a> [security\_groups](#input\_security\_groups) | A list of security group IDs to associate | `list(string)` | `null` | no |
 | <a name="input_service_linked_role_arn"></a> [service\_linked\_role\_arn](#input\_service\_linked\_role\_arn) | The ARN of the service-linked role that the ASG will use to call other AWS services | `string` | `null` | no |
@@ -386,6 +407,7 @@ No modules.
 | <a name="output_autoscaling_group_name"></a> [autoscaling\_group\_name](#output\_autoscaling\_group\_name) | The autoscaling group name |
 | <a name="output_autoscaling_group_target_group_arns"></a> [autoscaling\_group\_target\_group\_arns](#output\_autoscaling\_group\_target\_group\_arns) | List of Target Group ARNs that apply to this AutoScaling Group |
 | <a name="output_autoscaling_group_vpc_zone_identifier"></a> [autoscaling\_group\_vpc\_zone\_identifier](#output\_autoscaling\_group\_vpc\_zone\_identifier) | The VPC zone identifier |
+| <a name="output_autoscaling_policy_arns"></a> [autoscaling\_policy\_arns](#output\_autoscaling\_policy\_arns) | ARNs of autoscaling policies |
 | <a name="output_autoscaling_schedule_arns"></a> [autoscaling\_schedule\_arns](#output\_autoscaling\_schedule\_arns) | ARNs of autoscaling group schedules |
 | <a name="output_launch_configuration_arn"></a> [launch\_configuration\_arn](#output\_launch\_configuration\_arn) | The ARN of the launch configuration |
 | <a name="output_launch_configuration_id"></a> [launch\_configuration\_id](#output\_launch\_configuration\_id) | The ID of the launch configuration |
