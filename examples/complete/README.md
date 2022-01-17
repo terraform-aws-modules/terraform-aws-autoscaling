@@ -90,6 +90,7 @@ No inputs.
 | <a name="output_complete_lc_autoscaling_group_name"></a> [complete\_lc\_autoscaling\_group\_name](#output\_complete\_lc\_autoscaling\_group\_name) | The autoscaling group name |
 | <a name="output_complete_lc_autoscaling_group_target_group_arns"></a> [complete\_lc\_autoscaling\_group\_target\_group\_arns](#output\_complete\_lc\_autoscaling\_group\_target\_group\_arns) | List of Target Group ARNs that apply to this AutoScaling Group |
 | <a name="output_complete_lc_autoscaling_group_vpc_zone_identifier"></a> [complete\_lc\_autoscaling\_group\_vpc\_zone\_identifier](#output\_complete\_lc\_autoscaling\_group\_vpc\_zone\_identifier) | The VPC zone identifier |
+| <a name="output_complete_lc_autoscaling_policy_arns"></a> [complete\_lc\_autoscaling\_policy\_arns](#output\_complete\_lc\_autoscaling\_policy\_arns) | ARNs of autoscaling policies |
 | <a name="output_complete_lc_launch_configuration_arn"></a> [complete\_lc\_launch\_configuration\_arn](#output\_complete\_lc\_launch\_configuration\_arn) | The ARN of the launch configuration |
 | <a name="output_complete_lc_launch_configuration_id"></a> [complete\_lc\_launch\_configuration\_id](#output\_complete\_lc\_launch\_configuration\_id) | The ID of the launch configuration |
 | <a name="output_complete_lc_launch_configuration_name"></a> [complete\_lc\_launch\_configuration\_name](#output\_complete\_lc\_launch\_configuration\_name) | The name of the launch configuration |

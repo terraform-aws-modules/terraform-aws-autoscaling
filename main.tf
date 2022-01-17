@@ -574,4 +574,3 @@ resource "aws_autoscaling_policy" "this" {
     }
   }
 }
-
