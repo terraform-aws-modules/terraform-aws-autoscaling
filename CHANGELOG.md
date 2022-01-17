@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.11.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.10.0...v4.11.0) (2022-01-17)
+
+
+### Features
+
+* Add support for aws_autoscaling_policy ([#175](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/175)) ([a8ba844](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/a8ba844aee63309664c6cbaac582d26ce77fd655))
+
 ## [4.10.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.9.0...v4.10.0) (2022-01-14)
 
 
