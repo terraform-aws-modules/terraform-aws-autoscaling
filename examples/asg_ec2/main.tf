@@ -17,16 +17,17 @@ data "aws_vpc" "default" {
 }
 
 data "aws_subnet_ids" "all" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  vpc_id = data.aws_vpc.default.id
 }
 
 data "aws_security_group" "default" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  vpc_id = data.aws_vpc.default.id
   name   = "default"
 }
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
+  owners      = ["amazon"]
 
   filter {
     name = "name"
@@ -45,6 +46,24 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+resource "aws_iam_service_linked_role" "autoscaling" {
+  aws_service_name = "autoscaling.amazonaws.com"
+  description      = "A service linked role for autoscaling"
+  custom_suffix    = "something"
+
+  # Sometimes good sleep is required to have some IAM resources created before they can be used
+  provisioner "local-exec" {
+    command = "sleep 10"
+  }
+}
+
+locals {
+  user_data = <<EOF
+#!/bin/bash
+echo "Hello Terraform!"
+EOF
+}
+
 ######
 # Launch configuration and autoscaling group
 ######
@@ -59,11 +78,13 @@ module "example" {
   # create_lc = false # disables creation of launch configuration
   lc_name = "example-lc"
 
-  image_id                     = "${data.aws_ami.amazon_linux.id}"
+  image_id                     = data.aws_ami.amazon_linux.id
   instance_type                = "t2.micro"
-  security_groups              = ["${data.aws_security_group.default.id}"]
+  security_groups              = [data.aws_security_group.default.id]
   associate_public_ip_address  = true
   recreate_asg_when_lc_changes = true
+
+  user_data_base64 = base64encode(local.user_data)
 
   ebs_block_device = [
     {
@@ -84,12 +105,13 @@ module "example" {
 
   # Auto scaling group
   asg_name                  = "example-asg"
-  vpc_zone_identifier       = ["${data.aws_subnet_ids.all.ids}"]
+  vpc_zone_identifier       = data.aws_subnet_ids.all.ids
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
-  desired_capacity          = 0
+  desired_capacity          = 1
   wait_for_capacity_timeout = 0
+  service_linked_role_arn   = aws_iam_service_linked_role.autoscaling.arn
 
   tags = [
     {
@@ -102,6 +124,16 @@ module "example" {
       value               = "megasecret"
       propagate_at_launch = true
     },
+    {
+      key                 = "foo"
+      value               = ""
+      propagate_at_launch = true
+    },
+    {
+      key                 = "bar"
+      value               = ""
+      propagate_at_launch = true
+    }
   ]
 
   tags_as_map = {

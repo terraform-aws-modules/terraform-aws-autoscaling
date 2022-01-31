@@ -17,16 +17,17 @@ data "aws_vpc" "default" {
 }
 
 data "aws_subnet_ids" "all" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  vpc_id = data.aws_vpc.default.id
 }
 
 data "aws_security_group" "default" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  vpc_id = data.aws_vpc.default.id
   name   = "default"
 }
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
+  owners      = ["amazon"]
 
   filter {
     name = "name"
@@ -66,15 +67,16 @@ module "example" {
 }
 EOF
 
+
   # Launch configuration
   #
   # launch_configuration = "my-existing-launch-configuration" # Use the existing launch configuration
   # create_lc = false # disables creation of launch configuration
   lc_name = "example-lc"
 
-  image_id                     = "${data.aws_ami.amazon_linux.id}"
+  image_id                     = data.aws_ami.amazon_linux.id
   instance_type                = "t2.micro"
-  security_groups              = ["${data.aws_security_group.default.id}"]
+  security_groups              = [data.aws_security_group.default.id]
   associate_public_ip_address  = true
   recreate_asg_when_lc_changes = true
 
@@ -97,7 +99,7 @@ EOF
 
   # Auto scaling group
   asg_name                  = "example-asg"
-  vpc_zone_identifier       = ["${data.aws_subnet_ids.all.ids}"]
+  vpc_zone_identifier       = data.aws_subnet_ids.all.ids
   health_check_type         = "EC2"
   min_size                  = 0
   max_size                  = 1
@@ -122,3 +124,4 @@ EOF
     extra_tag2 = "extra_value2"
   }
 }
+
