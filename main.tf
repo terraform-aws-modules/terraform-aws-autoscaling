@@ -446,7 +446,14 @@ resource "aws_autoscaling_group" "this" {
     delete = var.delete_timeout
   }
 
-  tags = local.tags
+  dynamic "tag" {
+    for_each = { for tag in local.tags : "${tag.key}-${tag.value}" => tag }
+    content {
+      key                 = tag.value.key
+      value               = tag.value.value
+      propagate_at_launch = tag.value.propagate_at_launch
+    }
+  }
 
   lifecycle {
     create_before_destroy = true
