@@ -10,9 +10,8 @@ locals {
 
   tags = distinct(concat(
     [for k, v in data.aws_default_tags.current.tags :
-      { key                 = k
-        value               = v
-        propagate_at_launch = true
+      { key   = k
+        value = v
       }
     ],
     [
@@ -25,9 +24,8 @@ locals {
     var.tags,
     [for k, v in var.tags_as_map :
       {
-        key                 = k
-        value               = v
-        propagate_at_launch = true
+        key   = k
+        value = v
       }
     ]
   ))
@@ -451,7 +449,7 @@ resource "aws_autoscaling_group" "this" {
     content {
       key                 = tag.value.key
       value               = tag.value.value
-      propagate_at_launch = tag.value.propagate_at_launch
+      propagate_at_launch = try(tag.value.propagate_at_launch, true)
     }
   }
 
