@@ -447,9 +447,6 @@ module "complete_lt" {
 
   instance_market_options = {
     market_type = "spot"
-    spot_options = {
-      block_duration_minutes = 60
-    }
   }
 
   metadata_options = {
@@ -534,7 +531,11 @@ module "complete_lt" {
     },
     predictive-scaling = {
       policy_type = "PredictiveScaling"
-      predictive_scaling_config = {
+      predictive_scaling_configuration = {
+        mode                         = "ForecastAndScale"
+        scheduling_buffer_time       = 10
+        max_capacity_breach_behavior = "IncreaseMaxCapacity"
+        max_capacity_buffer          = 10
         metric_specification = {
           target_value = 32
           predefined_scaling_metric_specification = {
@@ -546,10 +547,6 @@ module "complete_lt" {
             resource_label         = "testLabel"
           }
         }
-        mode                         = "ForecastAndScale"
-        scheduling_buffer_time       = 10
-        max_capacity_breach_behavior = "IncreaseMaxCapacity"
-        max_capacity_buffer          = 10
       }
     }
   }
