@@ -8,27 +8,11 @@ locals {
   launch_template         = var.create_lt ? aws_launch_template.this[0].name : var.launch_template
   launch_template_version = var.create_lt && var.lt_version == null ? aws_launch_template.this[0].latest_version : var.lt_version
 
-  tags = distinct(concat(
-    [for k, v in data.aws_default_tags.current.tags :
-      { key   = k
-        value = v
-      }
-    ],
-    [
-      {
-        key                 = "Name"
-        value               = coalesce(var.instance_name, var.name)
-        propagate_at_launch = var.propagate_name
-      },
-    ],
+  asg_tags = merge(
+    data.aws_default_tags.current.tags,
     var.tags,
-    [for k, v in var.tags_as_map :
-      {
-        key   = k
-        value = v
-      }
-    ]
-  ))
+    { "Name" = coalesce(var.instance_name, var.name) },
+  )
 }
 
 ################################################################################
@@ -301,7 +285,7 @@ resource "aws_launch_template" "this" {
     for_each = var.tag_specifications
     content {
       resource_type = tag_specifications.value.resource_type
-      tags          = tag_specifications.value.tags
+      tags          = merge(var.tags, tag_specifications.value.tags)
     }
   }
 
@@ -309,7 +293,7 @@ resource "aws_launch_template" "this" {
     create_before_destroy = true
   }
 
-  tags = var.tags_as_map
+  tags = var.tags
 }
 
 ################################################################################
@@ -445,11 +429,11 @@ resource "aws_autoscaling_group" "this" {
   }
 
   dynamic "tag" {
-    for_each = { for tag in local.tags : "${tag.key}-${tag.value}" => tag }
+    for_each = local.asg_tags
     content {
-      key                 = tag.value.key
-      value               = tag.value.value
-      propagate_at_launch = try(tag.value.propagate_at_launch, true)
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
     }
   }
 

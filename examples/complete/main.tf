@@ -16,23 +16,9 @@ provider "aws" {
 }
 
 locals {
-  name   = "example-asg"
+  name   = "ex-asg-complete"
   region = "eu-west-1"
-
-  tags = [
-    {
-      key                 = "Project"
-      value               = "megasecret"
-      propagate_at_launch = true
-    },
-    {
-      key                 = "foo"
-      value               = "something"
-      propagate_at_launch = true
-    },
-  ]
-
-  tags_as_map = {
+  tags = {
     Owner       = "user"
     Environment = "dev"
   }
@@ -61,7 +47,7 @@ module "vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  tags = local.tags_as_map
+  tags = local.tags
 }
 
 module "asg_sg" {
@@ -82,7 +68,7 @@ module "asg_sg" {
 
   egress_rules = ["all-all"]
 
-  tags = local.tags_as_map
+  tags = local.tags
 }
 
 data "aws_ami" "amazon_linux" {
@@ -112,28 +98,26 @@ resource "aws_iam_service_linked_role" "autoscaling" {
 resource "aws_iam_instance_profile" "ssm" {
   name = "complete-${local.name}"
   role = aws_iam_role.ssm.name
-  tags = local.tags_as_map
+  tags = local.tags
 }
 
 resource "aws_iam_role" "ssm" {
   name = "complete-${local.name}"
-  tags = local.tags_as_map
+  tags = local.tags
 
-  assume_role_policy = <<-EOT
-  {
-    "Version": "2012-10-17",
-    "Statement": [
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
       {
-        "Action": "sts:AssumeRole",
-        "Principal": {
-          "Service": "ec2.amazonaws.com"
+        Action = "sts:AssumeRole",
+        Principal = {
+          Service = "ec2.amazonaws.com"
         },
-        "Effect": "Allow",
-        "Sid": ""
+        Effect = "Allow",
+        Sid    = ""
       }
     ]
-  }
-  EOT
+  })
 }
 
 module "alb_http_sg" {
@@ -146,7 +130,7 @@ module "alb_http_sg" {
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
 
-  tags = local.tags_as_map
+  tags = local.tags
 }
 
 module "alb" {
@@ -176,7 +160,7 @@ module "alb" {
     },
   ]
 
-  tags = local.tags_as_map
+  tags = local.tags
 }
 
 ################################################################################
@@ -213,8 +197,7 @@ module "lt_only" {
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 }
 
 module "lc_only" {
@@ -234,8 +217,7 @@ module "lc_only" {
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 }
 
 ################################################################################
@@ -261,8 +243,7 @@ module "default_lt" {
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 }
 
 # Launch configuration
@@ -284,8 +265,7 @@ module "default_lc" {
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 }
 
 ################################################################################
@@ -318,8 +298,7 @@ module "external_lt" {
   use_lt          = true
   launch_template = aws_launch_template.this.name
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 }
 
 # Launch configuration
@@ -348,8 +327,7 @@ module "external_lc" {
   use_lc               = true
   launch_configuration = aws_launch_configuration.this.name
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 }
 
 ################################################################################
@@ -507,16 +485,15 @@ module "complete_lt" {
     },
     {
       resource_type = "volume"
-      tags          = merge({ WhatAmI = "Volume" }, local.tags_as_map)
+      tags          = merge({ WhatAmI = "Volume" })
     },
     {
       resource_type = "spot-instances-request"
-      tags          = merge({ WhatAmI = "SpotInstanceRequest" }, local.tags_as_map)
+      tags          = merge({ WhatAmI = "SpotInstanceRequest" })
     }
   ]
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 
   # Autoscaling Schedule
   schedules = {
@@ -668,8 +645,7 @@ module "complete_lc" {
     http_put_response_hop_limit = 32
   }
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 }
 
 ################################################################################
@@ -746,8 +722,7 @@ module "mixed_instance" {
     ]
   }
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 }
 
 ################################################################################
@@ -778,6 +753,5 @@ module "warmed_lt" {
     max_group_prepared_capacity = 2
   }
 
-  tags        = local.tags
-  tags_as_map = local.tags_as_map
+  tags = local.tags
 }
