@@ -212,21 +212,9 @@ variable "delete_timeout" {
 }
 
 variable "tags" {
-  description = "A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch"
-  type        = list(map(string))
-  default     = []
-}
-
-variable "tags_as_map" {
-  description = "A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws_autoscaling_group requires."
+  description = "A map of tags to assign to resources"
   type        = map(string)
   default     = {}
-}
-
-variable "propagate_name" {
-  description = "Determines whether to propagate the `var.instance_name`/`var.name` tag to launch instances"
-  type        = bool
-  default     = true
 }
 
 variable "warm_pool" {

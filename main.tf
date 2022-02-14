@@ -8,29 +8,11 @@ locals {
   launch_template         = var.create_lt ? aws_launch_template.this[0].name : var.launch_template
   launch_template_version = var.create_lt && var.lt_version == null ? aws_launch_template.this[0].latest_version : var.lt_version
 
-  tags = distinct(concat(
-    [for k, v in data.aws_default_tags.current.tags :
-      { key                 = k
-        value               = v
-        propagate_at_launch = true
-      }
-    ],
-    [
-      {
-        key                 = "Name"
-        value               = coalesce(var.instance_name, var.name)
-        propagate_at_launch = var.propagate_name
-      },
-    ],
+  asg_tags = merge(
+    data.aws_default_tags.current.tags,
     var.tags,
-    [for k, v in var.tags_as_map :
-      {
-        key                 = k
-        value               = v
-        propagate_at_launch = true
-      }
-    ]
-  ))
+    { "Name" = coalesce(var.instance_name, var.name) },
+  )
 }
 
 ################################################################################
@@ -303,7 +285,7 @@ resource "aws_launch_template" "this" {
     for_each = var.tag_specifications
     content {
       resource_type = tag_specifications.value.resource_type
-      tags          = tag_specifications.value.tags
+      tags          = merge(var.tags, tag_specifications.value.tags)
     }
   }
 
@@ -311,7 +293,7 @@ resource "aws_launch_template" "this" {
     create_before_destroy = true
   }
 
-  tags = var.tags_as_map
+  tags = var.tags
 }
 
 ################################################################################
@@ -446,7 +428,14 @@ resource "aws_autoscaling_group" "this" {
     delete = var.delete_timeout
   }
 
-  tags = local.tags
+  dynamic "tag" {
+    for_each = local.asg_tags
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
+  }
 
   lifecycle {
     create_before_destroy = true
@@ -477,6 +466,7 @@ resource "aws_autoscaling_schedule" "this" {
 ################################################################################
 # Autoscaling Policy
 ################################################################################
+
 resource "aws_autoscaling_policy" "this" {
   for_each = { for k, v in var.scaling_policies : k => v if var.create_asg && var.create_scaling_policy }
 
@@ -542,12 +532,12 @@ resource "aws_autoscaling_policy" "this" {
       scheduling_buffer_time       = lookup(predictive_scaling_configuration.value, "scheduling_buffer_time", null)
 
       dynamic "metric_specification" {
-        for_each = lookup(predictive_scaling_configuration.value, "metric_specification", [])
+        for_each = can(predictive_scaling_configuration.value.metric_specification.target_value) ? [predictive_scaling_configuration.value.metric_specification] : []
         content {
           target_value = metric_specification.value.target_value
 
           dynamic "predefined_load_metric_specification" {
-            for_each = lookup(metric_specification.value, "predefined_load_metric_specification", null) != null ? [metric_specification.value.predefined_load_metric_specification] : []
+            for_each = can(metric_specification.value.predefined_load_metric_specification.predefined_metric_type) ? [metric_specification.value.predefined_load_metric_specification] : []
             content {
               predefined_metric_type = predefined_load_metric_specification.value.predefined_metric_type
               resource_label         = predefined_load_metric_specification.value.resource_label
@@ -555,7 +545,7 @@ resource "aws_autoscaling_policy" "this" {
           }
 
           dynamic "predefined_metric_pair_specification" {
-            for_each = lookup(metric_specification.value, "predefined_metric_pair_specification", null) != null ? [metric_specification.value.predefined_metric_pair_specification] : []
+            for_each = can(metric_specification.value.predefined_metric_pair_specification.predefined_metric_type) ? [metric_specification.value.predefined_metric_pair_specification] : []
             content {
               predefined_metric_type = predefined_metric_pair_specification.value.predefined_metric_type
               resource_label         = predefined_metric_pair_specification.value.resource_label
@@ -563,7 +553,7 @@ resource "aws_autoscaling_policy" "this" {
           }
 
           dynamic "predefined_scaling_metric_specification" {
-            for_each = lookup(metric_specification.value, "predefined_scaling_metric_specification", null) != null ? [metric_specification.value.predefined_scaling_metric_specification] : []
+            for_each = can(metric_specification.value.predefined_scaling_metric_specification.predefined_metric_type) ? [metric_specification.value.predefined_scaling_metric_specification] : []
             content {
               predefined_metric_type = predefined_scaling_metric_specification.value.predefined_metric_type
               resource_label         = predefined_scaling_metric_specification.value.resource_label
