@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.11.0...v5.0.0) (2022-02-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update autoscaling group `tags` -> `tag` to support v4 of AWS provider (#179)
+
+### Features
+
+* Update autoscaling group `tags` -> `tag` to support v4 of AWS provider ([#179](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/179)) ([2c2a8a9](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/2c2a8a9bc255b49dc63f587d090b6b5a7d8b7c94))
+
 ## [4.11.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.10.0...v4.11.0) (2022-01-17)
 
 
