@@ -274,6 +274,11 @@ output "complete_autoscaling_schedule_arns" {
   value       = module.complete.autoscaling_schedule_arns
 }
 
+output "complete_autoscaling_policy_arns" {
+  description = "ARNs of autoscaling policies"
+  value       = module.complete.autoscaling_policy_arns
+}
+
 ################################################################################
 # Mixed instance policy
 ################################################################################

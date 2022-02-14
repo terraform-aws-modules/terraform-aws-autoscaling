@@ -5,29 +5,11 @@ locals {
   launch_template         = var.create_launch_template ? aws_launch_template.this[0].name : var.launch_template
   launch_template_version = var.create_launch_template && var.launch_template_version == null ? aws_launch_template.this[0].latest_version : var.launch_template_version
 
-  tags = distinct(concat(
-    [for k, v in data.aws_default_tags.current.tags :
-      { key                 = k
-        value               = v
-        propagate_at_launch = true
-      }
-    ],
-    [
-      {
-        key                 = "Name"
-        value               = coalesce(var.instance_name, var.name)
-        propagate_at_launch = var.propagate_name
-      },
-    ],
+  asg_tags = merge(
+    data.aws_default_tags.current.tags,
     var.tags,
-    [for k, v in var.tags_as_map :
-      {
-        key                 = k
-        value               = v
-        propagate_at_launch = true
-      }
-    ]
-  ))
+    { "Name" = coalesce(var.instance_name, var.name) },
+  )
 }
 
 ################################################################################
@@ -176,6 +158,7 @@ resource "aws_launch_template" "this" {
       http_tokens                 = lookup(metadata_options.value, "http_tokens", null)
       http_put_response_hop_limit = lookup(metadata_options.value, "http_put_response_hop_limit", null)
       http_protocol_ipv6          = lookup(metadata_options.value, "http_protocol_ipv6", null)
+      instance_metadata_tags      = lookup(metadata_options.value, "instance_metadata_tags", null)
     }
   }
 
@@ -225,7 +208,7 @@ resource "aws_launch_template" "this" {
     for_each = var.tag_specifications
     content {
       resource_type = tag_specifications.value.resource_type
-      tags          = tag_specifications.value.tags
+      tags          = merge(var.tags, tag_specifications.value.tags)
     }
   }
 
@@ -233,7 +216,7 @@ resource "aws_launch_template" "this" {
     create_before_destroy = true
   }
 
-  tags = var.tags_as_map
+  tags = var.tags
 }
 
 ################################################################################
@@ -366,7 +349,14 @@ resource "aws_autoscaling_group" "this" {
     delete = var.delete_timeout
   }
 
-  tags = local.tags
+  dynamic "tag" {
+    for_each = local.asg_tags
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
+  }
 
   lifecycle {
     create_before_destroy = true
@@ -503,7 +493,14 @@ resource "aws_autoscaling_group" "idc" {
     delete = var.delete_timeout
   }
 
-  tags = local.tags
+  dynamic "tag" {
+    for_each = local.asg_tags
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
+  }
 
   lifecycle {
     create_before_destroy = true
@@ -531,4 +528,106 @@ resource "aws_autoscaling_schedule" "this" {
   # [Minute] [Hour] [Day_of_Month] [Month_of_Year] [Day_of_Week]
   # Cron examples: https://crontab.guru/examples.html
   recurrence = lookup(each.value, "recurrence", null)
+}
+
+################################################################################
+# Autoscaling Policy
+################################################################################
+
+resource "aws_autoscaling_policy" "this" {
+  for_each = { for k, v in var.scaling_policies : k => v if var.create && var.create_scaling_policy }
+
+  name                   = lookup(each.value, "name", each.key)
+  autoscaling_group_name = var.ignore_desired_capacity_changes ? aws_autoscaling_group.idc[0].name : aws_autoscaling_group.this[0].name
+
+  adjustment_type           = lookup(each.value, "adjustment_type", null)
+  policy_type               = lookup(each.value, "policy_type", null)
+  estimated_instance_warmup = lookup(each.value, "estimated_instance_warmup", null)
+  cooldown                  = lookup(each.value, "cooldown", null)
+  min_adjustment_magnitude  = lookup(each.value, "min_adjustment_magnitude", null)
+  metric_aggregation_type   = lookup(each.value, "metric_aggregation_type", null)
+
+  dynamic "step_adjustment" {
+    for_each = lookup(each.value, "step_adjustment", null) != null ? [each.value.step_adjustment] : []
+    content {
+      scaling_adjustment          = step_adjustment.value.scaling_adjustment
+      metric_interval_lower_bound = lookup(step_adjustment.value, "metric_interval_lower_bound", null)
+      metric_interval_upper_bound = lookup(step_adjustment.value, "metric_interval_upper_bound", null)
+    }
+  }
+
+  dynamic "target_tracking_configuration" {
+    for_each = lookup(each.value, "target_tracking_configuration", null) != null ? [each.value.target_tracking_configuration] : []
+    content {
+      target_value     = target_tracking_configuration.value.target_value
+      disable_scale_in = lookup(target_tracking_configuration.value, "disable_scale_in", null)
+
+      dynamic "predefined_metric_specification" {
+        for_each = lookup(target_tracking_configuration.value, "predefined_metric_specification", null) != null ? [target_tracking_configuration.value.predefined_metric_specification] : []
+        content {
+          predefined_metric_type = predefined_metric_specification.value.predefined_metric_type
+        }
+      }
+
+      dynamic "customized_metric_specification" {
+        for_each = lookup(target_tracking_configuration.value, "customized_metric_specification", null) != null ? [target_tracking_configuration.value.customized_metric_specification] : []
+        content {
+
+          dynamic "metric_dimension" {
+            for_each = lookup(customized_metric_specification.value, "metric_dimension", null) != null ? [customized_metric_specification.value.metric_dimension] : []
+            content {
+              name  = lookup(metric_dimension.value, "name", null)
+              value = lookup(metric_dimension.value, "value", null)
+            }
+          }
+
+          metric_name = customized_metric_specification.value.metric_name
+          namespace   = customized_metric_specification.value.namespace
+          statistic   = customized_metric_specification.value.statistic
+          unit        = lookup(customized_metric_specification.value, "unit", null)
+        }
+      }
+    }
+  }
+
+  dynamic "predictive_scaling_configuration" {
+    for_each = lookup(each.value, "predictive_scaling_configuration", null) != null ? [each.value.predictive_scaling_configuration] : []
+    content {
+      max_capacity_breach_behavior = lookup(predictive_scaling_configuration.value, "max_capacity_breach_behavior", null)
+      max_capacity_buffer          = lookup(predictive_scaling_configuration.value, "max_capacity_buffer", null)
+      mode                         = lookup(predictive_scaling_configuration.value, "mode", null)
+      scheduling_buffer_time       = lookup(predictive_scaling_configuration.value, "scheduling_buffer_time", null)
+
+      dynamic "metric_specification" {
+        for_each = can(predictive_scaling_configuration.value.metric_specification.target_value) ? [predictive_scaling_configuration.value.metric_specification] : []
+        content {
+          target_value = metric_specification.value.target_value
+
+          dynamic "predefined_load_metric_specification" {
+            for_each = can(metric_specification.value.predefined_load_metric_specification.predefined_metric_type) ? [metric_specification.value.predefined_load_metric_specification] : []
+            content {
+              predefined_metric_type = predefined_load_metric_specification.value.predefined_metric_type
+              resource_label         = predefined_load_metric_specification.value.resource_label
+            }
+          }
+
+          dynamic "predefined_metric_pair_specification" {
+            for_each = can(metric_specification.value.predefined_metric_pair_specification.predefined_metric_type) ? [metric_specification.value.predefined_metric_pair_specification] : []
+            content {
+              predefined_metric_type = predefined_metric_pair_specification.value.predefined_metric_type
+              resource_label         = predefined_metric_pair_specification.value.resource_label
+            }
+          }
+
+          dynamic "predefined_scaling_metric_specification" {
+            for_each = can(metric_specification.value.predefined_scaling_metric_specification.predefined_metric_type) ? [metric_specification.value.predefined_scaling_metric_specification] : []
+            content {
+              predefined_metric_type = predefined_scaling_metric_specification.value.predefined_metric_type
+              resource_label         = predefined_scaling_metric_specification.value.resource_label
+            }
+          }
+        }
+      }
+    }
+  }
 }
