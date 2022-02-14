@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.1.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v5.0.0...v5.1.0) (2022-02-14)
+
+
+### Features
+
+* Remove launch configuration support, add support for ignoring `desired_capacity` ([#173](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/173)) ([300379d](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/300379dda611504d78be058d56b132c2baaa1157))
+
 ## [5.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v4.11.0...v5.0.0) (2022-02-14)
 
 
