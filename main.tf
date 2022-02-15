@@ -132,7 +132,7 @@ resource "aws_launch_template" "this" {
       market_type = instance_market_options.value.market_type
 
       dynamic "spot_options" {
-        for_each = can(instance_market_options.value.spot_options) ? [instance_market_options.value.spot_options] : []
+        for_each = try([instance_market_options.value.spot_options], [])
         content {
           block_duration_minutes         = lookup(spot_options.value, "block_duration_minutes", null)
           instance_interruption_behavior = lookup(spot_options.value, "instance_interruption_behavior", null)
@@ -286,7 +286,7 @@ resource "aws_autoscaling_group" "this" {
       triggers = lookup(instance_refresh.value, "triggers", null)
 
       dynamic "preferences" {
-        for_each = can(instance_refresh.value.preferences) ? [instance_refresh.value.preferences] : []
+        for_each = try([instance_refresh.value.preferences], [])
         content {
           checkpoint_delay       = lookup(preferences.value, "checkpoint_delay", null)
           checkpoint_percentages = lookup(preferences.value, "checkpoint_percentages", null)
@@ -301,7 +301,7 @@ resource "aws_autoscaling_group" "this" {
     for_each = var.use_mixed_instances_policy ? [var.mixed_instances_policy] : []
     content {
       dynamic "instances_distribution" {
-        for_each = can(mixed_instances_policy.value.instances_distribution) ? [mixed_instances_policy.value.instances_distribution] : []
+        for_each = try([mixed_instances_policy.value.instances_distribution], [])
         content {
           on_demand_allocation_strategy            = lookup(instances_distribution.value, "on_demand_allocation_strategy", null)
           on_demand_base_capacity                  = lookup(instances_distribution.value, "on_demand_base_capacity", null)
@@ -319,13 +319,13 @@ resource "aws_autoscaling_group" "this" {
         }
 
         dynamic "override" {
-          for_each = can(mixed_instances_policy.value.override) ? mixed_instances_policy.value.override : []
+          for_each = try(mixed_instances_policy.value.override, [])
           content {
             instance_type     = lookup(override.value, "instance_type", null)
             weighted_capacity = lookup(override.value, "weighted_capacity", null)
 
             dynamic "launch_template_specification" {
-              for_each = can(override.value.launch_template_specification) ? [override.value.launch_template_specification] : []
+              for_each = try([override.value.launch_template_specification], [])
               content {
                 launch_template_id = lookup(launch_template_specification.value, "launch_template_id", null)
               }
@@ -430,7 +430,7 @@ resource "aws_autoscaling_group" "idc" {
       triggers = lookup(instance_refresh.value, "triggers", null)
 
       dynamic "preferences" {
-        for_each = can(instance_refresh.value.preferences) ? [instance_refresh.value.preferences] : []
+        for_each = try([instance_refresh.value.preferences], [])
         content {
           checkpoint_delay       = lookup(preferences.value, "checkpoint_delay", null)
           checkpoint_percentages = lookup(preferences.value, "checkpoint_percentages", null)
@@ -445,7 +445,7 @@ resource "aws_autoscaling_group" "idc" {
     for_each = var.use_mixed_instances_policy ? [var.mixed_instances_policy] : []
     content {
       dynamic "instances_distribution" {
-        for_each = can(mixed_instances_policy.value.instances_distribution) ? [mixed_instances_policy.value.instances_distribution] : []
+        for_each = try([mixed_instances_policy.value.instances_distribution], [])
         content {
           on_demand_allocation_strategy            = lookup(instances_distribution.value, "on_demand_allocation_strategy", null)
           on_demand_base_capacity                  = lookup(instances_distribution.value, "on_demand_base_capacity", null)
@@ -463,13 +463,13 @@ resource "aws_autoscaling_group" "idc" {
         }
 
         dynamic "override" {
-          for_each = can(mixed_instances_policy.value.override) ? [mixed_instances_policy.value.override] : []
+          for_each = try([mixed_instances_policy.value.override], [])
           content {
             instance_type     = lookup(override.value, "instance_type", null)
             weighted_capacity = lookup(override.value, "weighted_capacity", null)
 
             dynamic "launch_template_specification" {
-              for_each = can(override.value.launch_template_specification) ? [override.value.launch_template_specification] : []
+              for_each = try([override.value.launch_template_specification], [])
               content {
                 launch_template_id = lookup(launch_template_specification.value, "launch_template_id", null)
               }
@@ -548,7 +548,7 @@ resource "aws_autoscaling_policy" "this" {
   metric_aggregation_type   = lookup(each.value, "metric_aggregation_type", null)
 
   dynamic "step_adjustment" {
-    for_each = lookup(each.value, "step_adjustment", null) != null ? [each.value.step_adjustment] : []
+    for_each = try([each.value.step_adjustment], [])
     content {
       scaling_adjustment          = step_adjustment.value.scaling_adjustment
       metric_interval_lower_bound = lookup(step_adjustment.value, "metric_interval_lower_bound", null)
@@ -557,24 +557,24 @@ resource "aws_autoscaling_policy" "this" {
   }
 
   dynamic "target_tracking_configuration" {
-    for_each = lookup(each.value, "target_tracking_configuration", null) != null ? [each.value.target_tracking_configuration] : []
+    for_each = try([each.value.target_tracking_configuration], [])
     content {
       target_value     = target_tracking_configuration.value.target_value
       disable_scale_in = lookup(target_tracking_configuration.value, "disable_scale_in", null)
 
       dynamic "predefined_metric_specification" {
-        for_each = lookup(target_tracking_configuration.value, "predefined_metric_specification", null) != null ? [target_tracking_configuration.value.predefined_metric_specification] : []
+        for_each = try([target_tracking_configuration.value.predefined_metric_specification], [])
         content {
           predefined_metric_type = predefined_metric_specification.value.predefined_metric_type
         }
       }
 
       dynamic "customized_metric_specification" {
-        for_each = lookup(target_tracking_configuration.value, "customized_metric_specification", null) != null ? [target_tracking_configuration.value.customized_metric_specification] : []
+        for_each = try([target_tracking_configuration.value.customized_metric_specification], [])
         content {
 
           dynamic "metric_dimension" {
-            for_each = lookup(customized_metric_specification.value, "metric_dimension", null) != null ? [customized_metric_specification.value.metric_dimension] : []
+            for_each = try([customized_metric_specification.value.metric_dimension], [])
             content {
               name  = lookup(metric_dimension.value, "name", null)
               value = lookup(metric_dimension.value, "value", null)
@@ -591,7 +591,7 @@ resource "aws_autoscaling_policy" "this" {
   }
 
   dynamic "predictive_scaling_configuration" {
-    for_each = lookup(each.value, "predictive_scaling_configuration", null) != null ? [each.value.predictive_scaling_configuration] : []
+    for_each = try([each.value.predictive_scaling_configuration], [])
     content {
       max_capacity_breach_behavior = lookup(predictive_scaling_configuration.value, "max_capacity_breach_behavior", null)
       max_capacity_buffer          = lookup(predictive_scaling_configuration.value, "max_capacity_buffer", null)
@@ -599,12 +599,12 @@ resource "aws_autoscaling_policy" "this" {
       scheduling_buffer_time       = lookup(predictive_scaling_configuration.value, "scheduling_buffer_time", null)
 
       dynamic "metric_specification" {
-        for_each = can(predictive_scaling_configuration.value.metric_specification.target_value) ? [predictive_scaling_configuration.value.metric_specification] : []
+        for_each = try([predictive_scaling_configuration.value.metric_specification], [])
         content {
           target_value = metric_specification.value.target_value
 
           dynamic "predefined_load_metric_specification" {
-            for_each = can(metric_specification.value.predefined_load_metric_specification.predefined_metric_type) ? [metric_specification.value.predefined_load_metric_specification] : []
+            for_each = try([metric_specification.value.predefined_load_metric_specification], [])
             content {
               predefined_metric_type = predefined_load_metric_specification.value.predefined_metric_type
               resource_label         = predefined_load_metric_specification.value.resource_label
@@ -612,7 +612,7 @@ resource "aws_autoscaling_policy" "this" {
           }
 
           dynamic "predefined_metric_pair_specification" {
-            for_each = can(metric_specification.value.predefined_metric_pair_specification.predefined_metric_type) ? [metric_specification.value.predefined_metric_pair_specification] : []
+            for_each = try([metric_specification.value.predefined_metric_pair_specification], [])
             content {
               predefined_metric_type = predefined_metric_pair_specification.value.predefined_metric_type
               resource_label         = predefined_metric_pair_specification.value.resource_label
@@ -620,7 +620,7 @@ resource "aws_autoscaling_policy" "this" {
           }
 
           dynamic "predefined_scaling_metric_specification" {
-            for_each = can(metric_specification.value.predefined_scaling_metric_specification.predefined_metric_type) ? [metric_specification.value.predefined_scaling_metric_specification] : []
+            for_each = try([metric_specification.value.predefined_scaling_metric_specification], [])
             content {
               predefined_metric_type = predefined_scaling_metric_specification.value.predefined_metric_type
               resource_label         = predefined_scaling_metric_specification.value.resource_label
