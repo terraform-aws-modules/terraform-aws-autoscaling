@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [5.1.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v5.1.0...v5.1.1) (2022-02-15)
+
+
+### Bug Fixes
+
+* Update syntax to be more concise using `try()` to replace verbose lookups to see if a value is provided or not ([#180](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/180)) ([4cf8df1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/4cf8df15b51b3b7c63d9405168fda1b022789325))
+
 ## [5.1.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v5.0.0...v5.1.0) (2022-02-14)
 
 
