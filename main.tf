@@ -445,7 +445,7 @@ resource "aws_autoscaling_group" "idc" {
     for_each = var.use_mixed_instances_policy ? [var.mixed_instances_policy] : []
     content {
       dynamic "instances_distribution" {
-        for_each = try(mixed_instances_policy.value.instances_distribution, [])
+        for_each = try([mixed_instances_policy.value.instances_distribution], [])
         content {
           on_demand_allocation_strategy            = lookup(instances_distribution.value, "on_demand_allocation_strategy", null)
           on_demand_base_capacity                  = lookup(instances_distribution.value, "on_demand_base_capacity", null)
