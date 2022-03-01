@@ -463,7 +463,7 @@ resource "aws_autoscaling_group" "idc" {
         }
 
         dynamic "override" {
-          for_each = try([mixed_instances_policy.value.override], [])
+          for_each = try(mixed_instances_policy.value.override, [])
           content {
             instance_type     = lookup(override.value, "instance_type", null)
             weighted_capacity = lookup(override.value, "weighted_capacity", null)
