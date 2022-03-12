@@ -441,7 +441,6 @@ variable "schedules" {
   default     = {}
 }
 
-
 ################################################################################
 # Autoscaling policy
 ################################################################################
@@ -456,4 +455,10 @@ variable "scaling_policies" {
   description = "Map of target scaling policy schedule to create"
   type        = any
   default     = {}
+}
+
+variable "putin_khuylo" {
+  description = "Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo!"
+  type        = bool
+  default     = true
 }
