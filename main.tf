@@ -1,6 +1,8 @@
 data "aws_default_tags" "current" {}
 
 locals {
+  create = var.create && var.putin_khuylo
+
   launch_template_name    = coalesce(var.launch_template_name, var.name)
   launch_template         = var.create_launch_template ? aws_launch_template.this[0].name : var.launch_template
   launch_template_version = var.create_launch_template && var.launch_template_version == null ? aws_launch_template.this[0].latest_version : var.launch_template_version
@@ -224,7 +226,7 @@ resource "aws_launch_template" "this" {
 ################################################################################
 
 resource "aws_autoscaling_group" "this" {
-  count = var.create && !var.ignore_desired_capacity_changes ? 1 : 0
+  count = local.create && !var.ignore_desired_capacity_changes ? 1 : 0
 
   name        = var.use_name_prefix ? null : var.name
   name_prefix = var.use_name_prefix ? "${var.name}-" : null
@@ -368,7 +370,7 @@ resource "aws_autoscaling_group" "this" {
 ################################################################################
 
 resource "aws_autoscaling_group" "idc" {
-  count = var.create && var.ignore_desired_capacity_changes ? 1 : 0
+  count = local.create && var.ignore_desired_capacity_changes ? 1 : 0
 
   name        = var.use_name_prefix ? null : var.name
   name_prefix = var.use_name_prefix ? "${var.name}-" : null
@@ -513,7 +515,7 @@ resource "aws_autoscaling_group" "idc" {
 ################################################################################
 
 resource "aws_autoscaling_schedule" "this" {
-  for_each = var.create && var.create_schedule ? var.schedules : {}
+  for_each = local.create && var.create_schedule ? var.schedules : {}
 
   scheduled_action_name  = each.key
   autoscaling_group_name = try(aws_autoscaling_group.this[0].name, aws_autoscaling_group.idc[0].name)
@@ -535,7 +537,7 @@ resource "aws_autoscaling_schedule" "this" {
 ################################################################################
 
 resource "aws_autoscaling_policy" "this" {
-  for_each = { for k, v in var.scaling_policies : k => v if var.create && var.create_scaling_policy }
+  for_each = { for k, v in var.scaling_policies : k => v if local.create && var.create_scaling_policy }
 
   name                   = lookup(each.value, "name", each.key)
   autoscaling_group_name = var.ignore_desired_capacity_changes ? aws_autoscaling_group.idc[0].name : aws_autoscaling_group.this[0].name

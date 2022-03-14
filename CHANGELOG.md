@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.2.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v5.1.1...v5.2.0) (2022-03-12)
+
+
+### Features
+
+* Made it clear that we stand with Ukraine ([eecd4f8](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/eecd4f83690256dc347a26b2c712daa035ede7bd))
+
 ### [5.1.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v5.1.0...v5.1.1) (2022-02-15)
 
 
