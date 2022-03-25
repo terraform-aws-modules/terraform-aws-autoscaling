@@ -147,24 +147,11 @@ module "asg" {
       tags          = { WhatAmI = "SpotInstanceRequest" }
     }
   ]
-
-  tags = [
-    {
-      key                 = "Environment"
-      value               = "dev"
-      propagate_at_launch = true
-    },
-    {
-      key                 = "Project"
-      value               = "megasecret"
-      propagate_at_launch = true
-    },
-  ]
-
-  tags_as_map = {
-    extra_tag1 = "extra_value1"
-    extra_tag2 = "extra_value2"
+  tags = {
+    Environment = "dev"
+    Project     = "megasecret"
   }
+
 }
 ```
 
