@@ -147,24 +147,11 @@ module "asg" {
       tags          = { WhatAmI = "SpotInstanceRequest" }
     }
   ]
-
-  tags = [
-    {
-      key                 = "Environment"
-      value               = "dev"
-      propagate_at_launch = true
-    },
-    {
-      key                 = "Project"
-      value               = "megasecret"
-      propagate_at_launch = true
-    },
-  ]
-
-  tags_as_map = {
-    extra_tag1 = "extra_value1"
-    extra_tag2 = "extra_value2"
+  tags = {
+    Environment = "dev"
+    Project     = "megasecret"
   }
+
 }
 ```
 
@@ -386,9 +373,8 @@ Module is maintained by [Anton Babenko](https://github.com/antonbabenko) with he
 
 Apache 2 Licensed. See [LICENSE](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/LICENSE) for full details.
 
-## Additional terms of use for users from Russia and Belarus
+## Additional information for users from Russia and Belarus
 
-By using the code provided in this repository you agree with the following:
 * Russia has [illegally annexed Crimea in 2014](https://en.wikipedia.org/wiki/Annexation_of_Crimea_by_the_Russian_Federation) and [brought the war in Donbas](https://en.wikipedia.org/wiki/War_in_Donbas) followed by [full-scale invasion of Ukraine in 2022](https://en.wikipedia.org/wiki/2022_Russian_invasion_of_Ukraine).
 * Russia has brought sorrow and devastations to millions of Ukrainians, killed hundreds of innocent people, damaged thousands of buildings, and forced several million people to flee.
 * [Putin khuylo!](https://en.wikipedia.org/wiki/Putin_khuylo!)
