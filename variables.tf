@@ -148,13 +148,13 @@ variable "force_delete" {
 variable "termination_policies" {
   description = "A list of policies to decide how the instances in the Auto Scaling Group should be terminated. The allowed values are `OldestInstance`, `NewestInstance`, `OldestLaunchConfiguration`, `ClosestToNextInstanceHour`, `OldestLaunchTemplate`, `AllocationStrategy`, `Default`"
   type        = list(string)
-  default     = null
+  default     = []
 }
 
 variable "suspended_processes" {
   description = "A list of processes to suspend for the Auto Scaling Group. The allowed values are `Launch`, `Terminate`, `HealthCheck`, `ReplaceUnhealthy`, `AZRebalance`, `AlarmNotification`, `ScheduledActions`, `AddToLoadBalancer`. Note that if you suspend either the `Launch` or `Terminate` process types, it can prevent your Auto Scaling Group from functioning properly"
   type        = list(string)
-  default     = null
+  default     = []
 }
 
 variable "max_instance_lifetime" {
@@ -166,7 +166,7 @@ variable "max_instance_lifetime" {
 variable "enabled_metrics" {
   description = "A list of metrics to collect. The allowed values are `GroupDesiredCapacity`, `GroupInServiceCapacity`, `GroupPendingCapacity`, `GroupMinSize`, `GroupMaxSize`, `GroupInServiceInstances`, `GroupPendingInstances`, `GroupStandbyInstances`, `GroupStandbyCapacity`, `GroupTerminatingCapacity`, `GroupTerminatingInstances`, `GroupTotalCapacity`, `GroupTotalInstances`"
   type        = list(string)
-  default     = null
+  default     = []
 }
 
 variable "metrics_granularity" {
@@ -190,7 +190,7 @@ variable "initial_lifecycle_hooks" {
 variable "instance_refresh" {
   description = "If this block is configured, start an Instance Refresh when this Auto Scaling Group is updated"
   type        = any
-  default     = null
+  default     = {}
 }
 
 variable "use_mixed_instances_policy" {
@@ -219,8 +219,8 @@ variable "tags" {
 
 variable "warm_pool" {
   description = "If this block is configured, add a Warm Pool to the specified Auto Scaling group"
-  type        = any
-  default     = null
+  type        = map(string)
+  default     = {}
 }
 
 variable "ebs_optimized" {
@@ -253,7 +253,7 @@ variable "key_name" {
   default     = null
 }
 
-variable "user_data_base64" {
+variable "user_data" {
   description = "The Base64-encoded user data to provide when launching the instance"
   type        = string
   default     = null
@@ -262,19 +262,19 @@ variable "user_data_base64" {
 variable "security_groups" {
   description = "A list of security group IDs to associate"
   type        = list(string)
-  default     = null
+  default     = []
 }
 
 variable "enable_monitoring" {
   description = "Enables/disables detailed monitoring"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "metadata_options" {
   description = "Customize the metadata options for the instance"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 ################################################################################
@@ -350,43 +350,43 @@ variable "block_device_mappings" {
 variable "capacity_reservation_specification" {
   description = "Targeting for EC2 capacity reservations"
   type        = any
-  default     = null
+  default     = {}
 }
 
 variable "cpu_options" {
   description = "The CPU options for the instance"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "credit_specification" {
   description = "Customize the credit specification of the instance"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "elastic_gpu_specifications" {
   description = "The elastic GPU to attach to the instance"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "elastic_inference_accelerator" {
   description = "Configuration block containing an Elastic Inference Accelerator to attach to the instance"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "enclave_options" {
   description = "Enable Nitro Enclaves on launched instances"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "hibernation_options" {
   description = "The hibernation options for the instance"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "iam_instance_profile_arn" {
@@ -398,13 +398,13 @@ variable "iam_instance_profile_arn" {
 variable "instance_market_options" {
   description = "The market (purchasing) option for the instance"
   type        = any
-  default     = null
+  default     = {}
 }
 
 variable "license_specifications" {
   description = "A list of license specifications to associate with"
   type        = map(string)
-  default     = null
+  default     = {}
 }
 
 variable "network_interfaces" {
@@ -416,7 +416,13 @@ variable "network_interfaces" {
 variable "placement" {
   description = "The placement of the instance"
   type        = map(string)
-  default     = null
+  default     = {}
+}
+
+variable "private_dns_name_options" {
+  description = "The options for the instance hostname. The default values are inherited from the subnet"
+  type        = map(string)
+  default     = {}
 }
 
 variable "tag_specifications" {
