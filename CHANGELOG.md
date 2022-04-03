@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.1.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.0.0...v6.1.0) (2022-04-03)
+
+
+### Features
+
+* Improved support for EFA network interfaces ([#188](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/188)) ([f9f06ae](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/f9f06aea4e392ff6675543bb10256e161dab6666))
+
 ## [6.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v5.2.0...v6.0.0) (2022-04-03)
 
 
