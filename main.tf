@@ -256,7 +256,7 @@ resource "aws_autoscaling_group" "this" {
     }
   }
 
-  availability_zones  = var.availability_zone
+  availability_zones  = var.availability_zones
   vpc_zone_identifier = var.vpc_zone_identifier
 
   min_size                  = var.min_size
@@ -407,7 +407,7 @@ resource "aws_autoscaling_group" "idc" {
     }
   }
 
-  availability_zones  = var.availability_zone
+  availability_zones  = var.availability_zones
   vpc_zone_identifier = var.vpc_zone_identifier
 
   min_size                  = var.min_size
