@@ -11,6 +11,7 @@ locals {
     data.aws_default_tags.current.tags,
     var.tags,
     { "Name" = coalesce(var.instance_name, var.name) },
+    var.autoscaling_group_tags,
   )
 }
 

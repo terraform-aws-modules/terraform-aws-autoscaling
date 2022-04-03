@@ -277,6 +277,12 @@ variable "metadata_options" {
   default     = {}
 }
 
+variable "autoscaling_group_tags" {
+  description = "A map of additional tags to add to the autoscaling group"
+  type        = map(string)
+  default     = {}
+}
+
 ################################################################################
 # Launch template
 ################################################################################
