@@ -444,6 +444,52 @@ module "warm_pool" {
 }
 
 ################################################################################
+# EFA Network Interface
+# !Warning - This example requires the use of expensive instance types - Warning!
+################################################################################
+
+locals {
+  efa_user_data = <<-EOT
+  # Install EFA libraries
+  curl -O https://efa-installer.amazonaws.com/aws-efa-installer-latest.tar.gz
+  tar -xf aws-efa-installer-latest.tar.gz && cd aws-efa-installer
+  ./efa_installer.sh -y --minimal
+  fi_info -p efa -t FI_EP_RDM
+  # Disable ptrace
+  sysctl -w kernel.yama.ptrace_scope=0
+  EOT
+}
+
+module "efa" {
+  source = "../../"
+
+  # Autoscaling group
+  name = "default-${local.name}"
+
+  vpc_zone_identifier = module.vpc.private_subnets
+  min_size            = 0
+  max_size            = 1
+  desired_capacity    = 1
+
+  # aws ec2 describe-instance-types --region eu-west-1 --filters Name=network-info.efa-supported,Values=true --query "InstanceTypes[*].[InstanceType]" --output text | sort
+  instance_type = "c5n.9xlarge"
+  image_id      = data.aws_ami.amazon_linux.id
+  user_data     = base64encode(local.efa_user_data)
+
+  network_interfaces = [
+    {
+      description                 = "EFA interface example"
+      delete_on_termination       = true
+      device_index                = 0
+      associate_public_ip_address = false
+      interface_type              = "efa"
+    }
+  ]
+
+  tags = local.tags
+}
+
+################################################################################
 # Supporting Resources
 ################################################################################
 

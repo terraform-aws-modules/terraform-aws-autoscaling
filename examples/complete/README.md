@@ -9,6 +9,8 @@ There are primarily six different setups shown in this example project:
 - `external` - demonstrates how to create an autoscaling group using an externally created launch template
 - `complete` - demonstrates the vast majority of the functionality available for creating an autoscaling group
 - `mixed instance` - demonstrates how to create an autoscaling group configured to use a mixed instance policy
+- `warm pool` - demonstrates the usage of warm pools with capacity reservations
+- `efa` - demonstrates the usage of EFA (Elastic Fabric Adapter) type network interfaces
 
 ## Usage
 
@@ -46,6 +48,7 @@ Note that this example may create resources which cost money. Run `terraform des
 | <a name="module_complete"></a> [complete](#module\_complete) | ../../ | n/a |
 | <a name="module_default"></a> [default](#module\_default) | ../../ | n/a |
 | <a name="module_disabled"></a> [disabled](#module\_disabled) | ../../ | n/a |
+| <a name="module_efa"></a> [efa](#module\_efa) | ../../ | n/a |
 | <a name="module_external"></a> [external](#module\_external) | ../../ | n/a |
 | <a name="module_launch_template_only"></a> [launch\_template\_only](#module\_launch\_template\_only) | ../../ | n/a |
 | <a name="module_mixed_instance"></a> [mixed\_instance](#module\_mixed\_instance) | ../../ | n/a |
