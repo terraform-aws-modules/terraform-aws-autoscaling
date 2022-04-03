@@ -31,7 +31,8 @@ resource "aws_launch_template" "this" {
   key_name      = var.key_name
   user_data     = var.user_data
 
-  vpc_security_group_ids = var.security_groups
+  # Ref: https://github.com/hashicorp/terraform-provider-aws/issues/4570
+  vpc_security_group_ids = length(var.network_interfaces) > 0 ? [] : var.security_groups
 
   default_version                      = var.default_version
   update_default_version               = var.update_default_version
@@ -192,8 +193,9 @@ resource "aws_launch_template" "this" {
       network_interface_id         = try(network_interfaces.value.network_interface_id, null)
       network_card_index           = try(network_interfaces.value.network_card_index, null)
       private_ip_address           = try(network_interfaces.value.private_ip_address, null)
-      security_groups              = try(network_interfaces.value.security_groups, [])
-      subnet_id                    = try(network_interfaces.value.subnet_id, null)
+      # Ref: https://github.com/hashicorp/terraform-provider-aws/issues/4570
+      security_groups = compact(concat(try(network_interfaces.value.security_groups, []), var.security_groups))
+      subnet_id       = try(network_interfaces.value.subnet_id, null)
     }
   }
 
