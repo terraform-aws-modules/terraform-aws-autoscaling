@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v5.2.0...v6.0.0) (2022-04-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update provider to `v4.x`, add new attributes from `v4.x`, change `user_data_base64` to `user_data` (#186)
+
+### Features
+
+* Update provider to `v4.x`, add new attributes from `v4.x`, change `user_data_base64` to `user_data` ([#186](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/186)) ([8e2e285](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/8e2e285b031faafe298de5d1d738e9743e607b3d))
+
 ## [5.2.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v5.1.1...v5.2.0) (2022-03-12)
 
 
