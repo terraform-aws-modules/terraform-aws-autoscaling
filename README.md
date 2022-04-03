@@ -147,11 +147,11 @@ module "asg" {
       tags          = { WhatAmI = "SpotInstanceRequest" }
     }
   ]
+
   tags = {
     Environment = "dev"
     Project     = "megasecret"
   }
-
 }
 ```
 
@@ -201,30 +201,6 @@ Note: the default behavior of the module is to create an autoscaling group and l
         target_value = 50.0
       }
     }
-  }
-```
-
-## Tags
-
-There are two ways to specify tags for auto-scaling group in this module - `tags` and `tags_as_map`.
-
-```hcl
-  tags = [
-    {
-      key                 = "Project"
-      value               = "megasecret"
-      propagate_at_launch = true
-    },
-    {
-      key                 = "foo"
-      value               = ""
-      propagate_at_launch = true
-    },
-  ]
-
-  tags_as_map = {
-    Owner       = "user"
-    Environment = "dev"
   }
 ```
 
