@@ -11,6 +11,7 @@ locals {
     data.aws_default_tags.current.tags,
     var.tags,
     { "Name" = coalesce(var.instance_name, var.name) },
+    var.autoscaling_group_tags,
   )
 }
 
@@ -256,7 +257,7 @@ resource "aws_autoscaling_group" "this" {
     }
   }
 
-  availability_zones  = var.availability_zone
+  availability_zones  = var.availability_zones
   vpc_zone_identifier = var.vpc_zone_identifier
 
   min_size                  = var.min_size
@@ -407,7 +408,7 @@ resource "aws_autoscaling_group" "idc" {
     }
   }
 
-  availability_zones  = var.availability_zone
+  availability_zones  = var.availability_zones
   vpc_zone_identifier = var.vpc_zone_identifier
 
   min_size                  = var.min_size

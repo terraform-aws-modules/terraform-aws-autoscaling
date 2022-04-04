@@ -43,7 +43,7 @@ variable "launch_template_version" {
   default     = null
 }
 
-variable "availability_zone" {
+variable "availability_zones" {
   description = "A list of one or more availability zones for the group. Used for EC2-Classic and default subnets when not specified with `vpc_zone_identifier` argument. Conflicts with `vpc_zone_identifier`"
   type        = list(string)
   default     = null
@@ -273,6 +273,12 @@ variable "enable_monitoring" {
 
 variable "metadata_options" {
   description = "Customize the metadata options for the instance"
+  type        = map(string)
+  default     = {}
+}
+
+variable "autoscaling_group_tags" {
+  description = "A map of additional tags to add to the autoscaling group"
   type        = map(string)
   default     = {}
 }
