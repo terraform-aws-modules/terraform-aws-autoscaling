@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.2.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.1.0...v6.2.0) (2022-04-04)
+
+
+### Features
+
+* Add separate autoscaling group tag variable, correct variable name for `availability_zones` to match resource spec ([#189](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/189)) ([a7e5746](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/a7e57469d5be62f9ee7cdf74a7acf627897b4f52))
+
 ## [6.1.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.0.0...v6.1.0) (2022-04-03)
 
 
