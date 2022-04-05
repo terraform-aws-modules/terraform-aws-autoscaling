@@ -12,9 +12,19 @@ output "launch_template_only_launch_template_arn" {
   value       = module.launch_template_only.launch_template_arn
 }
 
+output "launch_template_only_launch_template_name" {
+  description = "The name of the launch template"
+  value       = module.launch_template_only.launch_template_name
+}
+
 output "launch_template_only_launch_template_latest_version" {
   description = "The latest version of the launch template"
   value       = module.launch_template_only.launch_template_latest_version
+}
+
+output "launch_template_only_launch_template_default_version" {
+  description = "The default version of the launch template"
+  value       = module.launch_template_only.launch_template_default_version
 }
 
 ################################################################################
@@ -31,9 +41,19 @@ output "default_launch_template_arn" {
   value       = module.default.launch_template_arn
 }
 
+output "default_launch_template_name" {
+  description = "The name of the launch template"
+  value       = module.default.launch_template_name
+}
+
 output "default_launch_template_latest_version" {
   description = "The latest version of the launch template"
   value       = module.default.launch_template_latest_version
+}
+
+output "default_launch_template_default_version" {
+  description = "The default version of the launch template"
+  value       = module.default.launch_template_default_version
 }
 
 output "default_autoscaling_group_id" {
@@ -115,9 +135,19 @@ output "external_launch_template_arn" {
   value       = module.external.launch_template_arn
 }
 
+output "external_launch_template_name" {
+  description = "The name of the launch template"
+  value       = module.external.launch_template_name
+}
+
 output "external_launch_template_latest_version" {
   description = "The latest version of the launch template"
   value       = module.external.launch_template_latest_version
+}
+
+output "external_launch_template_default_version" {
+  description = "The default version of the launch template"
+  value       = module.external.launch_template_default_version
 }
 
 output "external_autoscaling_group_id" {
@@ -199,9 +229,19 @@ output "complete_launch_template_arn" {
   value       = module.complete.launch_template_arn
 }
 
+output "complete_launch_template_name" {
+  description = "The name of the launch template"
+  value       = module.complete.launch_template_name
+}
+
 output "complete_launch_template_latest_version" {
   description = "The latest version of the launch template"
   value       = module.complete.launch_template_latest_version
+}
+
+output "complete_launch_template_default_version" {
+  description = "The default version of the launch template"
+  value       = module.complete.launch_template_default_version
 }
 
 output "complete_autoscaling_group_id" {
@@ -293,9 +333,19 @@ output "mixed_instance_launch_template_arn" {
   value       = module.mixed_instance.launch_template_arn
 }
 
+output "mixed_instance_launch_template_name" {
+  description = "The name of the launch template"
+  value       = module.mixed_instance.launch_template_name
+}
+
 output "mixed_instance_launch_template_latest_version" {
   description = "The latest version of the launch template"
   value       = module.mixed_instance.launch_template_latest_version
+}
+
+output "mixed_instance_launch_template_default_version" {
+  description = "The default version of the launch template"
+  value       = module.mixed_instance.launch_template_default_version
 }
 
 output "mixed_instance_autoscaling_group_id" {

@@ -90,8 +90,10 @@ No inputs.
 | <a name="output_complete_autoscaling_policy_arns"></a> [complete\_autoscaling\_policy\_arns](#output\_complete\_autoscaling\_policy\_arns) | ARNs of autoscaling policies |
 | <a name="output_complete_autoscaling_schedule_arns"></a> [complete\_autoscaling\_schedule\_arns](#output\_complete\_autoscaling\_schedule\_arns) | ARNs of autoscaling group schedules |
 | <a name="output_complete_launch_template_arn"></a> [complete\_launch\_template\_arn](#output\_complete\_launch\_template\_arn) | The ARN of the launch template |
+| <a name="output_complete_launch_template_default_version"></a> [complete\_launch\_template\_default\_version](#output\_complete\_launch\_template\_default\_version) | The default version of the launch template |
 | <a name="output_complete_launch_template_id"></a> [complete\_launch\_template\_id](#output\_complete\_launch\_template\_id) | The ID of the launch template |
 | <a name="output_complete_launch_template_latest_version"></a> [complete\_launch\_template\_latest\_version](#output\_complete\_launch\_template\_latest\_version) | The latest version of the launch template |
+| <a name="output_complete_launch_template_name"></a> [complete\_launch\_template\_name](#output\_complete\_launch\_template\_name) | The name of the launch template |
 | <a name="output_default_autoscaling_group_arn"></a> [default\_autoscaling\_group\_arn](#output\_default\_autoscaling\_group\_arn) | The ARN for this AutoScaling Group |
 | <a name="output_default_autoscaling_group_availability_zones"></a> [default\_autoscaling\_group\_availability\_zones](#output\_default\_autoscaling\_group\_availability\_zones) | The availability zones of the autoscale group |
 | <a name="output_default_autoscaling_group_default_cooldown"></a> [default\_autoscaling\_group\_default\_cooldown](#output\_default\_autoscaling\_group\_default\_cooldown) | Time between a scaling activity and the succeeding scaling activity |
@@ -106,8 +108,10 @@ No inputs.
 | <a name="output_default_autoscaling_group_target_group_arns"></a> [default\_autoscaling\_group\_target\_group\_arns](#output\_default\_autoscaling\_group\_target\_group\_arns) | List of Target Group ARNs that apply to this AutoScaling Group |
 | <a name="output_default_autoscaling_group_vpc_zone_identifier"></a> [default\_autoscaling\_group\_vpc\_zone\_identifier](#output\_default\_autoscaling\_group\_vpc\_zone\_identifier) | The VPC zone identifier |
 | <a name="output_default_launch_template_arn"></a> [default\_launch\_template\_arn](#output\_default\_launch\_template\_arn) | The ARN of the launch template |
+| <a name="output_default_launch_template_default_version"></a> [default\_launch\_template\_default\_version](#output\_default\_launch\_template\_default\_version) | The default version of the launch template |
 | <a name="output_default_launch_template_id"></a> [default\_launch\_template\_id](#output\_default\_launch\_template\_id) | The ID of the launch template |
 | <a name="output_default_launch_template_latest_version"></a> [default\_launch\_template\_latest\_version](#output\_default\_launch\_template\_latest\_version) | The latest version of the launch template |
+| <a name="output_default_launch_template_name"></a> [default\_launch\_template\_name](#output\_default\_launch\_template\_name) | The name of the launch template |
 | <a name="output_external_autoscaling_group_arn"></a> [external\_autoscaling\_group\_arn](#output\_external\_autoscaling\_group\_arn) | The ARN for this AutoScaling Group |
 | <a name="output_external_autoscaling_group_availability_zones"></a> [external\_autoscaling\_group\_availability\_zones](#output\_external\_autoscaling\_group\_availability\_zones) | The availability zones of the autoscale group |
 | <a name="output_external_autoscaling_group_default_cooldown"></a> [external\_autoscaling\_group\_default\_cooldown](#output\_external\_autoscaling\_group\_default\_cooldown) | Time between a scaling activity and the succeeding scaling activity |
@@ -122,11 +126,15 @@ No inputs.
 | <a name="output_external_autoscaling_group_target_group_arns"></a> [external\_autoscaling\_group\_target\_group\_arns](#output\_external\_autoscaling\_group\_target\_group\_arns) | List of Target Group ARNs that apply to this AutoScaling Group |
 | <a name="output_external_autoscaling_group_vpc_zone_identifier"></a> [external\_autoscaling\_group\_vpc\_zone\_identifier](#output\_external\_autoscaling\_group\_vpc\_zone\_identifier) | The VPC zone identifier |
 | <a name="output_external_launch_template_arn"></a> [external\_launch\_template\_arn](#output\_external\_launch\_template\_arn) | The ARN of the launch template |
+| <a name="output_external_launch_template_default_version"></a> [external\_launch\_template\_default\_version](#output\_external\_launch\_template\_default\_version) | The default version of the launch template |
 | <a name="output_external_launch_template_id"></a> [external\_launch\_template\_id](#output\_external\_launch\_template\_id) | The ID of the launch template |
 | <a name="output_external_launch_template_latest_version"></a> [external\_launch\_template\_latest\_version](#output\_external\_launch\_template\_latest\_version) | The latest version of the launch template |
+| <a name="output_external_launch_template_name"></a> [external\_launch\_template\_name](#output\_external\_launch\_template\_name) | The name of the launch template |
 | <a name="output_launch_template_only_launch_template_arn"></a> [launch\_template\_only\_launch\_template\_arn](#output\_launch\_template\_only\_launch\_template\_arn) | The ARN of the launch template |
+| <a name="output_launch_template_only_launch_template_default_version"></a> [launch\_template\_only\_launch\_template\_default\_version](#output\_launch\_template\_only\_launch\_template\_default\_version) | The default version of the launch template |
 | <a name="output_launch_template_only_launch_template_id"></a> [launch\_template\_only\_launch\_template\_id](#output\_launch\_template\_only\_launch\_template\_id) | The ID of the launch template |
 | <a name="output_launch_template_only_launch_template_latest_version"></a> [launch\_template\_only\_launch\_template\_latest\_version](#output\_launch\_template\_only\_launch\_template\_latest\_version) | The latest version of the launch template |
+| <a name="output_launch_template_only_launch_template_name"></a> [launch\_template\_only\_launch\_template\_name](#output\_launch\_template\_only\_launch\_template\_name) | The name of the launch template |
 | <a name="output_mixed_instance_autoscaling_group_arn"></a> [mixed\_instance\_autoscaling\_group\_arn](#output\_mixed\_instance\_autoscaling\_group\_arn) | The ARN for this AutoScaling Group |
 | <a name="output_mixed_instance_autoscaling_group_availability_zones"></a> [mixed\_instance\_autoscaling\_group\_availability\_zones](#output\_mixed\_instance\_autoscaling\_group\_availability\_zones) | The availability zones of the autoscale group |
 | <a name="output_mixed_instance_autoscaling_group_default_cooldown"></a> [mixed\_instance\_autoscaling\_group\_default\_cooldown](#output\_mixed\_instance\_autoscaling\_group\_default\_cooldown) | Time between a scaling activity and the succeeding scaling activity |
@@ -141,6 +149,8 @@ No inputs.
 | <a name="output_mixed_instance_autoscaling_group_target_group_arns"></a> [mixed\_instance\_autoscaling\_group\_target\_group\_arns](#output\_mixed\_instance\_autoscaling\_group\_target\_group\_arns) | List of Target Group ARNs that apply to this AutoScaling Group |
 | <a name="output_mixed_instance_autoscaling_group_vpc_zone_identifier"></a> [mixed\_instance\_autoscaling\_group\_vpc\_zone\_identifier](#output\_mixed\_instance\_autoscaling\_group\_vpc\_zone\_identifier) | The VPC zone identifier |
 | <a name="output_mixed_instance_launch_template_arn"></a> [mixed\_instance\_launch\_template\_arn](#output\_mixed\_instance\_launch\_template\_arn) | The ARN of the launch template |
+| <a name="output_mixed_instance_launch_template_default_version"></a> [mixed\_instance\_launch\_template\_default\_version](#output\_mixed\_instance\_launch\_template\_default\_version) | The default version of the launch template |
 | <a name="output_mixed_instance_launch_template_id"></a> [mixed\_instance\_launch\_template\_id](#output\_mixed\_instance\_launch\_template\_id) | The ID of the launch template |
 | <a name="output_mixed_instance_launch_template_latest_version"></a> [mixed\_instance\_launch\_template\_latest\_version](#output\_mixed\_instance\_launch\_template\_latest\_version) | The latest version of the launch template |
+| <a name="output_mixed_instance_launch_template_name"></a> [mixed\_instance\_launch\_template\_name](#output\_mixed\_instance\_launch\_template\_name) | The name of the launch template |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
