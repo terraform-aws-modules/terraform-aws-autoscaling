@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.3.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.2.0...v6.3.0) (2022-04-05)
+
+
+### Features
+
+* Add outputs for launch template name and default version ([#191](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/191)) ([e329ad4](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/e329ad4e97bb6470cf18d1c48463ffdb7669f84c))
+
 ## [6.2.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.1.0...v6.2.0) (2022-04-04)
 
 
