@@ -96,6 +96,11 @@ output "autoscaling_group_target_group_arns" {
   value       = try(aws_autoscaling_group.this[0].target_group_arns, aws_autoscaling_group.idc[0].target_group_arns, [])
 }
 
+output "autoscaling_group_enabled_metrics" {
+  description = "List of metrics enabled for collection"
+  value       = try(aws_autoscaling_group.this[0].enabled_metrics, aws_autoscaling_group.idc[0].enabled_metrics, [])
+}
+
 ################################################################################
 # Autoscaling group schedule
 ################################################################################

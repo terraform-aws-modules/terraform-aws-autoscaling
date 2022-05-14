@@ -30,13 +30,13 @@ Note that this example may create resources which cost money. Run `terraform des
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.1 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.7 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.14 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.7 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.14 |
 
 ## Modules
 
@@ -50,6 +50,8 @@ Note that this example may create resources which cost money. Run `terraform des
 | <a name="module_disabled"></a> [disabled](#module\_disabled) | ../../ | n/a |
 | <a name="module_efa"></a> [efa](#module\_efa) | ../../ | n/a |
 | <a name="module_external"></a> [external](#module\_external) | ../../ | n/a |
+| <a name="module_instance_requirements"></a> [instance\_requirements](#module\_instance\_requirements) | ../../ | n/a |
+| <a name="module_instance_requirements_accelerators"></a> [instance\_requirements\_accelerators](#module\_instance\_requirements\_accelerators) | ../../ | n/a |
 | <a name="module_launch_template_only"></a> [launch\_template\_only](#module\_launch\_template\_only) | ../../ | n/a |
 | <a name="module_mixed_instance"></a> [mixed\_instance](#module\_mixed\_instance) | ../../ | n/a |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
@@ -78,6 +80,7 @@ No inputs.
 | <a name="output_complete_autoscaling_group_availability_zones"></a> [complete\_autoscaling\_group\_availability\_zones](#output\_complete\_autoscaling\_group\_availability\_zones) | The availability zones of the autoscale group |
 | <a name="output_complete_autoscaling_group_default_cooldown"></a> [complete\_autoscaling\_group\_default\_cooldown](#output\_complete\_autoscaling\_group\_default\_cooldown) | Time between a scaling activity and the succeeding scaling activity |
 | <a name="output_complete_autoscaling_group_desired_capacity"></a> [complete\_autoscaling\_group\_desired\_capacity](#output\_complete\_autoscaling\_group\_desired\_capacity) | The number of Amazon EC2 instances that should be running in the group |
+| <a name="output_complete_autoscaling_group_enabled_metrics"></a> [complete\_autoscaling\_group\_enabled\_metrics](#output\_complete\_autoscaling\_group\_enabled\_metrics) | List of metrics enabled for collection |
 | <a name="output_complete_autoscaling_group_health_check_grace_period"></a> [complete\_autoscaling\_group\_health\_check\_grace\_period](#output\_complete\_autoscaling\_group\_health\_check\_grace\_period) | Time after instance comes into service before checking health |
 | <a name="output_complete_autoscaling_group_health_check_type"></a> [complete\_autoscaling\_group\_health\_check\_type](#output\_complete\_autoscaling\_group\_health\_check\_type) | EC2 or ELB. Controls how health checking is done |
 | <a name="output_complete_autoscaling_group_id"></a> [complete\_autoscaling\_group\_id](#output\_complete\_autoscaling\_group\_id) | The autoscaling group id |
@@ -98,6 +101,7 @@ No inputs.
 | <a name="output_default_autoscaling_group_availability_zones"></a> [default\_autoscaling\_group\_availability\_zones](#output\_default\_autoscaling\_group\_availability\_zones) | The availability zones of the autoscale group |
 | <a name="output_default_autoscaling_group_default_cooldown"></a> [default\_autoscaling\_group\_default\_cooldown](#output\_default\_autoscaling\_group\_default\_cooldown) | Time between a scaling activity and the succeeding scaling activity |
 | <a name="output_default_autoscaling_group_desired_capacity"></a> [default\_autoscaling\_group\_desired\_capacity](#output\_default\_autoscaling\_group\_desired\_capacity) | The number of Amazon EC2 instances that should be running in the group |
+| <a name="output_default_autoscaling_group_enabled_metrics"></a> [default\_autoscaling\_group\_enabled\_metrics](#output\_default\_autoscaling\_group\_enabled\_metrics) | List of metrics enabled for collection |
 | <a name="output_default_autoscaling_group_health_check_grace_period"></a> [default\_autoscaling\_group\_health\_check\_grace\_period](#output\_default\_autoscaling\_group\_health\_check\_grace\_period) | Time after instance comes into service before checking health |
 | <a name="output_default_autoscaling_group_health_check_type"></a> [default\_autoscaling\_group\_health\_check\_type](#output\_default\_autoscaling\_group\_health\_check\_type) | EC2 or ELB. Controls how health checking is done |
 | <a name="output_default_autoscaling_group_id"></a> [default\_autoscaling\_group\_id](#output\_default\_autoscaling\_group\_id) | The autoscaling group id |
@@ -116,6 +120,7 @@ No inputs.
 | <a name="output_external_autoscaling_group_availability_zones"></a> [external\_autoscaling\_group\_availability\_zones](#output\_external\_autoscaling\_group\_availability\_zones) | The availability zones of the autoscale group |
 | <a name="output_external_autoscaling_group_default_cooldown"></a> [external\_autoscaling\_group\_default\_cooldown](#output\_external\_autoscaling\_group\_default\_cooldown) | Time between a scaling activity and the succeeding scaling activity |
 | <a name="output_external_autoscaling_group_desired_capacity"></a> [external\_autoscaling\_group\_desired\_capacity](#output\_external\_autoscaling\_group\_desired\_capacity) | The number of Amazon EC2 instances that should be running in the group |
+| <a name="output_external_autoscaling_group_enabled_metrics"></a> [external\_autoscaling\_group\_enabled\_metrics](#output\_external\_autoscaling\_group\_enabled\_metrics) | List of metrics enabled for collection |
 | <a name="output_external_autoscaling_group_health_check_grace_period"></a> [external\_autoscaling\_group\_health\_check\_grace\_period](#output\_external\_autoscaling\_group\_health\_check\_grace\_period) | Time after instance comes into service before checking health |
 | <a name="output_external_autoscaling_group_health_check_type"></a> [external\_autoscaling\_group\_health\_check\_type](#output\_external\_autoscaling\_group\_health\_check\_type) | EC2 or ELB. Controls how health checking is done |
 | <a name="output_external_autoscaling_group_id"></a> [external\_autoscaling\_group\_id](#output\_external\_autoscaling\_group\_id) | The autoscaling group id |
@@ -139,6 +144,7 @@ No inputs.
 | <a name="output_mixed_instance_autoscaling_group_availability_zones"></a> [mixed\_instance\_autoscaling\_group\_availability\_zones](#output\_mixed\_instance\_autoscaling\_group\_availability\_zones) | The availability zones of the autoscale group |
 | <a name="output_mixed_instance_autoscaling_group_default_cooldown"></a> [mixed\_instance\_autoscaling\_group\_default\_cooldown](#output\_mixed\_instance\_autoscaling\_group\_default\_cooldown) | Time between a scaling activity and the succeeding scaling activity |
 | <a name="output_mixed_instance_autoscaling_group_desired_capacity"></a> [mixed\_instance\_autoscaling\_group\_desired\_capacity](#output\_mixed\_instance\_autoscaling\_group\_desired\_capacity) | The number of Amazon EC2 instances that should be running in the group |
+| <a name="output_mixed_instance_autoscaling_group_enabled_metrics"></a> [mixed\_instance\_autoscaling\_group\_enabled\_metrics](#output\_mixed\_instance\_autoscaling\_group\_enabled\_metrics) | List of metrics enabled for collection |
 | <a name="output_mixed_instance_autoscaling_group_health_check_grace_period"></a> [mixed\_instance\_autoscaling\_group\_health\_check\_grace\_period](#output\_mixed\_instance\_autoscaling\_group\_health\_check\_grace\_period) | Time after instance comes into service before checking health |
 | <a name="output_mixed_instance_autoscaling_group_health_check_type"></a> [mixed\_instance\_autoscaling\_group\_health\_check\_type](#output\_mixed\_instance\_autoscaling\_group\_health\_check\_type) | EC2 or ELB. Controls how health checking is done |
 | <a name="output_mixed_instance_autoscaling_group_id"></a> [mixed\_instance\_autoscaling\_group\_id](#output\_mixed\_instance\_autoscaling\_group\_id) | The autoscaling group id |

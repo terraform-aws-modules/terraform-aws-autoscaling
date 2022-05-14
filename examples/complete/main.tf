@@ -234,6 +234,10 @@ module "complete" {
     market_type = "spot"
   }
 
+  maintenance_options = {
+    auto_recovery = "default"
+  }
+
   metadata_options = {
     http_endpoint               = "enabled"
     http_tokens                 = "required"
@@ -485,6 +489,146 @@ module "efa" {
       interface_type              = "efa"
     }
   ]
+
+  tags = local.tags
+}
+
+
+################################################################################
+# Instance Requirements
+################################################################################
+
+module "instance_requirements" {
+  source = "../../"
+
+  # Needs https://github.com/hashicorp/terraform-provider-aws/issues/21566 for ASG
+  create = false
+
+  # Autoscaling group
+  name = "instance-req-${local.name}"
+
+  vpc_zone_identifier = module.vpc.private_subnets
+  min_size            = 0
+  max_size            = 5
+  desired_capacity    = 1
+
+  update_default_version = true
+  image_id               = data.aws_ami.amazon_linux.id
+
+  use_mixed_instances_policy = true
+  instance_requirements = {
+
+    accelerator_manufacturers = []
+    accelerator_names         = []
+    accelerator_types         = []
+
+    baseline_ebs_bandwidth_mbps = {
+      min = 400
+      max = 1600
+    }
+
+    burstable_performance   = "excluded"
+    cpu_manufacturers       = ["amazon-web-services", "amd", "intel"]
+    excluded_instance_types = ["t*"]
+    instance_generations    = ["current"]
+    local_storage_types     = ["ssd", "hdd"]
+
+    memory_gib_per_vcpu = {
+      min = 4
+      max = 16
+    }
+
+    memory_mib = {
+      min = 24
+      max = 128
+    }
+
+    network_interface_count = {
+      min = 1
+      max = 16
+    }
+
+    vcpu_count = {
+      min = 2
+      max = 96
+    }
+  }
+
+  tags = local.tags
+}
+
+################################################################################
+# Instance Requirements - Accelerators
+################################################################################
+
+module "instance_requirements_accelerators" {
+  source = "../../"
+
+  # Needs https://github.com/hashicorp/terraform-provider-aws/issues/21566 for ASG
+  # Requires access to g or p instance types in your account
+  # http://aws.amazon.com/contact-us/ec2-request
+  create = false
+
+  # Autoscaling group
+  name = "instance-req-accelerators-${local.name}"
+
+  vpc_zone_identifier = module.vpc.private_subnets
+  min_size            = 0
+  max_size            = 5
+  desired_capacity    = 1
+
+  update_default_version = true
+  image_id               = data.aws_ami.amazon_linux.id
+
+  use_mixed_instances_policy = true
+  instance_requirements = {
+    accelerator_count = {
+      min = 1
+      max = 8
+    }
+
+    accelerator_manufacturers = ["amazon-web-services", "amd", "nvidia"]
+    accelerator_names         = ["a100", "v100", "k80", "t4", "m60", "radeon-pro-v520"]
+
+    # accelerator_total_memory_mib = {
+    #   min = 4096
+    #   max = 16384
+    # }
+
+    accelerator_types = ["gpu", "inference"]
+    bare_metal        = "excluded"
+
+    # baseline_ebs_bandwidth_mbps = {
+    #   min = 400
+    #   max = 16384
+    # }
+
+    burstable_performance   = "excluded"
+    cpu_manufacturers       = ["amazon-web-services", "amd", "intel"]
+    excluded_instance_types = ["t*"]
+    instance_generations    = ["current"]
+    local_storage_types     = ["ssd", "hdd"]
+
+    # memory_gib_per_vcpu = {
+    #   min = 4
+    #   max = 16
+    # }
+
+    memory_mib = {
+      min = 24
+      max = 99999 # seems to be a provider bug
+    }
+
+    # network_interface_count = {
+    #   min = 1
+    #   max =4
+    # }
+
+    vcpu_count = {
+      min = 2
+      max = 999 # seems to be a provider bug
+    }
+  }
 
   tags = local.tags
 }
