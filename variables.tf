@@ -242,9 +242,15 @@ variable "image_id" {
 }
 
 variable "instance_type" {
-  description = "The type of the instance to launch"
+  description = "The type of the instance. If present then `instance_requirements` cannot be present"
   type        = string
-  default     = ""
+  default     = null
+}
+
+variable "instance_requirements" {
+  description = "The attribute requirements for the type of instance. If present then `instance_type` cannot be present"
+  type        = any
+  default     = {}
 }
 
 variable "key_name" {
@@ -410,6 +416,12 @@ variable "instance_market_options" {
 variable "license_specifications" {
   description = "A list of license specifications to associate with"
   type        = map(string)
+  default     = {}
+}
+
+variable "maintenance_options" {
+  description = "The maintenance options for the instance"
+  type        = any
   default     = {}
 }
 

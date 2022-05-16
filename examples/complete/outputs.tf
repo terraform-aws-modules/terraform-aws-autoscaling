@@ -121,6 +121,11 @@ output "default_autoscaling_group_target_group_arns" {
   value       = module.default.autoscaling_group_target_group_arns
 }
 
+output "default_autoscaling_group_enabled_metrics" {
+  description = "List of metrics enabled for collection"
+  value       = module.default.autoscaling_group_enabled_metrics
+}
+
 ################################################################################
 # External
 ################################################################################
@@ -213,6 +218,11 @@ output "external_autoscaling_group_load_balancers" {
 output "external_autoscaling_group_target_group_arns" {
   description = "List of Target Group ARNs that apply to this AutoScaling Group"
   value       = module.external.autoscaling_group_target_group_arns
+}
+
+output "external_autoscaling_group_enabled_metrics" {
+  description = "List of metrics enabled for collection"
+  value       = module.external.autoscaling_group_enabled_metrics
 }
 
 ################################################################################
@@ -319,6 +329,11 @@ output "complete_autoscaling_policy_arns" {
   value       = module.complete.autoscaling_policy_arns
 }
 
+output "complete_autoscaling_group_enabled_metrics" {
+  description = "List of metrics enabled for collection"
+  value       = module.complete.autoscaling_group_enabled_metrics
+}
+
 ################################################################################
 # Mixed instance policy
 ################################################################################
@@ -411,4 +426,9 @@ output "mixed_instance_autoscaling_group_load_balancers" {
 output "mixed_instance_autoscaling_group_target_group_arns" {
   description = "List of Target Group ARNs that apply to this AutoScaling Group"
   value       = module.mixed_instance.autoscaling_group_target_group_arns
+}
+
+output "mixed_instance_autoscaling_group_enabled_metrics" {
+  description = "List of metrics enabled for collection"
+  value       = module.mixed_instance.autoscaling_group_enabled_metrics
 }
