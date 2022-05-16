@@ -200,10 +200,10 @@ resource "aws_launch_template" "this" {
       }
 
       dynamic "memory_mib" {
-        for_each = try([instance_requirements.value.memory_mib], [])
+        for_each = [instance_requirements.value.memory_mib]
         content {
           max = try(memory_mib.value.max, null)
-          min = try(memory_mib.value.min, null)
+          min = memory_mib.value.min
         }
       }
 
@@ -228,10 +228,10 @@ resource "aws_launch_template" "this" {
       }
 
       dynamic "vcpu_count" {
-        for_each = try([instance_requirements.value.vcpu_count], [])
+        for_each = [instance_requirements.value.vcpu_count]
         content {
           max = try(vcpu_count.value.max, null)
-          min = try(vcpu_count.value.min, null)
+          min = vcpu_count.value.min
         }
       }
     }

@@ -501,7 +501,7 @@ module "efa" {
 module "instance_requirements" {
   source = "../../"
 
-  # Needs https://github.com/hashicorp/terraform-provider-aws/issues/21566 for ASG
+  # TODO - needs https://github.com/hashicorp/terraform-provider-aws/issues/21566 for ASG
   create = false
 
   # Autoscaling group
@@ -564,9 +564,8 @@ module "instance_requirements" {
 module "instance_requirements_accelerators" {
   source = "../../"
 
-  # Needs https://github.com/hashicorp/terraform-provider-aws/issues/21566 for ASG
-  # Requires access to g or p instance types in your account
-  # http://aws.amazon.com/contact-us/ec2-request
+  # TODO - needs https://github.com/hashicorp/terraform-provider-aws/issues/21566 for ASG
+  # Requires access to g or p instance types in your account http://aws.amazon.com/contact-us/ec2-request
   create = false
 
   # Autoscaling group
