@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.4.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.3.0...v6.4.0) (2022-05-16)
+
+
+### Features
+
+* Add support for ASG `maintenance_options` and LT `instance_requirements` ([#193](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/193)) ([1d1d3c0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/1d1d3c0c3bbcd069e362ba1131b111fbd5b5d906))
+
 ## [6.3.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.2.0...v6.3.0) (2022-04-05)
 
 
