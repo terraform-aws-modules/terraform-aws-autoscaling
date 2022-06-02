@@ -229,12 +229,6 @@ variable "ebs_optimized" {
   default     = null
 }
 
-variable "iam_instance_profile_name" {
-  description = "The name attribute of the IAM instance profile to associate with launched instances"
-  type        = string
-  default     = null
-}
-
 variable "image_id" {
   description = "The AMI from which to launch the instance"
   type        = string
@@ -401,12 +395,6 @@ variable "hibernation_options" {
   default     = {}
 }
 
-variable "iam_instance_profile_arn" {
-  description = "The IAM Instance Profile ARN to launch the instance with"
-  type        = string
-  default     = null
-}
-
 variable "instance_market_options" {
   description = "The market (purchasing) option for the instance"
   type        = any
@@ -478,6 +466,70 @@ variable "create_scaling_policy" {
 variable "scaling_policies" {
   description = "Map of target scaling policy schedule to create"
   type        = any
+  default     = {}
+}
+
+################################################################################
+# IAM Role / Instance Profile
+################################################################################
+
+variable "create_iam_instance_profile" {
+  description = "Determines whether an IAM instance profile is created or to use an existing IAM instance profile"
+  type        = bool
+  default     = false
+}
+
+variable "iam_instance_profile_arn" {
+  description = "Amazon Resource Name (ARN) of an existing IAM instance profile. Used when `create_iam_instance_profile` = `false`"
+  type        = string
+  default     = null
+}
+
+variable "iam_instance_profile_name" {
+  description = "The name of the IAM instance profile to be created (`create_iam_instance_profile` = `true`) or existing (`create_iam_instance_profile` = `false`)"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_name" {
+  description = "Name to use on IAM role created"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_use_name_prefix" {
+  description = "Determines whether the IAM role name (`iam_role_name`) is used as a prefix"
+  type        = bool
+  default     = true
+}
+
+variable "iam_role_path" {
+  description = "IAM role path"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_description" {
+  description = "Description of the role"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_permissions_boundary" {
+  description = "ARN of the policy that is used to set the permissions boundary for the IAM role"
+  type        = string
+  default     = null
+}
+
+variable "iam_role_policies" {
+  description = "IAM policies to attach to the IAM role"
+  type        = map(string)
+  default     = {}
+}
+
+variable "iam_role_tags" {
+  description = "A map of additional tags to add to the IAM role created"
+  type        = map(string)
   default     = {}
 }
 

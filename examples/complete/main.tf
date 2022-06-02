@@ -180,7 +180,17 @@ module "complete" {
   ebs_optimized     = true
   enable_monitoring = true
 
-  iam_instance_profile_arn = aws_iam_instance_profile.ssm.arn
+  create_iam_instance_profile = true
+  iam_role_name               = "complete-${local.name}"
+  iam_role_path               = "/ec2/"
+  iam_role_description        = "Complete IAM role example"
+  iam_role_tags = {
+    CustomIamRole = "Yes"
+  }
+  iam_role_policies = {
+    AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  }
+
   # # Security group is set on the ENIs below
   # security_groups          = [module.asg_sg.security_group_id]
 
@@ -338,6 +348,17 @@ module "complete" {
         }
       }
     }
+    request-count-per-target = {
+      policy_type               = "TargetTrackingScaling"
+      estimated_instance_warmup = 120
+      target_tracking_configuration = {
+        predefined_metric_specification = {
+          predefined_metric_type = "ALBRequestCountPerTarget"
+          resource_label         = "${module.alb.lb_arn_suffix}/${module.alb.target_group_arn_suffixes[0]}"
+        }
+        target_value = 800
+      }
+    }
   }
 }
 
@@ -359,6 +380,8 @@ module "mixed_instance" {
   image_id           = data.aws_ami.amazon_linux.id
   instance_type      = "t3.micro"
   capacity_rebalance = true
+
+  iam_instance_profile_arn = aws_iam_instance_profile.ssm.arn
 
   initial_lifecycle_hooks = [
     {

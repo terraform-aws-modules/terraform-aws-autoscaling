@@ -118,3 +118,37 @@ output "autoscaling_policy_arns" {
   description = "ARNs of autoscaling policies"
   value       = { for k, v in aws_autoscaling_policy.this : k => v.arn }
 }
+
+################################################################################
+# IAM Role / Instance Profile
+################################################################################
+
+output "iam_role_name" {
+  description = "The name of the IAM role"
+  value       = try(aws_iam_role.this[0].name, "")
+}
+
+output "iam_role_arn" {
+  description = "The Amazon Resource Name (ARN) specifying the IAM role"
+  value       = try(aws_iam_role.this[0].arn, "")
+}
+
+output "iam_role_unique_id" {
+  description = "Stable and unique string identifying the IAM role"
+  value       = try(aws_iam_role.this[0].unique_id, "")
+}
+
+output "iam_instance_profile_arn" {
+  description = "ARN assigned by AWS to the instance profile"
+  value       = try(aws_iam_instance_profile.this[0].arn, var.iam_instance_profile_arn)
+}
+
+output "iam_instance_profile_id" {
+  description = "Instance profile's ID"
+  value       = try(aws_iam_instance_profile.this[0].id, "")
+}
+
+output "iam_instance_profile_unique" {
+  description = "Stable and unique string identifying the IAM instance profile"
+  value       = try(aws_iam_instance_profile.this[0].unique_id, "")
+}
