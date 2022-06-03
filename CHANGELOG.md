@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.5.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.4.0...v6.5.0) (2022-06-03)
+
+
+### Features
+
+* Add support for IAM role and isntance profile creation ([#194](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/194)) ([2a9983f](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/2a9983f3a86fec4e4abce02f289ef58056c13494))
+
 ## [6.4.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.3.0...v6.4.0) (2022-05-16)
 
 
