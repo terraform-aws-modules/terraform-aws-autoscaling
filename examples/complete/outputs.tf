@@ -126,6 +126,36 @@ output "default_autoscaling_group_enabled_metrics" {
   value       = module.default.autoscaling_group_enabled_metrics
 }
 
+output "default_iam_role_name" {
+  description = "The name of the IAM role"
+  value       = module.default.iam_role_name
+}
+
+output "default_iam_role_arn" {
+  description = "The Amazon Resource Name (ARN) specifying the IAM role"
+  value       = module.default.iam_role_arn
+}
+
+output "default_iam_role_unique_id" {
+  description = "Stable and unique string identifying the IAM role"
+  value       = module.default.iam_role_unique_id
+}
+
+output "default_iam_instance_profile_arn" {
+  description = "ARN assigned by AWS to the instance profile"
+  value       = module.default.iam_instance_profile_arn
+}
+
+output "default_iam_instance_profile_id" {
+  description = "Instance profile's ID"
+  value       = module.default.iam_instance_profile_id
+}
+
+output "default_iam_instance_profile_unique" {
+  description = "Stable and unique string identifying the IAM instance profile"
+  value       = module.default.iam_instance_profile_unique
+}
+
 ################################################################################
 # External
 ################################################################################
@@ -223,6 +253,36 @@ output "external_autoscaling_group_target_group_arns" {
 output "external_autoscaling_group_enabled_metrics" {
   description = "List of metrics enabled for collection"
   value       = module.external.autoscaling_group_enabled_metrics
+}
+
+output "external_iam_role_name" {
+  description = "The name of the IAM role"
+  value       = module.external.iam_role_name
+}
+
+output "external_iam_role_arn" {
+  description = "The Amazon Resource Name (ARN) specifying the IAM role"
+  value       = module.external.iam_role_arn
+}
+
+output "external_iam_role_unique_id" {
+  description = "Stable and unique string identifying the IAM role"
+  value       = module.external.iam_role_unique_id
+}
+
+output "external_iam_instance_profile_arn" {
+  description = "ARN assigned by AWS to the instance profile"
+  value       = module.external.iam_instance_profile_arn
+}
+
+output "external_iam_instance_profile_id" {
+  description = "Instance profile's ID"
+  value       = module.external.iam_instance_profile_id
+}
+
+output "external_iam_instance_profile_unique" {
+  description = "Stable and unique string identifying the IAM instance profile"
+  value       = module.external.iam_instance_profile_unique
 }
 
 ################################################################################
@@ -334,6 +394,36 @@ output "complete_autoscaling_group_enabled_metrics" {
   value       = module.complete.autoscaling_group_enabled_metrics
 }
 
+output "complete_iam_role_name" {
+  description = "The name of the IAM role"
+  value       = module.complete.iam_role_name
+}
+
+output "complete_iam_role_arn" {
+  description = "The Amazon Resource Name (ARN) specifying the IAM role"
+  value       = module.complete.iam_role_arn
+}
+
+output "complete_iam_role_unique_id" {
+  description = "Stable and unique string identifying the IAM role"
+  value       = module.complete.iam_role_unique_id
+}
+
+output "complete_iam_instance_profile_arn" {
+  description = "ARN assigned by AWS to the instance profile"
+  value       = module.complete.iam_instance_profile_arn
+}
+
+output "complete_iam_instance_profile_id" {
+  description = "Instance profile's ID"
+  value       = module.complete.iam_instance_profile_id
+}
+
+output "complete_iam_instance_profile_unique" {
+  description = "Stable and unique string identifying the IAM instance profile"
+  value       = module.complete.iam_instance_profile_unique
+}
+
 ################################################################################
 # Mixed instance policy
 ################################################################################
@@ -431,4 +521,34 @@ output "mixed_instance_autoscaling_group_target_group_arns" {
 output "mixed_instance_autoscaling_group_enabled_metrics" {
   description = "List of metrics enabled for collection"
   value       = module.mixed_instance.autoscaling_group_enabled_metrics
+}
+
+output "mixed_instance_iam_role_name" {
+  description = "The name of the IAM role"
+  value       = module.mixed_instance.iam_role_name
+}
+
+output "mixed_instance_iam_role_arn" {
+  description = "The Amazon Resource Name (ARN) specifying the IAM role"
+  value       = module.mixed_instance.iam_role_arn
+}
+
+output "mixed_instance_iam_role_unique_id" {
+  description = "Stable and unique string identifying the IAM role"
+  value       = module.mixed_instance.iam_role_unique_id
+}
+
+output "mixed_instance_iam_instance_profile_arn" {
+  description = "ARN assigned by AWS to the instance profile"
+  value       = module.mixed_instance.iam_instance_profile_arn
+}
+
+output "mixed_instance_iam_instance_profile_id" {
+  description = "Instance profile's ID"
+  value       = module.mixed_instance.iam_instance_profile_id
+}
+
+output "mixed_instance_iam_instance_profile_unique" {
+  description = "Stable and unique string identifying the IAM instance profile"
+  value       = module.mixed_instance.iam_instance_profile_unique
 }

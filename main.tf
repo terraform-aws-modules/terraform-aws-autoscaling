@@ -1,3 +1,4 @@
+data "aws_partition" "current" {}
 data "aws_default_tags" "current" {}
 
 locals {
@@ -18,6 +19,11 @@ locals {
 ################################################################################
 # Launch template
 ################################################################################
+
+locals {
+  iam_instance_profile_arn  = var.create_iam_instance_profile ? aws_iam_instance_profile.this[0].arn : var.iam_instance_profile_arn
+  iam_instance_profile_name = !var.create_iam_instance_profile && var.iam_instance_profile_arn == null ? var.iam_instance_profile_name : null
+}
 
 resource "aws_launch_template" "this" {
   count = var.create_launch_template ? 1 : 0
@@ -123,10 +129,10 @@ resource "aws_launch_template" "this" {
   }
 
   dynamic "iam_instance_profile" {
-    for_each = var.iam_instance_profile_name != null || var.iam_instance_profile_arn != null ? [1] : []
+    for_each = local.iam_instance_profile_name != null || local.iam_instance_profile_arn != null ? [1] : []
     content {
-      name = var.iam_instance_profile_name
-      arn  = var.iam_instance_profile_arn
+      name = local.iam_instance_profile_name
+      arn  = local.iam_instance_profile_arn
     }
   }
 
@@ -695,6 +701,7 @@ resource "aws_autoscaling_policy" "this" {
         for_each = try([target_tracking_configuration.value.predefined_metric_specification], [])
         content {
           predefined_metric_type = predefined_metric_specification.value.predefined_metric_type
+          resource_label         = try(predefined_metric_specification.value.resource_label, null)
         }
       }
 
@@ -759,4 +766,60 @@ resource "aws_autoscaling_policy" "this" {
       }
     }
   }
+}
+
+################################################################################
+# IAM Role / Instance Profile
+################################################################################
+
+locals {
+  internal_iam_instance_profile_name = try(coalesce(var.iam_instance_profile_name, var.iam_role_name), "")
+}
+
+data "aws_iam_policy_document" "assume_role_policy" {
+  count = local.create && var.create_iam_instance_profile ? 1 : 0
+
+  statement {
+    sid     = "EC2AssumeRole"
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.${data.aws_partition.current.dns_suffix}"]
+    }
+  }
+}
+
+resource "aws_iam_role" "this" {
+  count = local.create && var.create_iam_instance_profile ? 1 : 0
+
+  name        = var.iam_role_use_name_prefix ? null : local.internal_iam_instance_profile_name
+  name_prefix = var.iam_role_use_name_prefix ? "${local.internal_iam_instance_profile_name}-" : null
+  path        = var.iam_role_path
+  description = var.iam_role_description
+
+  assume_role_policy    = data.aws_iam_policy_document.assume_role_policy[0].json
+  permissions_boundary  = var.iam_role_permissions_boundary
+  force_detach_policies = true
+
+  tags = merge(var.tags, var.iam_role_tags)
+}
+
+resource "aws_iam_role_policy_attachment" "this" {
+  for_each = { for k, v in var.iam_role_policies : k => v if var.create && var.create_iam_instance_profile }
+
+  policy_arn = each.value
+  role       = aws_iam_role.this[0].name
+}
+
+resource "aws_iam_instance_profile" "this" {
+  count = local.create && var.create_iam_instance_profile ? 1 : 0
+
+  role = aws_iam_role.this[0].name
+
+  name        = var.iam_role_use_name_prefix ? null : var.iam_role_name
+  name_prefix = var.iam_role_use_name_prefix ? "${var.iam_role_name}-" : null
+  path        = var.iam_role_path
+
+  tags = merge(var.tags, var.iam_role_tags)
 }
