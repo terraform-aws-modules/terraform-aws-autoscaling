@@ -244,6 +244,10 @@ module "complete" {
     market_type = "spot"
   }
 
+  license_specifications = {
+    license_configuration_arn = aws_licensemanager_license_configuration.test.arn
+  }
+
   maintenance_options = {
     auto_recovery = "default"
   }
@@ -795,4 +799,17 @@ resource "aws_ec2_capacity_reservation" "targeted" {
   availability_zone       = "${local.region}a"
   instance_count          = 1
   instance_match_criteria = "targeted"
+}
+
+resource "aws_licensemanager_license_configuration" "test" {
+  license_count            = 1
+  license_count_hard_limit = true
+  license_counting_type    = "Socket"
+  name                     = "test-license"
+
+  license_rules = [
+    "#allowedTenancy=EC2-DedicatedHost",
+    "#maximumSockets=2",
+    "#minimumSockets=2",
+  ]
 }
