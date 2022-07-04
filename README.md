@@ -66,7 +66,7 @@ module "asg" {
   ebs_optimized     = true
   enable_monitoring = true
 
-  # IAM role & instand profile
+  # IAM role & instance profile
   create_iam_instance_profile = true
   iam_role_name               = "example-asg"
   iam_role_path               = "/ec2/"
