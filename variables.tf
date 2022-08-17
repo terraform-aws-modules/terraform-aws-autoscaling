@@ -219,7 +219,7 @@ variable "tags" {
 
 variable "warm_pool" {
   description = "If this block is configured, add a Warm Pool to the specified Auto Scaling group"
-  type        = map(string)
+  type        = any
   default     = {}
 }
 
