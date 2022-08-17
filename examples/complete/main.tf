@@ -463,6 +463,10 @@ module "warm_pool" {
     pool_state                  = "Stopped"
     min_size                    = 1
     max_group_prepared_capacity = 2
+
+    instance_reuse_policy = {
+      reuse_on_scale_in = true
+    }
   }
 
   capacity_reservation_specification = {
