@@ -353,7 +353,7 @@ resource "aws_autoscaling_group" "this" {
     for_each = var.use_mixed_instances_policy ? [] : [1]
 
     content {
-      name    = local.launch_template
+      id      = aws_launch_template.this[0].id
       version = local.launch_template_version
     }
   }
@@ -434,8 +434,8 @@ resource "aws_autoscaling_group" "this" {
 
       launch_template {
         launch_template_specification {
-          launch_template_name = local.launch_template
-          version              = local.launch_template_version
+          launch_template_id = aws_launch_template.this[0].id
+          version            = local.launch_template_version
         }
 
         dynamic "override" {
@@ -504,7 +504,7 @@ resource "aws_autoscaling_group" "idc" {
     for_each = var.use_mixed_instances_policy ? [] : [1]
 
     content {
-      name    = local.launch_template
+      id      = aws_launch_template.this[0].id
       version = local.launch_template_version
     }
   }
@@ -585,8 +585,8 @@ resource "aws_autoscaling_group" "idc" {
 
       launch_template {
         launch_template_specification {
-          launch_template_name = local.launch_template
-          version              = local.launch_template_version
+          launch_template_id = aws_launch_template.this[0].id
+          version            = local.launch_template_version
         }
 
         dynamic "override" {
