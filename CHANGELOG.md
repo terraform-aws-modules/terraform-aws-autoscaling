@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [6.5.2](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.1...v6.5.2) (2022-08-17)
+
+
+### Bug Fixes
+
+* Correct type constraint of `warm_pool` variable ([#203](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/203)) ([c071c7f](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/c071c7f6f77e8d26b4922d4814e2d6d725a88d23))
+
 ### [6.5.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.0...v6.5.1) (2022-06-21)
 
 
