@@ -31,12 +31,6 @@ variable "instance_name" {
   default     = ""
 }
 
-variable "launch_template" {
-  description = "Name of an existing launch template to be used (created outside of this module)"
-  type        = string
-  default     = null
-}
-
 variable "launch_template_version" {
   description = "Launch template version. Can be version number, `$Latest`, or `$Default`"
   type        = string

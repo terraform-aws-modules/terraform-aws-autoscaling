@@ -112,7 +112,6 @@ module "external" {
 
   # Launch template
   create_launch_template = false
-  launch_template        = aws_launch_template.this.name
 
   tags = local.tags
 }
