@@ -5,6 +5,7 @@ locals {
   create = var.create && var.putin_khuylo
 
   launch_template_name    = coalesce(var.launch_template_name, var.name)
+  launch_template_id      = var.create_launch_template ? aws_launch_template.this[0].id : var.launch_template_id
   launch_template_version = var.create_launch_template && var.launch_template_version == null ? aws_launch_template.this[0].latest_version : var.launch_template_version
 
   asg_tags = merge(
@@ -352,7 +353,7 @@ resource "aws_autoscaling_group" "this" {
     for_each = var.use_mixed_instances_policy ? [] : [1]
 
     content {
-      id      = aws_launch_template.this[0].id
+      id      = local.launch_template_id
       version = local.launch_template_version
     }
   }
@@ -433,7 +434,7 @@ resource "aws_autoscaling_group" "this" {
 
       launch_template {
         launch_template_specification {
-          launch_template_id = aws_launch_template.this[0].id
+          launch_template_id = local.launch_template_id
           version            = local.launch_template_version
         }
 
@@ -503,7 +504,7 @@ resource "aws_autoscaling_group" "idc" {
     for_each = var.use_mixed_instances_policy ? [] : [1]
 
     content {
-      id      = aws_launch_template.this[0].id
+      id      = local.launch_template_id
       version = local.launch_template_version
     }
   }
@@ -584,7 +585,7 @@ resource "aws_autoscaling_group" "idc" {
 
       launch_template {
         launch_template_specification {
-          launch_template_id = aws_launch_template.this[0].id
+          launch_template_id = local.launch_template_id
           version            = local.launch_template_version
         }
 
