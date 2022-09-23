@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: aws-autoscaling
+  description: |
+    Terraform module which creates Auto Scaling resources on AWS.
+spec:
+  type: module
+  owner: tools&infra
+  lifecycle: production
