@@ -5,7 +5,7 @@ metadata:
   description: |
     Terraform module which creates Auto Scaling resources on AWS.
   annotations:
-    datadoghq.com/dashboard-url: https://p.datadoghq.com/sb/3d2e724ed-a51a29c3fdfbf35cff8ff6dfd99aaea2
+    datadoghq.com/graph-token: 922ab4c3772d4149f6e2f5327befdc36a4ffce170fbc5b473e7d4b43e07f2193
 spec:
   type: module
   owner: tools&infra
