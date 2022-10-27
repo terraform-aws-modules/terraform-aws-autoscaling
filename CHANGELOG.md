@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [6.5.3](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.2...v6.5.3) (2022-10-27)
+
+
+### Bug Fixes
+
+* Update CI configuration files to use latest version ([#209](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/209)) ([a1e9d9d](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/a1e9d9d74853741b34d980f8749835f73565e8c0))
+
 ### [6.5.2](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.1...v6.5.2) (2022-08-17)
 
 
