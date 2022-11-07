@@ -89,7 +89,7 @@ module "asg" {
         volume_size           = 20
         volume_type           = "gp2"
       }
-      }, {
+    }, {
       device_name = "/dev/sda1"
       no_device   = 1
       ebs = {
