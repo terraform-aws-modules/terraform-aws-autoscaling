@@ -23,6 +23,8 @@ locals {
     Environment = "dev"
   }
 
+  use_spots = true
+
   user_data = <<-EOT
   #!/bin/bash
   echo "Hello Terraform!"
@@ -240,9 +242,9 @@ module "complete" {
   #   configured = true # Root volume must be encrypted & not spot to enable hibernation
   # }
 
-  instance_market_options = {
+  instance_market_options = local.use_spots ? {
     market_type = "spot"
-  }
+  } : null
 
   license_specifications = {
     license_configuration_arn = aws_licensemanager_license_configuration.test.arn

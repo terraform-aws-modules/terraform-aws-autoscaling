@@ -137,7 +137,7 @@ resource "aws_launch_template" "this" {
   }
 
   dynamic "instance_market_options" {
-    for_each = length(var.instance_market_options) > 0 ? [var.instance_market_options] : []
+    for_each = try(length(var.instance_market_options) > 0 ? [var.instance_market_options] : [], [])
     content {
       market_type = instance_market_options.value.market_type
 
