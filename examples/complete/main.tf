@@ -135,6 +135,7 @@ module "complete" {
   max_size                  = 1
   desired_capacity          = 1
   wait_for_capacity_timeout = 0
+  default_instance_warmup   = 300
   health_check_type         = "EC2"
   vpc_zone_identifier       = module.vpc.private_subnets
   service_linked_role_arn   = aws_iam_service_linked_role.autoscaling.arn
