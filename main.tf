@@ -5,8 +5,8 @@ locals {
   create = var.create && var.putin_khuylo
 
   launch_template_name    = coalesce(var.launch_template_name, var.name)
-  launch_template         = var.create_launch_template && aws_launch_template.this ? aws_launch_template.this[0].name : var.launch_template
-  launch_template_version = var.create_launch_template && var.launch_template_version == null && aws_launch_template.this ? aws_launch_template.this[0].latest_version : var.launch_template_version
+  launch_template         = var.create_launch_template && aws_launch_template.this != null ? aws_launch_template.this[0].name : var.launch_template
+  launch_template_version = var.create_launch_template && var.launch_template_version == null && aws_launch_template.this != null ? aws_launch_template.this[0].latest_version : var.launch_template_version
 
   asg_tags = merge(
     data.aws_default_tags.current.tags,
@@ -21,7 +21,7 @@ locals {
 ################################################################################
 
 locals {
-  iam_instance_profile_arn  = var.create_iam_instance_profile && aws_iam_instance_profile.this ? aws_iam_instance_profile.this[0].arn : var.iam_instance_profile_arn
+  iam_instance_profile_arn  = var.create_iam_instance_profile && aws_iam_instance_profile.this != null ? aws_iam_instance_profile.this[0].arn : var.iam_instance_profile_arn
   iam_instance_profile_name = !var.create_iam_instance_profile && var.iam_instance_profile_arn == null ? var.iam_instance_profile_name : null
 }
 
