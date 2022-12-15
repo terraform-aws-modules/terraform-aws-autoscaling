@@ -370,6 +370,7 @@ resource "aws_autoscaling_group" "this" {
   wait_for_elb_capacity     = var.wait_for_elb_capacity
   wait_for_capacity_timeout = var.wait_for_capacity_timeout
   default_cooldown          = var.default_cooldown
+  default_instance_warmup   = var.default_instance_warmup
   protect_from_scale_in     = var.protect_from_scale_in
 
   load_balancers            = var.load_balancers
@@ -521,6 +522,7 @@ resource "aws_autoscaling_group" "idc" {
   wait_for_elb_capacity     = var.wait_for_elb_capacity
   wait_for_capacity_timeout = var.wait_for_capacity_timeout
   default_cooldown          = var.default_cooldown
+  default_instance_warmup   = var.default_instance_warmup
   protect_from_scale_in     = var.protect_from_scale_in
 
   load_balancers            = var.load_balancers
