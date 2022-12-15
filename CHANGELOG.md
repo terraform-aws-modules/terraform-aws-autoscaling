@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.6.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.3...v6.6.0) (2022-12-15)
+
+
+### Features
+
+* Add support for `disable_api_stop` ([#218](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/218)) ([69415ea](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/69415ea56d6f16e1fbce3a81df231f858b2ecd3b))
+
 ### [6.5.3](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.2...v6.5.3) (2022-10-27)
 
 
