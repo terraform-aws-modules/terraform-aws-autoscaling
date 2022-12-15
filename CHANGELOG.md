@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.7.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.6.0...v6.7.0) (2022-12-15)
+
+
+### Features
+
+* Add support for `default_instance_warmup` argument ([#213](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/213)) ([e3e8ef0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/e3e8ef0a7a3140c7c0cdf0df54a24abab0714f22))
+
 ## [6.6.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.3...v6.6.0) (2022-12-15)
 
 
