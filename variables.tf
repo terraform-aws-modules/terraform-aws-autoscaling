@@ -329,6 +329,12 @@ variable "disable_api_termination" {
   default     = null
 }
 
+variable "disable_api_stop" {
+  description = "If true, enables EC2 instance stop protection"
+  type        = bool
+  default     = null
+}
+
 variable "instance_initiated_shutdown_behavior" {
   description = "Shutdown behavior for the instance. Can be `stop` or `terminate`. (Default: `stop`)"
   type        = string
