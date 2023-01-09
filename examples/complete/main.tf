@@ -533,21 +533,40 @@ module "efa" {
 module "instance_requirements" {
   source = "../../"
 
-  # TODO - needs https://github.com/hashicorp/terraform-provider-aws/issues/21566 for ASG
-  create = false
-
   # Autoscaling group
   name = "instance-req-${local.name}"
 
-  vpc_zone_identifier = module.vpc.private_subnets
-  min_size            = 0
-  max_size            = 5
-  desired_capacity    = 1
+  vpc_zone_identifier   = module.vpc.private_subnets
+  min_size              = 0
+  max_size              = 5
+  desired_capacity      = 1
+  desired_capacity_type = "vcpu"
 
   update_default_version = true
   image_id               = data.aws_ami.amazon_linux.id
 
   use_mixed_instances_policy = true
+  mixed_instances_policy = {
+    override = [
+      {
+        instance_requirements = {
+          cpu_manufacturers     = ["amd"]
+          local_storage_types   = ["ssd"]
+          memory_gib_per_vcpu = {
+            min = 2
+            max = 4
+          }
+          memory_mib = {
+            min = 2048
+          },
+          vcpu_count = {
+            min = 2
+            max = 4
+          }
+        }
+      }
+    ]
+  }
   instance_requirements = {
 
     accelerator_manufacturers = []

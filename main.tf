@@ -365,6 +365,7 @@ resource "aws_autoscaling_group" "this" {
   min_size                  = var.min_size
   max_size                  = var.max_size
   desired_capacity          = var.desired_capacity
+  desired_capacity_type     = var.desired_capacity_type
   capacity_rebalance        = var.capacity_rebalance
   min_elb_capacity          = var.min_elb_capacity
   wait_for_elb_capacity     = var.wait_for_elb_capacity
@@ -446,6 +447,93 @@ resource "aws_autoscaling_group" "this" {
             instance_type     = try(override.value.instance_type, null)
             weighted_capacity = try(override.value.weighted_capacity, null)
 
+            dynamic "instance_requirements" {
+              for_each = flatten([try(override.value.instance_requirements, [])])
+              content {
+
+                dynamic "accelerator_count" {
+                  for_each = flatten([try(instance_requirements.value.accelerator_count, [])])
+                  content {
+                    max = try(accelerator_count.value.max, null)
+                    min = try(accelerator_count.value.min, null)
+                  }
+                }
+
+                accelerator_manufacturers = try(instance_requirements.value.accelerator_manufacturers, [])
+                accelerator_names         = try(instance_requirements.value.accelerator_names, [])
+
+                dynamic "accelerator_total_memory_mib" {
+                  for_each = flatten([try(instance_requirements.value.accelerator_total_memory_mib, [])])
+                  content {
+                    max = try(accelerator_total_memory_mib.value.max, null)
+                    min = try(accelerator_total_memory_mib.value.min, null)
+                  }
+                }
+
+                accelerator_types = try(instance_requirements.value.accelerator_types, [])
+                bare_metal        = try(instance_requirements.value.bare_metal, null)
+
+                dynamic "baseline_ebs_bandwidth_mbps" {
+                  for_each = flatten([try(instance_requirements.value.baseline_ebs_bandwidth_mbps, [])])
+                  content {
+                    max = try(baseline_ebs_bandwidth_mbps.value.max, null)
+                    min = try(baseline_ebs_bandwidth_mbps.value.min, null)
+                  }
+                }
+
+                burstable_performance   = try(instance_requirements.value.burstable_performance, null)
+                cpu_manufacturers       = try(instance_requirements.value.cpu_manufacturers, [])
+                excluded_instance_types = try(instance_requirements.value.excluded_instance_types, [])
+                instance_generations    = try(instance_requirements.value.instance_generations, [])
+                local_storage           = try(instance_requirements.value.local_storage, null)
+                local_storage_types     = try(instance_requirements.value.local_storage_types, [])
+
+                dynamic "memory_gib_per_vcpu" {
+                  for_each = flatten([try(instance_requirements.value.memory_gib_per_vcpu, [])])
+                  content {
+                    max = try(memory_gib_per_vcpu.value.max, null)
+                    min = try(memory_gib_per_vcpu.value.min, null)
+                  }
+                }
+
+                dynamic "memory_mib" {
+                  for_each = flatten([try(instance_requirements.value.memory_mib, [])])
+                  content {
+                    max = try(memory_mib.value.max, null)
+                    min = memory_mib.value.min
+                  }
+                }
+
+                dynamic "network_interface_count" {
+                  for_each = flatten([try(instance_requirements.value.network_interface_count, [])])
+                  content {
+                    max = try(network_interface_count.value.max, null)
+                    min = try(network_interface_count.value.min, null)
+                  }
+                }
+
+                on_demand_max_price_percentage_over_lowest_price = try(instance_requirements.value.on_demand_max_price_percentage_over_lowest_price, null)
+                require_hibernate_support                        = try(instance_requirements.value.require_hibernate_support, null)
+                spot_max_price_percentage_over_lowest_price      = try(instance_requirements.value.spot_max_price_percentage_over_lowest_price, null)
+
+                dynamic "total_local_storage_gb" {
+                  for_each = flatten([try(instance_requirements.value.total_local_storage_gb, [])])
+                  content {
+                    max = try(total_local_storage_gb.value.max, null)
+                    min = try(total_local_storage_gb.value.min, null)
+                  }
+                }
+
+                dynamic "vcpu_count" {
+                  for_each = flatten([try(instance_requirements.value.vcpu_count, [])])
+                  content {
+                    max = try(vcpu_count.value.max, null)
+                    min = vcpu_count.value.min
+                  }
+                }
+              }
+            }
+
             dynamic "launch_template_specification" {
               for_each = try([override.value.launch_template_specification], [])
               content {
@@ -517,6 +605,7 @@ resource "aws_autoscaling_group" "idc" {
   min_size                  = var.min_size
   max_size                  = var.max_size
   desired_capacity          = var.desired_capacity
+  desired_capacity_type     = var.desired_capacity_type
   capacity_rebalance        = var.capacity_rebalance
   min_elb_capacity          = var.min_elb_capacity
   wait_for_elb_capacity     = var.wait_for_elb_capacity
