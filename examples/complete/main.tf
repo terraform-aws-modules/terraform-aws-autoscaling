@@ -550,8 +550,8 @@ module "instance_requirements" {
     override = [
       {
         instance_requirements = {
-          cpu_manufacturers     = ["amd"]
-          local_storage_types   = ["ssd"]
+          cpu_manufacturers   = ["amd"]
+          local_storage_types = ["ssd"]
           memory_gib_per_vcpu = {
             min = 2
             max = 4
