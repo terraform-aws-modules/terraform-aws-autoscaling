@@ -497,7 +497,7 @@ resource "aws_autoscaling_group" "this" {
                 }
 
                 dynamic "memory_mib" {
-                  for_each = flatten([try(instance_requirements.value.memory_mib, [])])
+                  for_each = flatten([instance_requirements.value.memory_mib])
                   content {
                     max = try(memory_mib.value.max, null)
                     min = memory_mib.value.min
@@ -525,7 +525,7 @@ resource "aws_autoscaling_group" "this" {
                 }
 
                 dynamic "vcpu_count" {
-                  for_each = flatten([try(instance_requirements.value.vcpu_count, [])])
+                  for_each = flatten([instance_requirements.value.vcpu_count])
                   content {
                     max = try(vcpu_count.value.max, null)
                     min = vcpu_count.value.min
@@ -747,9 +747,7 @@ resource "aws_autoscaling_group" "idc" {
                 }
 
                 dynamic "memory_mib" {
-                  for_each = flatten([
-                    try(instance_requirements.value.memory_mib, [])
-                  ])
+                  for_each = flatten([instance_requirements.value.memory_mib])
                   content {
                     max = try(memory_mib.value.max, null)
                     min = memory_mib.value.min
@@ -781,9 +779,7 @@ resource "aws_autoscaling_group" "idc" {
                 }
 
                 dynamic "vcpu_count" {
-                  for_each = flatten([
-                    try(instance_requirements.value.vcpu_count, [])
-                  ])
+                  for_each = flatten([instance_requirements.value.vcpu_count])
                   content {
                     max = try(vcpu_count.value.max, null)
                     min = vcpu_count.value.min
