@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [6.7.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.7.0...v6.7.1) (2023-01-24)
+
+
+### Bug Fixes
+
+* Use a version for  to avoid GitHub API rate limiting on CI workflows ([#219](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/219)) ([e4ac559](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/e4ac55948cd2e6895ed41d859b6e91119761a12c))
+
 ## [6.7.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.6.0...v6.7.0) (2022-12-15)
 
 
