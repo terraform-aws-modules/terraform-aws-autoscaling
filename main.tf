@@ -158,7 +158,7 @@ resource "aws_launch_template" "this" {
   instance_type = var.instance_type
 
   dynamic "instance_requirements" {
-    for_each = length(var.instance_requirements) > 0 ? [var.instance_requirements] : []
+    for_each = try(length(var.instance_requirements), 0) > 0 ? [var.instance_requirements] : []
     content {
 
       dynamic "accelerator_count" {
