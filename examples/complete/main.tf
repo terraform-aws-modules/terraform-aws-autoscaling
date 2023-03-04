@@ -665,7 +665,7 @@ module "instance_requirements_accelerators" {
 }
 
 ################################################################################
-# Target Tracking Customized Metrics
+# Target Tracking Customized Metrics Policy
 ################################################################################
 
 module "target_tracking_customized_metrics" {

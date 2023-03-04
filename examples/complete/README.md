@@ -47,6 +47,7 @@ Note that this example may create resources which cost money. Run `terraform des
 | <a name="module_asg_sg"></a> [asg\_sg](#module\_asg\_sg) | terraform-aws-modules/security-group/aws | ~> 4.0 |
 | <a name="module_complete"></a> [complete](#module\_complete) | ../../ | n/a |
 | <a name="module_default"></a> [default](#module\_default) | ../../ | n/a |
+| <a name="module_default_sqs"></a> [default\_sqs](#module\_default\_sqs) | terraform-aws-modules/sqs/aws | n/a |
 | <a name="module_disabled"></a> [disabled](#module\_disabled) | ../../ | n/a |
 | <a name="module_efa"></a> [efa](#module\_efa) | ../../ | n/a |
 | <a name="module_external"></a> [external](#module\_external) | ../../ | n/a |
@@ -54,6 +55,7 @@ Note that this example may create resources which cost money. Run `terraform des
 | <a name="module_instance_requirements_accelerators"></a> [instance\_requirements\_accelerators](#module\_instance\_requirements\_accelerators) | ../../ | n/a |
 | <a name="module_launch_template_only"></a> [launch\_template\_only](#module\_launch\_template\_only) | ../../ | n/a |
 | <a name="module_mixed_instance"></a> [mixed\_instance](#module\_mixed\_instance) | ../../ | n/a |
+| <a name="module_target_tracking_customized_metrics"></a> [target\_tracking\_customized\_metrics](#module\_target\_tracking\_customized\_metrics) | ../../ | n/a |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
 | <a name="module_warm_pool"></a> [warm\_pool](#module\_warm\_pool) | ../../ | n/a |
 
