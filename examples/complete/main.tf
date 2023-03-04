@@ -114,6 +114,62 @@ module "external" {
   create_launch_template = false
   launch_template        = aws_launch_template.this.name
 
+  scaling_policies = {
+    test = {
+      policy_type               = "TargetTrackingScaling"
+      estimated_instance_warmup = 120
+      target_tracking_configuration = {
+        customized_metric_specification = {
+          metrics = [
+            {
+              label = "Get the queue size (the number of messages waiting to be processed)"
+              id    = "m1"
+              metric_stat = {
+                metric = {
+                  namespace   = "AWS/SQS"
+                  metric_name = "ApproximateNumberOfMessagesVisible"
+                  dimensions = [
+                    {
+                      name  = "QueueName"
+                      value = "my-queue"
+                    }
+                  ]
+                }
+                stat = "Sum"
+              }
+              return_data = false
+            },
+            {
+              label = "Get the group size (the number of InService instances)"
+              id    = "m2"
+              metric_stat = {
+                metric = {
+                  namespace   = "AWS/AutoScaling"
+                  metric_name = "GroupInServiceInstances"
+                  dimensions = [
+                    {
+                      name  = "AutoScalingGroupName"
+                      value = "my-asg"
+                    }
+                  ]
+                }
+                stat = "Average"
+              }
+              return_data = false
+            },
+            {
+              label       = "Calculate the backlog per instance"
+              id          = "e1"
+              expression  = "m1 / m2"
+              return_data = true
+            }
+          ]
+        }
+        target_value = 100
+      }
+    }
+  }
+
   tags = local.tags
 }
 

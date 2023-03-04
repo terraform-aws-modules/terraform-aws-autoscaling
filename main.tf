@@ -720,9 +720,45 @@ resource "aws_autoscaling_policy" "this" {
             }
           }
 
-          metric_name = customized_metric_specification.value.metric_name
-          namespace   = customized_metric_specification.value.namespace
-          statistic   = customized_metric_specification.value.statistic
+          dynamic "metrics" {
+            for_each = try(customized_metric_specification.value.metrics, [])
+            content {
+              expression  = try(metrics.value.expression, null)
+              id          = try(metrics.value.id, null)
+              label       = try(metrics.value.label, null)
+              return_data = try(metrics.value.return_data, null)
+
+              dynamic "metric_stat" {
+                for_each = try([metrics.value.metric_stat], [])
+                content {
+
+                  dynamic "metric" {
+                    for_each = try([metric_stat.value.metric], [])
+                    content {
+
+                      dynamic "dimensions" {
+                        for_each = try(metric.value.dimensions, [])
+                        content {
+                          name  = dimensions.value.name
+                          value = dimensions.value.value
+                        }
+                      }
+
+                      metric_name = metric.value.metric_name
+                      namespace   = metric.value.namespace
+                    }
+                  }
+
+                  stat = metric_stat.value.stat
+                  unit = try(metric_stat.value.unit, null)
+                }
+              }
+            }
+          }
+
+          metric_name = try(customized_metric_specification.value.metric_name, null)
+          namespace   = try(customized_metric_specification.value.namespace, null)
+          statistic   = try(customized_metric_specification.value.statistic, null)
           unit        = try(customized_metric_specification.value.unit, null)
         }
       }
