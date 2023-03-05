@@ -683,7 +683,7 @@ module "target_tracking_customized_metrics" {
   instance_type = "t3.micro"
 
   scaling_policies = {
-    test = {
+    metric_math = {
       policy_type               = "TargetTrackingScaling"
       estimated_instance_warmup = 120
       target_tracking_configuration = {
