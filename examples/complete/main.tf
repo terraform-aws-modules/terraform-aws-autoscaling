@@ -608,6 +608,84 @@ module "instance_requirements_accelerators" {
 }
 
 ################################################################################
+# Target Tracking Customized Metrics Policy
+################################################################################
+
+module "target_tracking_customized_metrics" {
+  source = "../../"
+
+  # Autoscaling group
+  name = "customized-metrics-${local.name}"
+
+  vpc_zone_identifier = module.vpc.private_subnets
+  min_size            = 0
+  max_size            = 1
+  desired_capacity    = 1
+
+  image_id      = data.aws_ami.amazon_linux.id
+  instance_type = "t3.micro"
+
+  scaling_policies = {
+    metric_math = {
+      policy_type               = "TargetTrackingScaling"
+      estimated_instance_warmup = 120
+      target_tracking_configuration = {
+        customized_metric_specification = {
+          # https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-target-tracking-metric-math.html
+          metrics = [
+            {
+              label = "Get the queue size (the number of messages waiting to be processed)"
+              id    = "m1"
+              metric_stat = {
+                metric = {
+                  namespace   = "AWS/SQS"
+                  metric_name = "ApproximateNumberOfMessagesVisible"
+                  dimensions = [
+                    {
+                      name  = aws_sqs_queue.this.name
+                      value = "my-queue"
+                    }
+                  ]
+                }
+                stat = "Sum"
+              }
+              return_data = false
+            },
+            {
+              label = "Get the group size (the number of InService instances)"
+              id    = "m2"
+              metric_stat = {
+                metric = {
+                  namespace   = "AWS/AutoScaling"
+                  metric_name = "GroupInServiceInstances"
+                  dimensions = [
+                    {
+                      name  = "customized-metrics-${local.name}"
+                      value = "my-asg"
+                    }
+                  ]
+                }
+                stat = "Average"
+              }
+              return_data = true
+            },
+            {
+              label       = "Calculate the backlog per instance"
+              id          = "e1"
+              expression  = "m1 / m2"
+              return_data = false
+            }
+          ]
+        }
+        target_value = 100
+      }
+    }
+  }
+
+  tags = local.tags
+}
+
+################################################################################
 # External
 ################################################################################
 
@@ -849,3 +927,9 @@ resource "aws_ec2_capacity_reservation" "targeted" {
 #     "#minimumSockets=2",
 #   ]
 # }
+
+resource "aws_sqs_queue" "this" {
+  name = local.name
+
+  tags = local.tags
+}
