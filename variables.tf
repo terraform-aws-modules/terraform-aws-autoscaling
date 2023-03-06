@@ -73,6 +73,12 @@ variable "desired_capacity" {
   default     = null
 }
 
+variable "desired_capacity_type" {
+  description = "The unit of measurement for the value specified for desired_capacity. Supported for attribute-based instance type selection only. Valid values: `units`, `vcpu`, `memory-mib`."
+  type        = string
+  default     = null
+}
+
 variable "capacity_rebalance" {
   description = "Indicates whether capacity rebalance is enabled"
   type        = bool
