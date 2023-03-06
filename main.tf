@@ -932,34 +932,38 @@ resource "aws_autoscaling_policy" "this" {
 
       dynamic "customized_metric_specification" {
         for_each = try([target_tracking_configuration.value.customized_metric_specification], [])
-        content {
 
+        content {
           dynamic "metric_dimension" {
             for_each = try([customized_metric_specification.value.metric_dimension], [])
+
             content {
-              name  = try(metric_dimension.value.name, null)
-              value = try(metric_dimension.value.value, null)
+              name  = metric_dimension.value.name
+              value = metric_dimension.value.value
             }
           }
 
+          metric_name = try(customized_metric_specification.value.metric_name, null)
+
           dynamic "metrics" {
             for_each = try(customized_metric_specification.value.metrics, [])
+
             content {
-              expression  = try(metrics.value.expression, null)
-              id          = try(metrics.value.id, null)
-              label       = try(metrics.value.label, null)
-              return_data = try(metrics.value.return_data, null)
+              expression = try(metrics.value.expression, null)
+              id         = metrics.value.id
+              label      = try(metrics.value.label, null)
 
               dynamic "metric_stat" {
                 for_each = try([metrics.value.metric_stat], [])
-                content {
 
+                content {
                   dynamic "metric" {
                     for_each = try([metric_stat.value.metric], [])
-                    content {
 
+                    content {
                       dynamic "dimensions" {
                         for_each = try(metric.value.dimensions, [])
+
                         content {
                           name  = dimensions.value.name
                           value = dimensions.value.value
@@ -975,13 +979,14 @@ resource "aws_autoscaling_policy" "this" {
                   unit = try(metric_stat.value.unit, null)
                 }
               }
+
+              return_data = try(metrics.value.return_data, null)
             }
           }
 
-          metric_name = try(customized_metric_specification.value.metric_name, null)
-          namespace   = try(customized_metric_specification.value.namespace, null)
-          statistic   = try(customized_metric_specification.value.statistic, null)
-          unit        = try(customized_metric_specification.value.unit, null)
+          namespace = try(customized_metric_specification.value.namespace, null)
+          statistic = try(customized_metric_specification.value.statistic, null)
+          unit      = try(customized_metric_specification.value.unit, null)
         }
       }
     }

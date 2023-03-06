@@ -642,7 +642,7 @@ module "target_tracking_customized_metrics" {
                   metric_name = "ApproximateNumberOfMessagesVisible"
                   dimensions = [
                     {
-                      name  = module.default_sqs.queue_name
+                      name  = aws_sqs_queue.this.name
                       value = "my-queue"
                     }
                   ]
@@ -928,10 +928,8 @@ resource "aws_ec2_capacity_reservation" "targeted" {
 #   ]
 # }
 
-module "default_sqs" {
-  source = "terraform-aws-modules/sqs/aws"
-
-  name = "${local.name}-default"
+resource "aws_sqs_queue" "this" {
+  name = local.name
 
   tags = local.tags
 }
