@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.8.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.7.1...v6.8.0) (2023-03-06)
+
+
+### Features
+
+* Support `desired_capacity_type` and add mixed instance launch template override `instance_requirements` for ASG ([#220](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/220)) ([e867c0f](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/e867c0fa7b8cf87d2c9e6b4cb05a0b540c598ebe))
+
 ### [6.7.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.7.0...v6.7.1) (2023-01-24)
 
 
