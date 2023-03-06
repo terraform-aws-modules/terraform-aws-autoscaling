@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.9.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.8.0...v6.9.0) (2023-03-06)
+
+
+### Features
+
+* Metric math support for target tracking scaling policy ([#225](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/225)) ([f9e0186](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/f9e0186c8d8cbc0398ba49b68ec7a5388b765ea3))
+
 ## [6.8.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.7.1...v6.8.0) (2023-03-06)
 
 
