@@ -1,120 +1,26 @@
 provider "aws" {
   region = local.region
-
-  default_tags {
-    tags = {
-      Project = "terraform-aws-autoscaling"
-    }
-  }
-
-  # Make it faster by skipping something
-  skip_get_ec2_platforms      = true
-  skip_metadata_api_check     = true
-  skip_region_validation      = true
-  skip_credentials_validation = true
-  skip_requesting_account_id  = true
 }
 
+data "aws_availability_zones" "available" {}
+
 locals {
-  name   = "ex-asg-complete"
+  name   = basename(path.cwd)
   region = "eu-west-1"
+
+  vpc_cidr = "10.0.0.0/16"
+  azs      = slice(data.aws_availability_zones.available.names, 0, 3)
+
   tags = {
-    Owner       = "user"
-    Environment = "dev"
+    Example    = local.name
+    GithubRepo = "terraform-aws-autoscaling"
+    GithubOrg  = "terraform-aws-modules"
   }
 
   user_data = <<-EOT
-  #!/bin/bash
-  echo "Hello Terraform!"
+    #!/bin/bash
+    echo "Hello Terraform!"
   EOT
-}
-
-################################################################################
-# Disabled
-################################################################################
-
-module "disabled" {
-  source = "../../"
-
-  create                 = false
-  create_launch_template = false
-
-  # Autoscaling group
-  name = "disabled-${local.name}"
-}
-
-################################################################################
-# Launch template only
-################################################################################
-
-module "launch_template_only" {
-  source = "../../"
-
-  create = false
-  name   = "launch-template-only-${local.name}"
-
-  vpc_zone_identifier = module.vpc.private_subnets
-  min_size            = 0
-  max_size            = 1
-  desired_capacity    = 1
-
-  image_id      = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
-
-  tags = local.tags
-}
-
-################################################################################
-# Default
-################################################################################
-
-module "default" {
-  source = "../../"
-
-  # Autoscaling group
-  name = "default-${local.name}"
-
-  vpc_zone_identifier = module.vpc.private_subnets
-  min_size            = 0
-  max_size            = 1
-  desired_capacity    = 1
-
-  image_id      = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
-
-  tags = local.tags
-}
-
-################################################################################
-# External
-################################################################################
-
-resource "aws_launch_template" "this" {
-  name_prefix   = "external-lt-${local.name}-"
-  image_id      = data.aws_ami.amazon_linux.id
-  instance_type = "t3.micro"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-module "external" {
-  source = "../../"
-
-  # Autoscaling group
-  name = "external-${local.name}"
-
-  vpc_zone_identifier = module.vpc.private_subnets
-  min_size            = 0
-  max_size            = 1
-  desired_capacity    = 1
-
-  # Launch template
-  create_launch_template = false
-  launch_template        = aws_launch_template.this.name
-
-  tags = local.tags
 }
 
 ################################################################################
@@ -245,9 +151,9 @@ module "complete" {
     market_type = "spot"
   }
 
-  license_specifications = {
-    license_configuration_arn = aws_licensemanager_license_configuration.test.arn
-  }
+  # license_specifications = {
+  #   license_configuration_arn = aws_licensemanager_license_configuration.test.arn
+  # }
 
   maintenance_options = {
     auto_recovery = "default"
@@ -486,13 +392,13 @@ module "warm_pool" {
 
 locals {
   efa_user_data = <<-EOT
-  # Install EFA libraries
-  curl -O https://efa-installer.amazonaws.com/aws-efa-installer-latest.tar.gz
-  tar -xf aws-efa-installer-latest.tar.gz && cd aws-efa-installer
-  ./efa_installer.sh -y --minimal
-  fi_info -p efa -t FI_EP_RDM
-  # Disable ptrace
-  sysctl -w kernel.yama.ptrace_scope=0
+    # Install EFA libraries
+    curl -O https://efa-installer.amazonaws.com/aws-efa-installer-latest.tar.gz
+    tar -xf aws-efa-installer-latest.tar.gz && cd aws-efa-installer
+    ./efa_installer.sh -y --minimal
+    fi_info -p efa -t FI_EP_RDM
+    # Disable ptrace
+    sysctl -w kernel.yama.ptrace_scope=0
   EOT
 }
 
@@ -524,7 +430,6 @@ module "efa" {
 
   tags = local.tags
 }
-
 
 ################################################################################
 # Instance Requirements
@@ -615,22 +520,41 @@ module "instance_requirements" {
 module "instance_requirements_accelerators" {
   source = "../../"
 
-  # TODO - needs https://github.com/hashicorp/terraform-provider-aws/issues/21566 for ASG
   # Requires access to g or p instance types in your account http://aws.amazon.com/contact-us/ec2-request
   create = false
 
   # Autoscaling group
   name = "instance-req-accelerators-${local.name}"
 
-  vpc_zone_identifier = module.vpc.private_subnets
-  min_size            = 0
-  max_size            = 5
-  desired_capacity    = 1
+  vpc_zone_identifier   = module.vpc.private_subnets
+  min_size              = 0
+  max_size              = 5
+  desired_capacity      = 1
+  desired_capacity_type = "units"
 
   update_default_version = true
   image_id               = data.aws_ami.amazon_linux.id
 
   use_mixed_instances_policy = true
+  mixed_instances_policy = {
+    override = [
+      {
+        instance_requirements = {
+          memory_gib_per_vcpu = {
+            min = 4
+            max = 16
+          }
+          memory_mib = {
+            min = 16
+          },
+          vcpu_count = {
+            min = 4
+            max = 64
+          }
+        }
+      }
+    ]
+  }
   instance_requirements = {
     accelerator_count = {
       min = 1
@@ -640,18 +564,18 @@ module "instance_requirements_accelerators" {
     accelerator_manufacturers = ["amazon-web-services", "amd", "nvidia"]
     accelerator_names         = ["a100", "v100", "k80", "t4", "m60", "radeon-pro-v520"]
 
-    # accelerator_total_memory_mib = {
-    #   min = 4096
-    #   max = 16384
-    # }
+    accelerator_total_memory_mib = {
+      min = 4096
+      max = 16384
+    }
 
     accelerator_types = ["gpu", "inference"]
     bare_metal        = "excluded"
 
-    # baseline_ebs_bandwidth_mbps = {
-    #   min = 400
-    #   max = 16384
-    # }
+    baseline_ebs_bandwidth_mbps = {
+      min = 400
+      max = 16384
+    }
 
     burstable_performance   = "excluded"
     cpu_manufacturers       = ["amazon-web-services", "amd", "intel"]
@@ -659,26 +583,114 @@ module "instance_requirements_accelerators" {
     instance_generations    = ["current"]
     local_storage_types     = ["ssd", "hdd"]
 
-    # memory_gib_per_vcpu = {
-    #   min = 4
-    #   max = 16
-    # }
+    memory_gib_per_vcpu = {
+      min = 4
+      max = 16
+    }
 
     memory_mib = {
       min = 24
       max = 99999 # seems to be a provider bug
     }
 
-    # network_interface_count = {
-    #   min = 1
-    #   max =4
-    # }
+    network_interface_count = {
+      min = 1
+      max = 4
+    }
 
     vcpu_count = {
       min = 2
       max = 999 # seems to be a provider bug
     }
   }
+
+  tags = local.tags
+}
+
+################################################################################
+# External
+################################################################################
+
+resource "aws_launch_template" "this" {
+  name_prefix   = "external-lt-${local.name}-"
+  image_id      = data.aws_ami.amazon_linux.id
+  instance_type = "t3.micro"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+module "external" {
+  source = "../../"
+
+  # Autoscaling group
+  name = "external-${local.name}"
+
+  vpc_zone_identifier = module.vpc.private_subnets
+  min_size            = 0
+  max_size            = 1
+  desired_capacity    = 1
+
+  # Launch template
+  create_launch_template = false
+  launch_template        = aws_launch_template.this.name
+
+  tags = local.tags
+}
+
+################################################################################
+# Disabled
+################################################################################
+
+module "disabled" {
+  source = "../../"
+
+  create                 = false
+  create_launch_template = false
+
+  # Autoscaling group
+  name = "disabled-${local.name}"
+}
+
+################################################################################
+# Launch template only
+################################################################################
+
+module "launch_template_only" {
+  source = "../../"
+
+  create = false
+  name   = "launch-template-only-${local.name}"
+
+  vpc_zone_identifier = module.vpc.private_subnets
+  min_size            = 0
+  max_size            = 1
+  desired_capacity    = 1
+
+  image_id      = data.aws_ami.amazon_linux.id
+  instance_type = "t3.micro"
+
+  tags = local.tags
+}
+
+################################################################################
+# Default
+################################################################################
+
+module "default" {
+  source = "../../"
+
+  # Autoscaling group
+  name = "default-${local.name}"
+
+  vpc_zone_identifier = module.vpc.private_subnets
+  min_size            = 0
+  max_size            = 1
+  desired_capacity    = 1
+
+  image_id      = data.aws_ami.amazon_linux.id
+  instance_type = "t3.micro"
 
   tags = local.tags
 }
@@ -692,11 +704,11 @@ module "vpc" {
   version = "~> 3.0"
 
   name = local.name
-  cidr = "10.99.0.0/18"
+  cidr = local.vpc_cidr
 
-  azs             = ["${local.region}a", "${local.region}b", "${local.region}c"]
-  public_subnets  = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
-  private_subnets = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
+  azs             = local.azs
+  public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k)]
+  private_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 10)]
 
   enable_dns_hostnames = true
   enable_dns_support   = true
@@ -825,15 +837,15 @@ resource "aws_ec2_capacity_reservation" "targeted" {
   instance_match_criteria = "targeted"
 }
 
-resource "aws_licensemanager_license_configuration" "test" {
-  license_count            = 1
-  license_count_hard_limit = true
-  license_counting_type    = "Socket"
-  name                     = "test-license"
+# resource "aws_licensemanager_license_configuration" "test" {
+#   license_count            = 1
+#   license_count_hard_limit = true
+#   license_counting_type    = "Socket"
+#   name                     = "test-license"
 
-  license_rules = [
-    "#allowedTenancy=EC2-DedicatedHost",
-    "#maximumSockets=2",
-    "#minimumSockets=2",
-  ]
-}
+#   license_rules = [
+#     "#allowedTenancy=EC2-DedicatedHost",
+#     "#maximumSockets=2",
+#     "#minimumSockets=2",
+#   ]
+# }
