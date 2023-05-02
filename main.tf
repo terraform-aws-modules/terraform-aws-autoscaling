@@ -60,7 +60,7 @@ resource "aws_launch_configuration" "this" {
 # Autoscaling group
 ####################
 resource "aws_autoscaling_group" "this" {
-  count = var.create_asg && false == var.create_asg_with_initial_lifecycle_hook ? 1 : 0
+  count = var.create_asg && var.create_asg_with_initial_lifecycle_hook == false ? 1 : 0
 
   name_prefix = "${join(
     "-",
@@ -171,7 +171,7 @@ resource "aws_autoscaling_group" "this_with_initial_lifecycle_hook" {
 
   lifecycle {
     create_before_destroy = true
-    ignore_changes        = [desired_capacity]
+    ignore_changes        = [desired_capacity, name_prefix]
   }
 }
 
