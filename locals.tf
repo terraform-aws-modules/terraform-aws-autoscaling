@@ -1,13 +1,25 @@
 locals {
-  tags_asg_format = ["${null_resource.tags_as_list_of_maps.*.triggers}"]
+  tags = concat(
+    [
+      {
+        "key"                 = "Name"
+        "value"               = var.name
+        "propagate_at_launch" = true
+      },
+    ],
+    var.tags,
+    local.tags_asg_format,
+  )
+
+  tags_asg_format = null_resource.tags_as_list_of_maps.*.triggers
 }
 
 resource "null_resource" "tags_as_list_of_maps" {
-  count = "${length(keys(var.tags_as_map))}"
+  count = length(keys(var.tags_as_map))
 
-  triggers = "${map(
-    "key", "${element(keys(var.tags_as_map), count.index)}",
-    "value", "${element(values(var.tags_as_map), count.index)}",
-    "propagate_at_launch", "true"
-  )}"
+  triggers = {
+    "key"                 = keys(var.tags_as_map)[count.index]
+    "value"               = values(var.tags_as_map)[count.index]
+    "propagate_at_launch" = "true"
+  }
 }
