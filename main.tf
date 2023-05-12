@@ -679,6 +679,7 @@ resource "aws_autoscaling_group" "idc" {
           checkpoint_percentages = try(preferences.value.checkpoint_percentages, null)
           instance_warmup        = try(preferences.value.instance_warmup, null)
           min_healthy_percentage = try(preferences.value.min_healthy_percentage, null)
+          auto_rollback          = try(preferences.value.auto_rollback, null)
         }
       }
     }
