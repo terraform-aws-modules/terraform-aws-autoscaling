@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.10.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.9.0...v6.10.0) (2023-05-17)
+
+
+### Features
+
+* Add auto_rollback feature to this module in instance_refresh settings ([#232](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/232)) ([f6adff7](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/f6adff7443da91db8eae5b3c16ad048d6eec9a13))
+
 ## [6.9.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.8.0...v6.9.0) (2023-03-06)
 
 
