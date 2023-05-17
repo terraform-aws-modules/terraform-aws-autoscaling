@@ -72,6 +72,7 @@ module "complete" {
       checkpoint_percentages = [35, 70, 100]
       instance_warmup        = 300
       min_healthy_percentage = 50
+      auto_rollback          = true
     }
     triggers = ["tag"]
   }
