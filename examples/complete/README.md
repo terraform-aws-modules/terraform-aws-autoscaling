@@ -30,13 +30,13 @@ Note that this example may create resources which cost money. Run `terraform des
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 4.59 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.59 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.59 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.59 |
 
 ## Modules
 
@@ -56,21 +56,21 @@ Note that this example may create resources which cost money. Run `terraform des
 | <a name="module_mixed_instance"></a> [mixed\_instance](#module\_mixed\_instance) | ../../ | n/a |
 | <a name="module_step_scaling_alarm"></a> [step\_scaling\_alarm](#module\_step\_scaling\_alarm) | terraform-aws-modules/cloudwatch/aws//modules/metric-alarm | ~> 4.3 |
 | <a name="module_target_tracking_customized_metrics"></a> [target\_tracking\_customized\_metrics](#module\_target\_tracking\_customized\_metrics) | ../../ | n/a |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 5.1 |
 | <a name="module_warm_pool"></a> [warm\_pool](#module\_warm\_pool) | ../../ | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aws_ec2_capacity_reservation.targeted](https://registry.terraform.io/providers/hashicorp/aws/4.59/docs/resources/ec2_capacity_reservation) | resource |
-| [aws_iam_instance_profile.ssm](https://registry.terraform.io/providers/hashicorp/aws/4.59/docs/resources/iam_instance_profile) | resource |
-| [aws_iam_role.ssm](https://registry.terraform.io/providers/hashicorp/aws/4.59/docs/resources/iam_role) | resource |
-| [aws_iam_service_linked_role.autoscaling](https://registry.terraform.io/providers/hashicorp/aws/4.59/docs/resources/iam_service_linked_role) | resource |
-| [aws_launch_template.this](https://registry.terraform.io/providers/hashicorp/aws/4.59/docs/resources/launch_template) | resource |
-| [aws_sqs_queue.this](https://registry.terraform.io/providers/hashicorp/aws/4.59/docs/resources/sqs_queue) | resource |
-| [aws_ami.amazon_linux](https://registry.terraform.io/providers/hashicorp/aws/4.59/docs/data-sources/ami) | data source |
-| [aws_availability_zones.available](https://registry.terraform.io/providers/hashicorp/aws/4.59/docs/data-sources/availability_zones) | data source |
+| [aws_ec2_capacity_reservation.targeted](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_capacity_reservation) | resource |
+| [aws_iam_instance_profile.ssm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) | resource |
+| [aws_iam_role.ssm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_service_linked_role.autoscaling](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_service_linked_role) | resource |
+| [aws_launch_template.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) | resource |
+| [aws_sqs_queue.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) | resource |
+| [aws_ami.amazon_linux](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_availability_zones.available](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) | data source |
 
 ## Inputs
 
