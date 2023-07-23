@@ -910,7 +910,7 @@ resource "aws_autoscaling_policy" "this" {
   scaling_adjustment        = try(each.value.scaling_adjustment, null)
 
   dynamic "step_adjustment" {
-    for_each = try([each.value.step_adjustment], [])
+    for_each = try(each.value.step_adjustment, [])
     content {
       scaling_adjustment          = step_adjustment.value.scaling_adjustment
       metric_interval_lower_bound = try(step_adjustment.value.metric_interval_lower_bound, null)

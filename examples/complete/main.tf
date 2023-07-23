@@ -271,6 +271,23 @@ module "complete" {
         target_value = 800
       }
     }
+    scale-out = {
+      name                      = "scale-out"
+      adjustment_type           = "ExactCapacity"
+      policy_type               = "StepScaling"
+      estimated_instance_warmup = 120
+      step_adjustment = [
+        {
+          scaling_adjustment          = 1
+          metric_interval_lower_bound = 0
+          metric_interval_upper_bound = 10
+        },
+        {
+          scaling_adjustment          = 2
+          metric_interval_lower_bound = 10
+        }
+      ]
+    }
   }
 }
 
@@ -933,4 +950,21 @@ resource "aws_sqs_queue" "this" {
   name = local.name
 
   tags = local.tags
+}
+
+module "step_scaling_alarm" {
+  source = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+
+  alarm_name          = "${local.name}-step-scaling"
+  alarm_description   = "Step Scaling Alarm Example"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  threshold           = 40
+  period              = 300
+
+  namespace   = "AWS/EC2"
+  metric_name = "CPUUtilization"
+  statistic   = "Average"
+
+  alarm_actions = [module.complete.autoscaling_policy_arns["scale-out"]]
 }
