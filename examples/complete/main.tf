@@ -953,7 +953,8 @@ resource "aws_sqs_queue" "this" {
 }
 
 module "step_scaling_alarm" {
-  source = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+  source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+  version = "~> 4.3"
 
   alarm_name          = "${local.name}-step-scaling"
   alarm_description   = "Step Scaling Alarm Example"
