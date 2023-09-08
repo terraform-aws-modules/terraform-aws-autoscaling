@@ -411,11 +411,14 @@ resource "aws_autoscaling_group" "this" {
       dynamic "preferences" {
         for_each = try([instance_refresh.value.preferences], [])
         content {
-          checkpoint_delay       = try(preferences.value.checkpoint_delay, null)
-          checkpoint_percentages = try(preferences.value.checkpoint_percentages, null)
-          instance_warmup        = try(preferences.value.instance_warmup, null)
-          min_healthy_percentage = try(preferences.value.min_healthy_percentage, null)
-          auto_rollback          = try(preferences.value.auto_rollback, null)
+          checkpoint_delay             = try(preferences.value.checkpoint_delay, null)
+          checkpoint_percentages       = try(preferences.value.checkpoint_percentages, null)
+          instance_warmup              = try(preferences.value.instance_warmup, null)
+          min_healthy_percentage       = try(preferences.value.min_healthy_percentage, null)
+          auto_rollback                = try(preferences.value.auto_rollback, null)
+          scale_in_protected_instances = try(preferences.value.scale_in_protected_instances, null)
+          standby_instances            = try(preferences.value.standby_instances, null)
+          skip_matching                = try(preferences.value.skip_matching, null)
         }
       }
     }
@@ -675,11 +678,14 @@ resource "aws_autoscaling_group" "idc" {
       dynamic "preferences" {
         for_each = try([instance_refresh.value.preferences], [])
         content {
-          checkpoint_delay       = try(preferences.value.checkpoint_delay, null)
-          checkpoint_percentages = try(preferences.value.checkpoint_percentages, null)
-          instance_warmup        = try(preferences.value.instance_warmup, null)
-          min_healthy_percentage = try(preferences.value.min_healthy_percentage, null)
-          auto_rollback          = try(preferences.value.auto_rollback, null)
+          checkpoint_delay             = try(preferences.value.checkpoint_delay, null)
+          checkpoint_percentages       = try(preferences.value.checkpoint_percentages, null)
+          instance_warmup              = try(preferences.value.instance_warmup, null)
+          min_healthy_percentage       = try(preferences.value.min_healthy_percentage, null)
+          auto_rollback                = try(preferences.value.auto_rollback, null)
+          scale_in_protected_instances = try(preferences.value.scale_in_protected_instances, null)
+          standby_instances            = try(preferences.value.standby_instances, null)
+          skip_matching                = try(preferences.value.skip_matching, null)
         }
       }
     }
