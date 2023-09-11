@@ -72,9 +72,9 @@ module "complete" {
       checkpoint_percentages       = [35, 70, 100]
       instance_warmup              = 300
       min_healthy_percentage       = 50
-      auto_rollback                = true
-      standby_instances            = "Ignore"
-      scale_in_protected_instances = "Ignore"
+      auto_rollback                = false
+      standby_instances            = "Wait"
+      scale_in_protected_instances = "Wait"
       skip_matching                = false
 
     }
