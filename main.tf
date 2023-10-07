@@ -51,6 +51,8 @@ resource "aws_launch_configuration" "this" {
     }
   }
 
+  metadata_options = var.metadata_options
+
   lifecycle {
     create_before_destroy = true
   }
