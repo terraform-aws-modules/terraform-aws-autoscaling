@@ -321,3 +321,12 @@ variable "max_instance_lifetime" {
   default     = 0
 }
 
+variable "metadata_options" {
+  type        = any
+  description = "The maintenance options for the instance"
+  default = {
+    http_endpoint               = "enabled"
+    http_tokens                 = "optional"
+    http_put_response_hop_limit = 32
+  }
+}
