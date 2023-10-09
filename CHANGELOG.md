@@ -2,6 +2,55 @@
 
 All notable changes to this project will be documented in this file.
 
+## [6.10.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.9.0...v6.10.0) (2023-05-17)
+
+
+### Features
+
+* Add auto_rollback feature to this module in instance_refresh settings ([#232](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/232)) ([f6adff7](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/f6adff7443da91db8eae5b3c16ad048d6eec9a13))
+
+## [6.9.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.8.0...v6.9.0) (2023-03-06)
+
+
+### Features
+
+* Metric math support for target tracking scaling policy ([#225](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/225)) ([f9e0186](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/f9e0186c8d8cbc0398ba49b68ec7a5388b765ea3))
+
+## [6.8.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.7.1...v6.8.0) (2023-03-06)
+
+
+### Features
+
+* Support `desired_capacity_type` and add mixed instance launch template override `instance_requirements` for ASG ([#220](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/220)) ([e867c0f](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/e867c0fa7b8cf87d2c9e6b4cb05a0b540c598ebe))
+
+### [6.7.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.7.0...v6.7.1) (2023-01-24)
+
+
+### Bug Fixes
+
+* Use a version for  to avoid GitHub API rate limiting on CI workflows ([#219](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/219)) ([e4ac559](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/e4ac55948cd2e6895ed41d859b6e91119761a12c))
+
+## [6.7.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.6.0...v6.7.0) (2022-12-15)
+
+
+### Features
+
+* Add support for `default_instance_warmup` argument ([#213](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/213)) ([e3e8ef0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/e3e8ef0a7a3140c7c0cdf0df54a24abab0714f22))
+
+## [6.6.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.3...v6.6.0) (2022-12-15)
+
+
+### Features
+
+* Add support for `disable_api_stop` ([#218](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/218)) ([69415ea](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/69415ea56d6f16e1fbce3a81df231f858b2ecd3b))
+
+### [6.5.3](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.2...v6.5.3) (2022-10-27)
+
+
+### Bug Fixes
+
+* Update CI configuration files to use latest version ([#209](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/209)) ([a1e9d9d](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/a1e9d9d74853741b34d980f8749835f73565e8c0))
+
 ### [6.5.2](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.5.1...v6.5.2) (2022-08-17)
 
 

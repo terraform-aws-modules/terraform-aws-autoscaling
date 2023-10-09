@@ -73,6 +73,12 @@ variable "desired_capacity" {
   default     = null
 }
 
+variable "desired_capacity_type" {
+  description = "The unit of measurement for the value specified for desired_capacity. Supported for attribute-based instance type selection only. Valid values: `units`, `vcpu`, `memory-mib`."
+  type        = string
+  default     = null
+}
+
 variable "capacity_rebalance" {
   description = "Indicates whether capacity rebalance is enabled"
   type        = bool
@@ -99,6 +105,12 @@ variable "wait_for_capacity_timeout" {
 
 variable "default_cooldown" {
   description = "The amount of time, in seconds, after a scaling activity completes before another scaling activity can start"
+  type        = number
+  default     = null
+}
+
+variable "default_instance_warmup" {
+  description = "Amount of time, in seconds, until a newly launched instance can contribute to the Amazon CloudWatch metrics. This delay lets an instance finish initializing before Amazon EC2 Auto Scaling aggregates instance metrics, resulting in more reliable usage data. Set this value equal to the amount of time that it takes for resource consumption to become stable after an instance reaches the InService state."
   type        = number
   default     = null
 }
@@ -325,6 +337,12 @@ variable "update_default_version" {
 
 variable "disable_api_termination" {
   description = "If true, enables EC2 instance termination protection"
+  type        = bool
+  default     = null
+}
+
+variable "disable_api_stop" {
+  description = "If true, enables EC2 instance stop protection"
   type        = bool
   default     = null
 }
