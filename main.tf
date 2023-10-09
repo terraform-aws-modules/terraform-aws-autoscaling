@@ -1,5 +1,4 @@
 data "aws_partition" "current" {}
-data "aws_default_tags" "current" {}
 
 locals {
   create = var.create && var.putin_khuylo
@@ -9,7 +8,6 @@ locals {
   launch_template_version = var.create_launch_template && var.launch_template_version == null ? aws_launch_template.this[0].latest_version : var.launch_template_version
 
   asg_tags = merge(
-    data.aws_default_tags.current.tags,
     var.tags,
     { "Name" = coalesce(var.instance_name, var.name) },
     var.autoscaling_group_tags,
