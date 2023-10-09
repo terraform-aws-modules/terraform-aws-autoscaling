@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.10.0...v7.0.0) (2023-10-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* Use `launch_template_id` instead of `launch_template_name`, raise MSV of AWS provider and Terraform to 5.0 and 1.0 respectively (#204)
+
+### Features
+
+* Use `launch_template_id` instead of `launch_template_name`, raise MSV of AWS provider and Terraform to 5.0 and 1.0 respectively ([#204](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/204)) ([1d988c0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/1d988c0c218143c73369b016c2999d769cc0933d))
+
 ## [6.10.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.9.0...v6.10.0) (2023-05-17)
 
 
