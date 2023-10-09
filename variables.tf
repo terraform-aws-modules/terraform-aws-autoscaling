@@ -31,8 +31,8 @@ variable "instance_name" {
   default     = ""
 }
 
-variable "launch_template" {
-  description = "Name of an existing launch template to be used (created outside of this module)"
+variable "launch_template_id" {
+  description = "ID of an existing launch template to be used (created outside of this module)"
   type        = string
   default     = null
 }

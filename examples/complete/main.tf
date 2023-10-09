@@ -271,6 +271,23 @@ module "complete" {
         target_value = 800
       }
     }
+    scale-out = {
+      name                      = "scale-out"
+      adjustment_type           = "ExactCapacity"
+      policy_type               = "StepScaling"
+      estimated_instance_warmup = 120
+      step_adjustment = [
+        {
+          scaling_adjustment          = 1
+          metric_interval_lower_bound = 0
+          metric_interval_upper_bound = 10
+        },
+        {
+          scaling_adjustment          = 2
+          metric_interval_lower_bound = 10
+        }
+      ]
+    }
   }
 }
 
@@ -713,7 +730,7 @@ module "external" {
 
   # Launch template
   create_launch_template = false
-  launch_template        = aws_launch_template.this.name
+  launch_template_id     = aws_launch_template.this.id
 
   tags = local.tags
 }
@@ -780,7 +797,7 @@ module "default" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0"
+  version = "~> 5.0"
 
   name = local.name
   cidr = local.vpc_cidr
@@ -789,15 +806,12 @@ module "vpc" {
   public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k)]
   private_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 10)]
 
-  enable_dns_hostnames = true
-  enable_dns_support   = true
-
   tags = local.tags
 }
 
 module "asg_sg" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   name        = local.name
   description = "A security group"
@@ -867,7 +881,7 @@ resource "aws_iam_role" "ssm" {
 
 module "alb_http_sg" {
   source  = "terraform-aws-modules/security-group/aws//modules/http-80"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   name        = "${local.name}-alb-http"
   vpc_id      = module.vpc.vpc_id
@@ -880,7 +894,7 @@ module "alb_http_sg" {
 
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
-  version = "~> 6.0"
+  version = "~> 8.0"
 
   name = local.name
 
@@ -916,21 +930,26 @@ resource "aws_ec2_capacity_reservation" "targeted" {
   instance_match_criteria = "targeted"
 }
 
-# resource "aws_licensemanager_license_configuration" "test" {
-#   license_count            = 1
-#   license_count_hard_limit = true
-#   license_counting_type    = "Socket"
-#   name                     = "test-license"
-
-#   license_rules = [
-#     "#allowedTenancy=EC2-DedicatedHost",
-#     "#maximumSockets=2",
-#     "#minimumSockets=2",
-#   ]
-# }
-
 resource "aws_sqs_queue" "this" {
   name = local.name
 
   tags = local.tags
+}
+
+module "step_scaling_alarm" {
+  source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+  version = "~> 4.3"
+
+  alarm_name          = "${local.name}-step-scaling"
+  alarm_description   = "Step Scaling Alarm Example"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  threshold           = 40
+  period              = 300
+
+  namespace   = "AWS/EC2"
+  metric_name = "CPUUtilization"
+  statistic   = "Average"
+
+  alarm_actions = [module.complete.autoscaling_policy_arns["scale-out"]]
 }

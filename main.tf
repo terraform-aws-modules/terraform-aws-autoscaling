@@ -1,15 +1,13 @@
 data "aws_partition" "current" {}
-data "aws_default_tags" "current" {}
 
 locals {
   create = var.create && var.putin_khuylo
 
   launch_template_name    = coalesce(var.launch_template_name, var.name)
-  launch_template         = var.create_launch_template ? aws_launch_template.this[0].name : var.launch_template
+  launch_template_id      = var.create_launch_template ? aws_launch_template.this[0].id : var.launch_template_id
   launch_template_version = var.create_launch_template && var.launch_template_version == null ? aws_launch_template.this[0].latest_version : var.launch_template_version
 
   asg_tags = merge(
-    data.aws_default_tags.current.tags,
     var.tags,
     { "Name" = coalesce(var.instance_name, var.name) },
     var.autoscaling_group_tags,
@@ -354,7 +352,7 @@ resource "aws_autoscaling_group" "this" {
     for_each = var.use_mixed_instances_policy ? [] : [1]
 
     content {
-      name    = local.launch_template
+      id      = local.launch_template_id
       version = local.launch_template_version
     }
   }
@@ -438,8 +436,8 @@ resource "aws_autoscaling_group" "this" {
 
       launch_template {
         launch_template_specification {
-          launch_template_name = local.launch_template
-          version              = local.launch_template_version
+          launch_template_id = local.launch_template_id
+          version            = local.launch_template_version
         }
 
         dynamic "override" {
@@ -618,7 +616,7 @@ resource "aws_autoscaling_group" "idc" {
     for_each = var.use_mixed_instances_policy ? [] : [1]
 
     content {
-      name    = local.launch_template
+      id      = local.launch_template_id
       version = local.launch_template_version
     }
   }
@@ -702,8 +700,8 @@ resource "aws_autoscaling_group" "idc" {
 
       launch_template {
         launch_template_specification {
-          launch_template_name = local.launch_template
-          version              = local.launch_template_version
+          launch_template_id = local.launch_template_id
+          version            = local.launch_template_version
         }
 
         dynamic "override" {
@@ -910,7 +908,7 @@ resource "aws_autoscaling_policy" "this" {
   scaling_adjustment        = try(each.value.scaling_adjustment, null)
 
   dynamic "step_adjustment" {
-    for_each = try([each.value.step_adjustment], [])
+    for_each = try(each.value.step_adjustment, [])
     content {
       scaling_adjustment          = step_adjustment.value.scaling_adjustment
       metric_interval_lower_bound = try(step_adjustment.value.metric_interval_lower_bound, null)
