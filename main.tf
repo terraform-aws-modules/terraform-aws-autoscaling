@@ -383,9 +383,10 @@ resource "aws_autoscaling_group" "this" {
   suspended_processes   = var.suspended_processes
   max_instance_lifetime = var.max_instance_lifetime
 
-  enabled_metrics         = var.enabled_metrics
-  metrics_granularity     = var.metrics_granularity
-  service_linked_role_arn = var.service_linked_role_arn
+  enabled_metrics                  = var.enabled_metrics
+  metrics_granularity              = var.metrics_granularity
+  service_linked_role_arn          = var.service_linked_role_arn
+  ignore_failed_scaling_activities = var.ignore_failed_scaling_activities
 
   dynamic "initial_lifecycle_hook" {
     for_each = var.initial_lifecycle_hooks
@@ -409,11 +410,13 @@ resource "aws_autoscaling_group" "this" {
       dynamic "preferences" {
         for_each = try([instance_refresh.value.preferences], [])
         content {
-          checkpoint_delay       = try(preferences.value.checkpoint_delay, null)
-          checkpoint_percentages = try(preferences.value.checkpoint_percentages, null)
-          instance_warmup        = try(preferences.value.instance_warmup, null)
-          min_healthy_percentage = try(preferences.value.min_healthy_percentage, null)
-          auto_rollback          = try(preferences.value.auto_rollback, null)
+          checkpoint_delay             = try(preferences.value.checkpoint_delay, null)
+          checkpoint_percentages       = try(preferences.value.checkpoint_percentages, null)
+          instance_warmup              = try(preferences.value.instance_warmup, null)
+          min_healthy_percentage       = try(preferences.value.min_healthy_percentage, null)
+          auto_rollback                = try(preferences.value.auto_rollback, null)
+          scale_in_protected_instances = try(preferences.value.scale_in_protected_instances, null)
+          standby_instances            = try(preferences.value.standby_instances, null)
         }
       }
     }
@@ -647,9 +650,10 @@ resource "aws_autoscaling_group" "idc" {
   suspended_processes   = var.suspended_processes
   max_instance_lifetime = var.max_instance_lifetime
 
-  enabled_metrics         = var.enabled_metrics
-  metrics_granularity     = var.metrics_granularity
-  service_linked_role_arn = var.service_linked_role_arn
+  enabled_metrics                  = var.enabled_metrics
+  metrics_granularity              = var.metrics_granularity
+  service_linked_role_arn          = var.service_linked_role_arn
+  ignore_failed_scaling_activities = var.ignore_failed_scaling_activities
 
   dynamic "initial_lifecycle_hook" {
     for_each = var.initial_lifecycle_hooks
@@ -673,11 +677,13 @@ resource "aws_autoscaling_group" "idc" {
       dynamic "preferences" {
         for_each = try([instance_refresh.value.preferences], [])
         content {
-          checkpoint_delay       = try(preferences.value.checkpoint_delay, null)
-          checkpoint_percentages = try(preferences.value.checkpoint_percentages, null)
-          instance_warmup        = try(preferences.value.instance_warmup, null)
-          min_healthy_percentage = try(preferences.value.min_healthy_percentage, null)
-          auto_rollback          = try(preferences.value.auto_rollback, null)
+          checkpoint_delay             = try(preferences.value.checkpoint_delay, null)
+          checkpoint_percentages       = try(preferences.value.checkpoint_percentages, null)
+          instance_warmup              = try(preferences.value.instance_warmup, null)
+          min_healthy_percentage       = try(preferences.value.min_healthy_percentage, null)
+          auto_rollback                = try(preferences.value.auto_rollback, null)
+          scale_in_protected_instances = try(preferences.value.scale_in_protected_instances, null)
+          standby_instances            = try(preferences.value.standby_instances, null)
         }
       }
     }
