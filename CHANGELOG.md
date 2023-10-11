@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.1.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.0.0...v7.1.0) (2023-10-11)
+
+
+### Features
+
+* Instance refresh preferences ([#245](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/245)) ([f3ffe36](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/f3ffe3651bc0f358378bc53564016937a94b4d3d))
+
 ## [7.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v6.10.0...v7.0.0) (2023-10-09)
 
 
