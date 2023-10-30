@@ -121,10 +121,13 @@ module "asg" {
     }
   }
 
+  # This will ensure imdsv2 is enabled, required, and a single hop which is aws security
+  # best practices
+  # See https://docs.aws.amazon.com/securityhub/latest/userguide/autoscaling-controls.html#autoscaling-4
   metadata_options = {
     http_endpoint               = "enabled"
     http_tokens                 = "required"
-    http_put_response_hop_limit = 32
+    http_put_response_hop_limit = 1
   }
 
   network_interfaces = [
