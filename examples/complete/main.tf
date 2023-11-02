@@ -46,6 +46,11 @@ module "complete" {
   vpc_zone_identifier       = module.vpc.private_subnets
   service_linked_role_arn   = aws_iam_service_linked_role.autoscaling.arn
 
+  # Traffic source attachment
+  create_traffic_source_attachment = true
+  traffic_source_identifier        = module.alb.target_groups["ex_asg"].arn
+  traffic_source_type              = "elbv2"
+
   initial_lifecycle_hooks = [
     {
       name                 = "ExampleStartupLifeCycleHook"
@@ -103,8 +108,6 @@ module "complete" {
 
   # # Security group is set on the ENIs below
   # security_groups          = [module.asg_sg.security_group_id]
-
-  target_group_arns = module.alb.target_group_arns
 
   block_device_mappings = [
     {
@@ -268,7 +271,7 @@ module "complete" {
       target_tracking_configuration = {
         predefined_metric_specification = {
           predefined_metric_type = "ALBRequestCountPerTarget"
-          resource_label         = "${module.alb.lb_arn_suffix}/${module.alb.target_group_arn_suffixes[0]}"
+          resource_label         = "${module.alb.arn_suffix}/${module.alb.target_groups["ex_asg"].arn_suffix}"
         }
         target_value = 800
       }
@@ -822,7 +825,7 @@ module "asg_sg" {
   computed_ingress_with_source_security_group_id = [
     {
       rule                     = "http-80-tcp"
-      source_security_group_id = module.alb_http_sg.security_group_id
+      source_security_group_id = module.alb.security_group_id
     }
   ]
   number_of_computed_ingress_with_source_security_group_id = 1
@@ -881,45 +884,58 @@ resource "aws_iam_role" "ssm" {
   })
 }
 
-module "alb_http_sg" {
-  source  = "terraform-aws-modules/security-group/aws//modules/http-80"
-  version = "~> 5.0"
-
-  name        = "${local.name}-alb-http"
-  vpc_id      = module.vpc.vpc_id
-  description = "Security group for ${local.name}"
-
-  ingress_cidr_blocks = ["0.0.0.0/0"]
-
-  tags = local.tags
-}
-
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
-  version = "~> 8.0"
+  version = "~> 9.0"
 
   name = local.name
 
-  vpc_id          = module.vpc.vpc_id
-  subnets         = module.vpc.public_subnets
-  security_groups = [module.alb_http_sg.security_group_id]
+  vpc_id  = module.vpc.vpc_id
+  subnets = module.vpc.public_subnets
 
-  http_tcp_listeners = [
-    {
-      port               = 80
-      protocol           = "HTTP"
-      target_group_index = 0
+  # For example only
+  enable_deletion_protection = false
+
+  # Security Group
+  security_group_ingress_rules = {
+    all_http = {
+      from_port   = 80
+      to_port     = 80
+      ip_protocol = "tcp"
+      cidr_ipv4   = "0.0.0.0/0"
     }
-  ]
+  }
+  security_group_egress_rules = {
+    all = {
+      ip_protocol = "-1"
+      cidr_ipv4   = module.vpc.vpc_cidr_block
+    }
+  }
 
-  target_groups = [
-    {
-      name             = local.name
-      backend_protocol = "HTTP"
-      backend_port     = 80
-      target_type      = "instance"
-    },
-  ]
+  listeners = {
+    ex_http = {
+      port     = 80
+      protocol = "HTTP"
+
+      forward = {
+        target_group_key = "ex_asg"
+      }
+    }
+  }
+
+  target_groups = {
+    ex_asg = {
+      backend_protocol                  = "HTTP"
+      backend_port                      = 80
+      target_type                       = "instance"
+      deregistration_delay              = 5
+      load_balancing_cross_zone_enabled = true
+
+      # There's nothing to attach here in this definition.
+      # The attachment happens in the ASG module above
+      create_attachment = false
+    }
+  }
 
   tags = local.tags
 }

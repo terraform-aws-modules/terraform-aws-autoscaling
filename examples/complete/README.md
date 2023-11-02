@@ -42,8 +42,7 @@ Note that this example may create resources which cost money. Run `terraform des
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alb"></a> [alb](#module\_alb) | terraform-aws-modules/alb/aws | ~> 8.0 |
-| <a name="module_alb_http_sg"></a> [alb\_http\_sg](#module\_alb\_http\_sg) | terraform-aws-modules/security-group/aws//modules/http-80 | ~> 5.0 |
+| <a name="module_alb"></a> [alb](#module\_alb) | terraform-aws-modules/alb/aws | ~> 9.0 |
 | <a name="module_asg_sg"></a> [asg\_sg](#module\_asg\_sg) | terraform-aws-modules/security-group/aws | ~> 5.0 |
 | <a name="module_complete"></a> [complete](#module\_complete) | ../../ | n/a |
 | <a name="module_default"></a> [default](#module\_default) | ../../ | n/a |
