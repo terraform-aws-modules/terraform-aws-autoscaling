@@ -462,6 +462,28 @@ variable "tag_specifications" {
 }
 
 ################################################################################
+# Autoscaling group traffic source attachment
+################################################################################
+
+variable "create_traffic_source_attachment" {
+  description = "Determines whether to create autoscaling group traffic source attachment"
+  type        = bool
+  default     = false
+}
+
+variable "traffic_source_identifier" {
+  description = "Identifies the traffic source. For Application Load Balancers, Gateway Load Balancers, Network Load Balancers, and VPC Lattice, this will be the Amazon Resource Name (ARN) for a target group in this account and Region. For Classic Load Balancers, this will be the name of the Classic Load Balancer in this account and Region"
+  type        = string
+  default     = ""
+}
+
+variable "traffic_source_type" {
+  description = "Provides additional context for the value of identifier. The following lists the valid values: `elb` if `identifier` is the name of a Classic Load Balancer. `elbv2` if `identifier` is the ARN of an Application Load Balancer, Gateway Load Balancer, or Network Load Balancer target group. `vpc-lattice` if `identifier` is the ARN of a VPC Lattice target group"
+  type        = string
+  default     = "elbv2"
+}
+
+################################################################################
 # Autoscaling group schedule
 ################################################################################
 
