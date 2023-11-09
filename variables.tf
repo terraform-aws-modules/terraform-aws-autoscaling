@@ -14,6 +14,12 @@ variable "ignore_desired_capacity_changes" {
   default     = false
 }
 
+variable "ignore_desired_capacity_changes_and_target_group_arns_changes" {
+  description = "Determines whether the both `desired_capacity` and `target_group_arns` value are ignored after initial apply. If true, this varible overrides `ignore_desired_capacity_changes`"
+  type        = bool
+  default     = false
+}
+
 variable "name" {
   description = "Name used across the resources created"
   type        = string
