@@ -15,7 +15,7 @@ variable "ignore_desired_capacity_changes" {
 }
 
 variable "ignore_desired_capacity_changes_and_target_group_arns_changes" {
-  description = "Determines whether the both `desired_capacity` and `target_group_arns` value are ignored after initial apply. If true, this varible overrides `ignore_desired_capacity_changes`"
+  description = "Determines whether the both `desired_capacity` and `target_group_arns` value are ignored after initial apply. If true, this variable overrides `ignore_desired_capacity_changes`"
   type        = bool
   default     = false
 }
