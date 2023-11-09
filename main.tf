@@ -343,7 +343,7 @@ resource "aws_launch_template" "this" {
 ################################################################################
 
 resource "aws_autoscaling_group" "this" {
-  count = local.create && !var.ignore_desired_capacity_changes ? 1 : 0
+  count = local.create && !var.ignore_desired_capacity_changes && !var.ignore_desired_capacity_and_target_group_arns_changes ? 1 : 0
 
   name        = var.use_name_prefix ? null : var.name
   name_prefix = var.use_name_prefix ? "${var.name}-" : null
@@ -610,7 +610,7 @@ resource "aws_autoscaling_group" "this" {
 ################################################################################
 
 resource "aws_autoscaling_group" "idc" {
-  count = local.create && var.ignore_desired_capacity_changes && !var.ignore_desired_capacity_changes_and_target_group_arns_changes ? 1 : 0
+  count = local.create && var.ignore_desired_capacity_changes && !var.ignore_desired_capacity_and_target_group_arns_changes ? 1 : 0
 
   name        = var.use_name_prefix ? null : var.name
   name_prefix = var.use_name_prefix ? "${var.name}-" : null
@@ -878,7 +878,7 @@ resource "aws_autoscaling_group" "idc" {
 ################################################################################
 
 resource "aws_autoscaling_group" "idc_itg" {
-  count = local.create && var.ignore_desired_capacity_changes_and_target_group_arns_changes ? 1 : 0
+  count = local.create && var.ignore_desired_capacity_and_target_group_arns_changes ? 1 : 0
 
   name        = var.use_name_prefix ? null : var.name
   name_prefix = var.use_name_prefix ? "${var.name}-" : null
@@ -1148,7 +1148,7 @@ resource "aws_autoscaling_group" "idc_itg" {
 resource "aws_autoscaling_traffic_source_attachment" "this" {
   count = local.create && var.create_traffic_source_attachment ? 1 : 0
 
-  autoscaling_group_name = var.ignore_desired_capacity_changes ? aws_autoscaling_group.idc[0].id : aws_autoscaling_group.this[0].id
+  autoscaling_group_name = (var.ignore_desired_capacity_changes && !var.ignore_desired_capacity_and_target_group_arns_changes) ? aws_autoscaling_group.idc[0].id : (var.ignore_desired_capacity_and_target_group_arns_changes ? aws_autoscaling_group.idc_itg[0].id : aws_autoscaling_group.this[0].id)
 
   traffic_source {
     identifier = var.traffic_source_identifier
@@ -1164,7 +1164,7 @@ resource "aws_autoscaling_schedule" "this" {
   for_each = local.create && var.create_schedule ? var.schedules : {}
 
   scheduled_action_name  = each.key
-  autoscaling_group_name = try(aws_autoscaling_group.this[0].name, aws_autoscaling_group.idc[0].name)
+  autoscaling_group_name = try(aws_autoscaling_group.this[0].name, aws_autoscaling_group.idc[0].name, aws_autoscaling_group.idc_itg[0].name)
 
   min_size         = try(each.value.min_size, null)
   max_size         = try(each.value.max_size, null)
@@ -1186,7 +1186,7 @@ resource "aws_autoscaling_policy" "this" {
   for_each = { for k, v in var.scaling_policies : k => v if local.create && var.create_scaling_policy }
 
   name                   = try(each.value.name, each.key)
-  autoscaling_group_name = var.ignore_desired_capacity_changes ? aws_autoscaling_group.idc[0].name : aws_autoscaling_group.this[0].name
+  autoscaling_group_name = (var.ignore_desired_capacity_changes && !var.ignore_desired_capacity_and_target_group_arns_changes) ? aws_autoscaling_group.idc[0].name : (var.ignore_desired_capacity_and_target_group_arns_changes ? aws_autoscaling_group.idc_itg[0].name : aws_autoscaling_group.this[0].name)
 
   adjustment_type           = try(each.value.adjustment_type, null)
   policy_type               = try(each.value.policy_type, null)
