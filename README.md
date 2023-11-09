@@ -247,6 +247,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_autoscaling_group.idc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
+| [aws_autoscaling_group.idc_itg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
 | [aws_autoscaling_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
 | [aws_autoscaling_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_policy) | resource |
 | [aws_autoscaling_schedule.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_schedule) | resource |
@@ -303,7 +304,7 @@ No modules.
 | <a name="input_iam_role_tags"></a> [iam\_role\_tags](#input\_iam\_role\_tags) | A map of additional tags to add to the IAM role created | `map(string)` | `{}` | no |
 | <a name="input_iam_role_use_name_prefix"></a> [iam\_role\_use\_name\_prefix](#input\_iam\_role\_use\_name\_prefix) | Determines whether the IAM role name (`iam_role_name`) is used as a prefix | `bool` | `true` | no |
 | <a name="input_ignore_desired_capacity_changes"></a> [ignore\_desired\_capacity\_changes](#input\_ignore\_desired\_capacity\_changes) | Determines whether the `desired_capacity` value is ignored after initial apply. See README note for more details | `bool` | `false` | no |
-| <a name="ignore_desired_capacity_changes_and_target_group_arns_changes"></a> [ignore\_desired\_capacity\_changes\_and\_target\_group\_arns\_changes](#ignore\_desired\_capacity\_changes\_and\_target\_group\_arns\_changes) | Determines whether the both `desired_capacity` and `target_group_arns` value are ignored after initial apply. If true, this variable overrides `ignore_desired_capacity_changes` | `bool` | `false` | no |
+| <a name="input_ignore_desired_capacity_changes_and_target_group_arns_changes"></a> [ignore\_desired\_capacity\_changes\_and\_target\_group\_arns\_changes](#input\_ignore\_desired\_capacity\_changes\_and\_target\_group\_arns\_changes) | Determines whether the both `desired_capacity` and `target_group_arns` value are ignored after initial apply. If true, this variable overrides `ignore_desired_capacity_changes` | `bool` | `false` | no |
 | <a name="input_ignore_failed_scaling_activities"></a> [ignore\_failed\_scaling\_activities](#input\_ignore\_failed\_scaling\_activities) | Whether to ignore failed Auto Scaling scaling activities while waiting for capacity. The default is false -- failed scaling activities cause errors to be returned. | `bool` | `false` | no |
 | <a name="input_image_id"></a> [image\_id](#input\_image\_id) | The AMI from which to launch the instance | `string` | `""` | no |
 | <a name="input_initial_lifecycle_hooks"></a> [initial\_lifecycle\_hooks](#input\_initial\_lifecycle\_hooks) | One or more Lifecycle Hooks to attach to the Auto Scaling Group before instances are launched. The syntax is exactly the same as the separate `aws_autoscaling_lifecycle_hook` resource, without the `autoscaling_group_name` attribute. Please note that this will only work when creating a new Auto Scaling Group. For all other use-cases, please use `aws_autoscaling_lifecycle_hook` resource | `list(map(string))` | `[]` | no |
