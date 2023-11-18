@@ -303,7 +303,7 @@ variable "ignore_failed_scaling_activities" {
 
 variable "instance_maintenance_policy" {
   description = "If this block is configured, add a instance maintenance policy to the specified Auto Scaling group"
-  type        = any
+  type        = map(any)
   default     = {}
 }
 
