@@ -401,6 +401,14 @@ resource "aws_autoscaling_group" "this" {
     }
   }
 
+  dynamic "instance_maintenance_policy" {
+    for_each = length(var.instance_maintenance_policy) > 0 ? [var.instance_maintenance_policy] : []
+    content {
+      min_healthy_percentage = instance_maintenance_policy.value.min_healthy_percentage
+      max_healthy_percentage = instance_maintenance_policy.value.max_healthy_percentage
+    }
+  }
+
   dynamic "instance_refresh" {
     for_each = length(var.instance_refresh) > 0 ? [var.instance_refresh] : []
     content {
@@ -665,6 +673,14 @@ resource "aws_autoscaling_group" "idc" {
       notification_metadata   = try(initial_lifecycle_hook.value.notification_metadata, null)
       notification_target_arn = try(initial_lifecycle_hook.value.notification_target_arn, null)
       role_arn                = try(initial_lifecycle_hook.value.role_arn, null)
+    }
+  }
+
+  dynamic "instance_maintenance_policy" {
+    for_each = length(var.instance_maintenance_policy) > 0 ? [var.instance_maintenance_policy] : []
+    content {
+      min_healthy_percentage = instance_maintenance_policy.value.min_healthy_percentage
+      max_healthy_percentage = instance_maintenance_policy.value.max_healthy_percentage
     }
   }
 
