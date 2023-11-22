@@ -70,6 +70,11 @@ module "complete" {
     }
   ]
 
+  instance_maintenance_policy = {
+    min_healthy_percentage = 100
+    max_healthy_percentage = 110
+  }
+
   instance_refresh = {
     strategy = "Rolling"
     preferences = {
