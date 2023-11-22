@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.3.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.2.0...v7.3.0) (2023-11-22)
+
+
+### Features
+
+* Add `instance_maintenance_policy` to autoscaling group ([#251](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/251)) ([d9bf968](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/d9bf96889c634fa98e6a59a86154085f163d74b0))
+
 ## [7.2.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.1.0...v7.2.0) (2023-11-02)
 
 
