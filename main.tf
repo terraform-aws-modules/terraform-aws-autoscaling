@@ -610,6 +610,10 @@ resource "aws_autoscaling_group" "this" {
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes = [
+      load_balancers,
+      target_group_arns,
+    ]
   }
 }
 
@@ -885,7 +889,11 @@ resource "aws_autoscaling_group" "idc" {
 
   lifecycle {
     create_before_destroy = true
-    ignore_changes        = [desired_capacity]
+    ignore_changes = [
+      desired_capacity,
+      load_balancers,
+      target_group_arns,
+    ]
   }
 }
 
