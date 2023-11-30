@@ -372,7 +372,9 @@ resource "aws_autoscaling_group" "this" {
   default_instance_warmup   = var.default_instance_warmup
   protect_from_scale_in     = var.protect_from_scale_in
 
-  load_balancers            = var.load_balancers
+  # TODO - remove at next breaking change. Use `traffic_source_identifier`/`traffic_source_type` instead
+  load_balancers = var.load_balancers
+  # TODO - remove at next breaking change. Use `traffic_source_identifier`/`traffic_source_type` instead
   target_group_arns         = var.target_group_arns
   placement_group           = var.placement_group
   health_check_type         = var.health_check_type
