@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [7.3.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.3.0...v7.3.1) (2023-11-30)
+
+
+### Bug Fixes
+
+* Ignore changes to `load_balancers` and `target_group_arns` ([#252](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/252)) ([ef8235c](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/ef8235c27775e5a529b830c810ba4f90b291ea54))
+
 ## [7.3.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.2.0...v7.3.0) (2023-11-22)
 
 
