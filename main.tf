@@ -373,7 +373,7 @@ resource "aws_autoscaling_group" "this" {
   protect_from_scale_in     = var.protect_from_scale_in
 
   # TODO - remove at next breaking change. Use `traffic_source_identifier`/`traffic_source_type` instead
-  load_balancers            = var.load_balancers
+  load_balancers = var.load_balancers
   # TODO - remove at next breaking change. Use `traffic_source_identifier`/`traffic_source_type` instead
   target_group_arns         = var.target_group_arns
   placement_group           = var.placement_group
