@@ -427,6 +427,7 @@ resource "aws_autoscaling_group" "this" {
           max_healthy_percentage       = try(preferences.value.max_healthy_percentage, null)
           auto_rollback                = try(preferences.value.auto_rollback, null)
           scale_in_protected_instances = try(preferences.value.scale_in_protected_instances, null)
+          skip_matching                = try(preferences.value.skip_matching, null)
           standby_instances            = try(preferences.value.standby_instances, null)
         }
       }
@@ -707,6 +708,7 @@ resource "aws_autoscaling_group" "idc" {
           max_healthy_percentage       = try(preferences.value.max_healthy_percentage, null)
           auto_rollback                = try(preferences.value.auto_rollback, null)
           scale_in_protected_instances = try(preferences.value.scale_in_protected_instances, null)
+          skip_matching                = try(preferences.value.skip_matching, null)
           standby_instances            = try(preferences.value.standby_instances, null)
         }
       }
