@@ -52,6 +52,7 @@ module "asg" {
       checkpoint_percentages = [35, 70, 100]
       instance_warmup        = 300
       min_healthy_percentage = 50
+      max_healthy_percentage = 100
     }
     triggers = ["tag"]
   }
@@ -230,13 +231,13 @@ Note: the default behavior of the module is to create an autoscaling group and l
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.26 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.32 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.26 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.32 |
 
 ## Modules
 
