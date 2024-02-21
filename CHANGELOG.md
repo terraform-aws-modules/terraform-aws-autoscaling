@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.4.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.3.1...v7.4.0) (2024-02-21)
+
+
+### Features
+
+* Adds `max_healthy_percentage` and `skip_matching` to autoscaling group ([#256](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/256)) ([faf98ef](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/faf98efecc626816bc3bbe226e2e4da8b9372dc8))
+
 ### [7.3.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.3.0...v7.3.1) (2023-11-30)
 
 
