@@ -82,9 +82,11 @@ module "complete" {
       checkpoint_percentages       = [35, 70, 100]
       instance_warmup              = 300
       min_healthy_percentage       = 50
+      max_healthy_percentage       = 100
       auto_rollback                = true
       scale_in_protected_instances = "Refresh"
       standby_instances            = "Terminate"
+      skip_matching                = false
     }
     triggers = ["tag"]
   }
@@ -348,6 +350,8 @@ module "mixed_instance" {
       checkpoint_percentages = [35, 70, 100]
       instance_warmup        = 300
       min_healthy_percentage = 50
+      max_healthy_percentage = 100
+      skip_matching          = true
     }
     triggers = ["tag"]
   }
@@ -848,7 +852,7 @@ data "aws_ami" "amazon_linux" {
     name = "name"
 
     values = [
-      "amzn-ami-hvm-*-x86_64-gp2",
+      "amzn2-ami-hvm-*-x86_64-gp2",
     ]
   }
 }
