@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.4.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.4.0...v7.4.1) (2024-03-07)
+
+
+### Bug Fixes
+
+* Update CI workflow versions to remove deprecated runtime warnings ([#258](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/258)) ([06f666f](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/06f666f7a5cd879ee7fbcd3863f88b9867cfa531))
+
 ## [7.4.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.3.1...v7.4.0) (2024-02-21)
 
 
