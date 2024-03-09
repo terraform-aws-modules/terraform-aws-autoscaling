@@ -53,6 +53,7 @@ Note that this example may create resources which cost money. Run `terraform des
 | <a name="module_instance_requirements_accelerators"></a> [instance\_requirements\_accelerators](#module\_instance\_requirements\_accelerators) | ../../ | n/a |
 | <a name="module_launch_template_only"></a> [launch\_template\_only](#module\_launch\_template\_only) | ../../ | n/a |
 | <a name="module_mixed_instance"></a> [mixed\_instance](#module\_mixed\_instance) | ../../ | n/a |
+| <a name="module_ssm"></a> [ssm](#module\_ssm) | ../../ | n/a |
 | <a name="module_step_scaling_alarm"></a> [step\_scaling\_alarm](#module\_step\_scaling\_alarm) | terraform-aws-modules/cloudwatch/aws//modules/metric-alarm | ~> 4.3 |
 | <a name="module_target_tracking_customized_metrics"></a> [target\_tracking\_customized\_metrics](#module\_target\_tracking\_customized\_metrics) | ../../ | n/a |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 5.0 |

@@ -1,11 +1,19 @@
 data "aws_partition" "current" {}
 
+data "aws_ssm_parameter" "this" {
+  count = local.create && var.image_id == "" ? 1 : 0
+
+  name = var.ami_ssm_parameter
+}
+
 locals {
   create = var.create && var.putin_khuylo
 
   launch_template_name    = coalesce(var.launch_template_name, var.name)
   launch_template_id      = var.create_launch_template ? aws_launch_template.this[0].id : var.launch_template_id
   launch_template_version = var.create_launch_template && var.launch_template_version == null ? aws_launch_template.this[0].latest_version : var.launch_template_version
+
+  image_id = try(coalesce(var.image_id, try(nonsensitive(data.aws_ssm_parameter.this[0].value), null)), null)
 
   asg_tags = merge(
     var.tags,
@@ -31,7 +39,7 @@ resource "aws_launch_template" "this" {
   description = var.launch_template_description
 
   ebs_optimized = var.ebs_optimized
-  image_id      = var.image_id
+  image_id      = local.image_id
   key_name      = var.key_name
   user_data     = var.user_data
 

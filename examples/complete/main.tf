@@ -785,6 +785,27 @@ module "launch_template_only" {
 }
 
 ################################################################################
+# AWS System parameter
+################################################################################
+
+module "ssm" {
+  source = "../../"
+
+  # Autoscaling group
+  name = "ssm-${local.name}"
+
+  vpc_zone_identifier = module.vpc.private_subnets
+  min_size            = 0
+  max_size            = 1
+  desired_capacity    = 1
+
+  ami_ssm_parameter = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+  instance_type     = "t3.micro"
+
+  tags = local.tags
+}
+
+################################################################################
 # Default
 ################################################################################
 
