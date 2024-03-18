@@ -9,7 +9,7 @@ locals {
 
   asg_tags = merge(
     var.tags,
-    { "Name" = coalesce(var.instance_name, var.name) },
+    (var.automatic_name_tag_apply ? { "Name" = coalesce(var.instance_name, var.name) } : {}),
     var.autoscaling_group_tags,
   )
 }

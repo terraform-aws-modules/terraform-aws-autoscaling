@@ -307,6 +307,11 @@ variable "instance_maintenance_policy" {
   default     = {}
 }
 
+variable "automatic_name_tag_apply" {
+  description = "If this variables is set to true, Name tag will be automatically applied to the new instances."
+  type        = bool
+  default     = true
+}
 
 ################################################################################
 # Launch template
