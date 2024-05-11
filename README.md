@@ -392,6 +392,9 @@ No modules.
 | <a name="output_launch_template_name"></a> [launch\_template\_name](#output\_launch\_template\_name) | The name of the launch template |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
+## Notes
+- A refresh will not start if `launch_template_version` is set to `$Latest` when using an external launch template. To trigger the refresh when the external launch template is changed, set this to `latest_version` of that `aws_launch_template resource`.
+
 ## Authors
 
 Module is maintained by [Anton Babenko](https://github.com/antonbabenko) with help from [these awesome contributors](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/graphs/contributors).
