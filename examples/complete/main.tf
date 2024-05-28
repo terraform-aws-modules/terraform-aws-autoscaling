@@ -509,14 +509,17 @@ module "instance_requirements" {
     accelerator_manufacturers = []
     accelerator_names         = []
     accelerator_types         = []
+    # If you specify allowed_instance_types, you can't specify excluded_instance_types
+    # allowed_instance_types = ["m*"]
 
     baseline_ebs_bandwidth_mbps = {
       min = 400
       max = 1600
     }
 
-    burstable_performance   = "excluded"
-    cpu_manufacturers       = ["amazon-web-services", "amd", "intel"]
+    burstable_performance = "excluded"
+    cpu_manufacturers     = ["amazon-web-services", "amd", "intel"]
+    # If you specify excluded_instance_types, you can't specify allowed_instance_types
     excluded_instance_types = ["t*"]
     instance_generations    = ["current"]
     local_storage_types     = ["ssd", "hdd"]

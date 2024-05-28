@@ -178,8 +178,9 @@ resource "aws_launch_template" "this" {
         }
       }
 
-      accelerator_types = try(instance_requirements.value.accelerator_types, [])
-      bare_metal        = try(instance_requirements.value.bare_metal, null)
+      accelerator_types      = try(instance_requirements.value.accelerator_types, [])
+      allowed_instance_types = try(instance_requirements.value.allowed_instance_types, null)
+      bare_metal             = try(instance_requirements.value.bare_metal, null)
 
       dynamic "baseline_ebs_bandwidth_mbps" {
         for_each = try([instance_requirements.value.baseline_ebs_bandwidth_mbps], [])
@@ -191,7 +192,7 @@ resource "aws_launch_template" "this" {
 
       burstable_performance   = try(instance_requirements.value.burstable_performance, null)
       cpu_manufacturers       = try(instance_requirements.value.cpu_manufacturers, [])
-      excluded_instance_types = try(instance_requirements.value.excluded_instance_types, [])
+      excluded_instance_types = try(instance_requirements.value.excluded_instance_types, null)
       instance_generations    = try(instance_requirements.value.instance_generations, [])
       local_storage           = try(instance_requirements.value.local_storage, null)
       local_storage_types     = try(instance_requirements.value.local_storage_types, [])
