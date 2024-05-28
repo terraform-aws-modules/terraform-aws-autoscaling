@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.5.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.4.1...v7.5.0) (2024-05-28)
+
+
+### Features
+
+* Add `allowed_instance_types` to `instance_requirements` ([#267](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/267)) ([09d8e0f](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/09d8e0fcd4536bd05208ad9226076bccf9b6178a)), closes [#265](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/265)
+
 ## [7.4.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.4.0...v7.4.1) (2024-03-07)
 
 
