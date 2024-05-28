@@ -225,45 +225,19 @@ Note: the default behavior of the module is to create an autoscaling group and l
 
 - [Complete](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/complete) - Creates several variations of resources for autoscaling groups and launch templates.
 
-## Contributing
-
-When contributing a change to this module, it is important to verify that the minimum provider version of this module is compatible.
-
-To test this you can temporarily pin the version of the `aws` provider to the minimum version.
-
-```hcl
-# versions.tf
-terraform {
-  required_version = ">= 1.0"
-
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-
-      # version = ">= 5.xyz"
-      # temporary pinning to minimum version
-      version = "5.xyz"
-
-    }
-  }
-}
-```
-
-Then test the examples against the pinned version.
-
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.46 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.45 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.46 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.45 |
 
 ## Modules
 
