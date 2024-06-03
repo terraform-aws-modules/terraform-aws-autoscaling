@@ -87,6 +87,9 @@ module "complete" {
       scale_in_protected_instances = "Refresh"
       standby_instances            = "Terminate"
       skip_matching                = false
+      alarm_specification = {
+        alarms = [module.auto_rollback.cloudwatch_metric_alarm_id]
+      }
     }
     triggers = ["tag"]
   }
@@ -982,4 +985,25 @@ module "step_scaling_alarm" {
   statistic   = "Average"
 
   alarm_actions = [module.complete.autoscaling_policy_arns["scale-out"]]
+}
+
+module "auto_rollback" {
+  source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+  version = "~> 4.3"
+
+  alarm_name          = "${local.name}-auto-rollback"
+  alarm_description   = "Auto Rollback Alarm Example"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  threshold           = 0
+  period              = 60
+  treat_missing_data  = "notBreaching"
+
+  namespace   = "AWS/ApplicationELB"
+  metric_name = "HTTPCode_ELB_5XX_Count"
+  statistic   = "Sum"
+
+  dimensions = {
+    LoadBalancer = module.alb.arn_suffix
+  }
 }

@@ -421,6 +421,14 @@ resource "aws_autoscaling_group" "this" {
       dynamic "preferences" {
         for_each = try([instance_refresh.value.preferences], [])
         content {
+
+          dynamic "alarm_specification" {
+            for_each = try([preferences.value.alarm_specification], [])
+            content {
+              alarms = alarm_specification.value.alarms
+            }
+          }
+
           checkpoint_delay             = try(preferences.value.checkpoint_delay, null)
           checkpoint_percentages       = try(preferences.value.checkpoint_percentages, null)
           instance_warmup              = try(preferences.value.instance_warmup, null)
@@ -702,6 +710,14 @@ resource "aws_autoscaling_group" "idc" {
       dynamic "preferences" {
         for_each = try([instance_refresh.value.preferences], [])
         content {
+
+          dynamic "alarm_specification" {
+            for_each = try([preferences.value.alarm_specification], [])
+            content {
+              alarms = alarm_specification.value.alarms
+            }
+          }
+
           checkpoint_delay             = try(preferences.value.checkpoint_delay, null)
           checkpoint_percentages       = try(preferences.value.checkpoint_percentages, null)
           instance_warmup              = try(preferences.value.instance_warmup, null)
