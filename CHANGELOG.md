@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.6.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.5.0...v7.6.0) (2024-06-03)
+
+
+### Features
+
+* Support Alarm Specification in Instance Refresh Preferences ([#271](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/271)) ([8c319c0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/8c319c03bd108b1ff5f79f24d1989f8b9758cfec))
+
 ## [7.5.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.4.1...v7.5.0) (2024-05-28)
 
 
