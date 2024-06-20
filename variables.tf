@@ -344,7 +344,7 @@ variable "default_version" {
 
 variable "update_default_version" {
   description = "Whether to update Default Version each update. Conflicts with `default_version`"
-  type        = string
+  type        = bool
   default     = null
 }
 
