@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.6.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.6.0...v7.6.1) (2024-06-20)
+
+
+### Bug Fixes
+
+* Argument `update_default_version` type should be a `bool` ([#272](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/272)) ([28521c4](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/28521c48b184fb06faafd4800ece29bb520cd3db))
+
 ## [7.6.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.5.0...v7.6.0) (2024-06-03)
 
 
