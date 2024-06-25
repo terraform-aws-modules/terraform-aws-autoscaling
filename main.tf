@@ -925,13 +925,13 @@ resource "aws_autoscaling_group" "idc" {
 ################################################################################
 
 resource "aws_autoscaling_traffic_source_attachment" "this" {
-  count = local.create && var.create_traffic_source_attachment ? 1 : 0
+  for_each = { for k, v in var.traffic_source_attachments : k => v if local.create && var.create_traffic_source_attachments }
 
   autoscaling_group_name = var.ignore_desired_capacity_changes ? aws_autoscaling_group.idc[0].id : aws_autoscaling_group.this[0].id
 
   traffic_source {
-    identifier = var.traffic_source_identifier
-    type       = var.traffic_source_type
+    identifier = each.value.traffic_source_identifier
+    type       = each.value.traffic_source_type
   }
 }
 
