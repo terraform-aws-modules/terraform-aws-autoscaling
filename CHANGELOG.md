@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [7.7.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.6.1...v7.7.0) (2024-07-07)
+
+
+### Features
+
+* Support `max_spot_price_as_percentage_of_optimal_on_demand_price` ([#276](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/276)) ([02251e3](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/02251e3f67fb34e28e465fc449b92338e07f4fc9))
+
 ## [7.6.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.6.0...v7.6.1) (2024-06-20)
 
 
