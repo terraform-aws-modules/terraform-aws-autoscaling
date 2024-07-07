@@ -490,8 +490,9 @@ module "instance_requirements" {
     override = [
       {
         instance_requirements = {
-          cpu_manufacturers   = ["amd"]
-          local_storage_types = ["ssd"]
+          cpu_manufacturers                                       = ["amd"]
+          local_storage_types                                     = ["ssd"]
+          max_spot_price_as_percentage_of_optimal_on_demand_price = 60
           memory_gib_per_vcpu = {
             min = 2
             max = 4
@@ -526,6 +527,8 @@ module "instance_requirements" {
     excluded_instance_types = ["t*"]
     instance_generations    = ["current"]
     local_storage_types     = ["ssd", "hdd"]
+
+    max_spot_price_as_percentage_of_optimal_on_demand_price = 45
 
     memory_gib_per_vcpu = {
       min = 4
