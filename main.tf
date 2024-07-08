@@ -155,8 +155,9 @@ resource "aws_launch_template" "this" {
 
   instance_type = var.instance_type
 
+  # Spot usage required instance_requirements. Either instance_type or instance_requirements must be provided.
   dynamic "instance_requirements" {
-    for_each = length(var.instance_requirements) > 0 ? [var.instance_requirements] : []
+    for_each = length(var.instance_requirements) > 0 && var.instance_type == null ? [var.instance_requirements] : []
     content {
 
       dynamic "accelerator_count" {
