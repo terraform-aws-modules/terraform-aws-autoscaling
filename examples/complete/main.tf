@@ -47,9 +47,12 @@ module "complete" {
   service_linked_role_arn   = aws_iam_service_linked_role.autoscaling.arn
 
   # Traffic source attachment
-  create_traffic_source_attachment = true
-  traffic_source_identifier        = module.alb.target_groups["ex_asg"].arn
-  traffic_source_type              = "elbv2"
+  traffic_source_attachments = {
+    ex-alb = {
+      traffic_source_identifier = module.alb.target_groups["ex_asg"].arn
+      traffic_source_type       = "elbv2" # default
+    }
+  }
 
   initial_lifecycle_hooks = [
     {

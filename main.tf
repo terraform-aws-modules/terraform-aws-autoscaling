@@ -374,10 +374,9 @@ resource "aws_autoscaling_group" "this" {
   default_instance_warmup   = var.default_instance_warmup
   protect_from_scale_in     = var.protect_from_scale_in
 
-  # TODO - remove at next breaking change. Use `traffic_source_identifier`/`traffic_source_type` instead
-  load_balancers = var.load_balancers
-  # TODO - remove at next breaking change. Use `traffic_source_identifier`/`traffic_source_type` instead
-  target_group_arns         = var.target_group_arns
+  # Use `traffic_source_identifier`/`traffic_source_type` instead
+  # load_balancers    = var.load_balancers
+  # target_group_arns = var.target_group_arns
   placement_group           = var.placement_group
   health_check_type         = var.health_check_type
   health_check_grace_period = var.health_check_grace_period
@@ -666,8 +665,9 @@ resource "aws_autoscaling_group" "idc" {
   default_instance_warmup   = var.default_instance_warmup
   protect_from_scale_in     = var.protect_from_scale_in
 
-  load_balancers            = var.load_balancers
-  target_group_arns         = var.target_group_arns
+  # Use `traffic_source_identifier`/`traffic_source_type` instead
+  # load_balancers    = var.load_balancers
+  # target_group_arns = var.target_group_arns
   placement_group           = var.placement_group
   health_check_type         = var.health_check_type
   health_check_grace_period = var.health_check_grace_period
@@ -928,13 +928,13 @@ resource "aws_autoscaling_group" "idc" {
 ################################################################################
 
 resource "aws_autoscaling_traffic_source_attachment" "this" {
-  count = local.create && var.create_traffic_source_attachment ? 1 : 0
+  for_each = { for k, v in var.traffic_source_attachments : k => v if local.create }
 
   autoscaling_group_name = var.ignore_desired_capacity_changes ? aws_autoscaling_group.idc[0].id : aws_autoscaling_group.this[0].id
 
   traffic_source {
-    identifier = var.traffic_source_identifier
-    type       = var.traffic_source_type
+    identifier = each.value.traffic_source_identifier
+    type       = try(each.value.traffic_source_type, "elbv2")
   }
 }
 
