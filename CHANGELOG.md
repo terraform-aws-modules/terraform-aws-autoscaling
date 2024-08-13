@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [8.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.7.0...v8.0.0) (2024-08-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* Allow multiple traffic source attachments (#273)
+
+### Features
+
+* Allow multiple traffic source attachments ([#273](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/273)) ([3782413](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/37824138e8d98fc8179177bc5c92880be2282d84))
+
 ## [7.7.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.6.1...v7.7.0) (2024-07-07)
 
 
