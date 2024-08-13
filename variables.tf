@@ -121,18 +121,6 @@ variable "protect_from_scale_in" {
   default     = false
 }
 
-variable "load_balancers" {
-  description = "A list of elastic load balancer names to add to the autoscaling group names. Only valid for classic load balancers. For ALBs, use `target_group_arns` instead"
-  type        = list(string)
-  default     = []
-}
-
-variable "target_group_arns" {
-  description = "A set of `aws_alb_target_group` ARNs, for use with Application or Network Load Balancing"
-  type        = list(string)
-  default     = []
-}
-
 variable "placement_group" {
   description = "The name of the placement group into which you'll launch your instances, if any"
   type        = string
@@ -472,15 +460,9 @@ variable "tag_specifications" {
 # Autoscaling group traffic source attachment
 ################################################################################
 
-variable "create_traffic_source_attachments" {
-  description = "Determines whether to create autoscaling group traffic source attachments"
-  type        = bool
-  default     = false
-}
-
 variable "traffic_source_attachments" {
-  description = "Map of traffic source attachments to create"
-  type        = map(any)
+  description = "Map of traffic source attachment definitions to create"
+  type        = any
   default     = {}
 }
 
