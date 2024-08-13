@@ -190,12 +190,13 @@ resource "aws_launch_template" "this" {
         }
       }
 
-      burstable_performance   = try(instance_requirements.value.burstable_performance, null)
-      cpu_manufacturers       = try(instance_requirements.value.cpu_manufacturers, [])
-      excluded_instance_types = try(instance_requirements.value.excluded_instance_types, null)
-      instance_generations    = try(instance_requirements.value.instance_generations, [])
-      local_storage           = try(instance_requirements.value.local_storage, null)
-      local_storage_types     = try(instance_requirements.value.local_storage_types, [])
+      burstable_performance                                   = try(instance_requirements.value.burstable_performance, null)
+      cpu_manufacturers                                       = try(instance_requirements.value.cpu_manufacturers, [])
+      excluded_instance_types                                 = try(instance_requirements.value.excluded_instance_types, null)
+      instance_generations                                    = try(instance_requirements.value.instance_generations, [])
+      local_storage                                           = try(instance_requirements.value.local_storage, null)
+      local_storage_types                                     = try(instance_requirements.value.local_storage_types, [])
+      max_spot_price_as_percentage_of_optimal_on_demand_price = try(instance_requirements.value.max_spot_price_as_percentage_of_optimal_on_demand_price, null)
 
       dynamic "memory_gib_per_vcpu" {
         for_each = try([instance_requirements.value.memory_gib_per_vcpu], [])
@@ -506,12 +507,13 @@ resource "aws_autoscaling_group" "this" {
                   }
                 }
 
-                burstable_performance   = try(instance_requirements.value.burstable_performance, null)
-                cpu_manufacturers       = try(instance_requirements.value.cpu_manufacturers, null)
-                excluded_instance_types = try(instance_requirements.value.excluded_instance_types, null)
-                instance_generations    = try(instance_requirements.value.instance_generations, null)
-                local_storage           = try(instance_requirements.value.local_storage, null)
-                local_storage_types     = try(instance_requirements.value.local_storage_types, null)
+                burstable_performance                                   = try(instance_requirements.value.burstable_performance, null)
+                cpu_manufacturers                                       = try(instance_requirements.value.cpu_manufacturers, null)
+                excluded_instance_types                                 = try(instance_requirements.value.excluded_instance_types, null)
+                instance_generations                                    = try(instance_requirements.value.instance_generations, null)
+                local_storage                                           = try(instance_requirements.value.local_storage, null)
+                local_storage_types                                     = try(instance_requirements.value.local_storage_types, null)
+                max_spot_price_as_percentage_of_optimal_on_demand_price = try(instance_requirements.value.max_spot_price_as_percentage_of_optimal_on_demand_price, null)
 
                 dynamic "memory_gib_per_vcpu" {
                   for_each = try([instance_requirements.value.memory_gib_per_vcpu], [])
@@ -795,12 +797,13 @@ resource "aws_autoscaling_group" "idc" {
                   }
                 }
 
-                burstable_performance   = try(instance_requirements.value.burstable_performance, null)
-                cpu_manufacturers       = try(instance_requirements.value.cpu_manufacturers, null)
-                excluded_instance_types = try(instance_requirements.value.excluded_instance_types, null)
-                instance_generations    = try(instance_requirements.value.instance_generations, null)
-                local_storage           = try(instance_requirements.value.local_storage, null)
-                local_storage_types     = try(instance_requirements.value.local_storage_types, null)
+                burstable_performance                                   = try(instance_requirements.value.burstable_performance, null)
+                cpu_manufacturers                                       = try(instance_requirements.value.cpu_manufacturers, null)
+                excluded_instance_types                                 = try(instance_requirements.value.excluded_instance_types, null)
+                instance_generations                                    = try(instance_requirements.value.instance_generations, null)
+                local_storage                                           = try(instance_requirements.value.local_storage, null)
+                local_storage_types                                     = try(instance_requirements.value.local_storage_types, null)
+                max_spot_price_as_percentage_of_optimal_on_demand_price = try(instance_requirements.value.max_spot_price_as_percentage_of_optimal_on_demand_price, null)
 
                 dynamic "memory_gib_per_vcpu" {
                   for_each = try([instance_requirements.value.memory_gib_per_vcpu], [])
