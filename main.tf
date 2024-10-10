@@ -965,7 +965,8 @@ resource "aws_autoscaling_schedule" "this" {
 ################################################################################
 
 resource "aws_autoscaling_policy" "this" {
-  for_each = { for k, v in var.scaling_policies : k => v if local.create && var.create_scaling_policy }
+  for_each   = { for k, v in var.scaling_policies : k => v if local.create && var.create_scaling_policy }
+  depends_on = [aws_autoscaling_traffic_source_attachment.this]
 
   name                   = try(each.value.name, each.key)
   autoscaling_group_name = var.ignore_desired_capacity_changes ? aws_autoscaling_group.idc[0].name : aws_autoscaling_group.this[0].name
