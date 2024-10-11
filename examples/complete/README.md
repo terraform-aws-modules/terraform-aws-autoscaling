@@ -24,7 +24,7 @@ $ terraform apply
 
 Note that this example may create resources which cost money. Run `terraform destroy` when you don't need these resources.
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -212,4 +212,4 @@ No inputs.
 | <a name="output_target_tracking_customized_metrics_launch_template_id"></a> [target\_tracking\_customized\_metrics\_launch\_template\_id](#output\_target\_tracking\_customized\_metrics\_launch\_template\_id) | The ID of the launch template |
 | <a name="output_target_tracking_customized_metrics_launch_template_latest_version"></a> [target\_tracking\_customized\_metrics\_launch\_template\_latest\_version](#output\_target\_tracking\_customized\_metrics\_launch\_template\_latest\_version) | The latest version of the launch template |
 | <a name="output_target_tracking_customized_metrics_launch_template_name"></a> [target\_tracking\_customized\_metrics\_launch\_template\_name](#output\_target\_tracking\_customized\_metrics\_launch\_template\_name) | The name of the launch template |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
