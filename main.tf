@@ -391,6 +391,13 @@ resource "aws_autoscaling_group" "this" {
   service_linked_role_arn          = var.service_linked_role_arn
   ignore_failed_scaling_activities = var.ignore_failed_scaling_activities
 
+  dynamic "availability_zone_distribution" {
+    for_each = length(var.availability_zone_distribution) > 0 ? [var.availability_zone_distribution] : []
+    content {
+      capacity_distribution_strategy = availability_zone_distribution.value.capacity_distribution_strategy
+    }
+  }
+
   dynamic "initial_lifecycle_hook" {
     for_each = var.initial_lifecycle_hooks
     content {
@@ -681,6 +688,13 @@ resource "aws_autoscaling_group" "idc" {
   metrics_granularity              = var.metrics_granularity
   service_linked_role_arn          = var.service_linked_role_arn
   ignore_failed_scaling_activities = var.ignore_failed_scaling_activities
+
+  dynamic "availability_zone_distribution" {
+    for_each = length(var.availability_zone_distribution) > 0 ? [var.availability_zone_distribution] : []
+    content {
+      capacity_distribution_strategy = availability_zone_distribution.value.capacity_distribution_strategy
+    }
+  }
 
   dynamic "initial_lifecycle_hook" {
     for_each = var.initial_lifecycle_hooks
