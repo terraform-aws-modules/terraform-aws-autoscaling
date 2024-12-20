@@ -49,6 +49,12 @@ variable "availability_zones" {
   default     = null
 }
 
+variable "availability_zone_distribution" {
+  description = "A map of configuration for capacity distribution across availability zones"
+  type        = any
+  default     = {}
+}
+
 variable "vpc_zone_identifier" {
   description = "A list of subnet IDs to launch resources in. Subnets automatically determine which availability zones the group will reside. Conflicts with `availability_zones`"
   type        = list(string)
