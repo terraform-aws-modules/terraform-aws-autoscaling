@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [8.0.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.0.0...v8.0.1) (2024-12-20)
+
+
+### Bug Fixes
+
+* Update CI workflow versions to latest ([#280](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/280)) ([ea61a31](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/ea61a3179d7f3afb75a8ceda751a239ae4f43ae5))
+
 ## [8.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v7.7.0...v8.0.0) (2024-08-13)
 
 
