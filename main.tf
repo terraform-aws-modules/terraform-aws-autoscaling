@@ -295,6 +295,7 @@ resource "aws_launch_template" "this" {
       ipv6_address_count           = try(network_interfaces.value.ipv6_address_count, null)
       network_interface_id         = try(network_interfaces.value.network_interface_id, null)
       network_card_index           = try(network_interfaces.value.network_card_index, null)
+      primary_ipv6                 = try(network_interfaces.value.primary_ipv6, null)
       private_ip_address           = try(network_interfaces.value.private_ip_address, null)
       # Ref: https://github.com/hashicorp/terraform-provider-aws/issues/4570
       security_groups = compact(concat(try(network_interfaces.value.security_groups, []), var.security_groups))
