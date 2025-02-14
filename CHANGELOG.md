@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [8.1.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.0.1...v8.1.0) (2025-02-14)
+
+
+### Features
+
+* Add support for `primary_ipv6` in launch template ([#283](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/283)) ([061dce6](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/061dce6308d8ada4348b1bcf76492cd7c188ea6c))
+
 ## [8.0.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.0.0...v8.0.1) (2024-12-20)
 
 
