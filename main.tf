@@ -300,6 +300,15 @@ resource "aws_launch_template" "this" {
       # Ref: https://github.com/hashicorp/terraform-provider-aws/issues/4570
       security_groups = compact(concat(try(network_interfaces.value.security_groups, []), var.security_groups))
       subnet_id       = try(network_interfaces.value.subnet_id, null)
+
+      dynamic "connection_tracking_specification" {
+        for_each = try([network_interfaces.value.connection_tracking_specification], [])
+        content {
+          tcp_established_timeout = try(connection_tracking_specification.value.tcp_established_timeout, null)
+          udp_stream_timeout      = try(connection_tracking_specification.value.udp_stream_timeout, null)
+          udp_timeout             = try(connection_tracking_specification.value.udp_timeout, null)
+        }
+      }
     }
   }
 
@@ -1061,8 +1070,9 @@ resource "aws_autoscaling_policy" "this" {
                     }
                   }
 
-                  stat = metric_stat.value.stat
-                  unit = try(metric_stat.value.unit, null)
+                  period = try(metric_stat.value.period, null)
+                  stat   = metric_stat.value.stat
+                  unit   = try(metric_stat.value.unit, null)
                 }
               }
 

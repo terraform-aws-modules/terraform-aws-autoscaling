@@ -440,7 +440,7 @@ variable "maintenance_options" {
 
 variable "network_interfaces" {
   description = "Customize network interfaces to be attached at instance boot time"
-  type        = list(any)
+  type        = any
   default     = []
 }
 
