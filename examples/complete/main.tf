@@ -191,6 +191,11 @@ module "complete" {
       description           = "eth0"
       device_index          = 0
       security_groups       = [module.asg_sg.security_group_id]
+      connection_tracking_specification = {
+        tcp_established_timeout = 60
+        udp_stream_timeout      = 60
+        udp_timeout             = 60
+      }
     },
     {
       delete_on_termination = true
