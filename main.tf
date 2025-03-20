@@ -347,7 +347,7 @@ resource "aws_launch_template" "this" {
     create_before_destroy = true
   }
 
-  tags = var.tags
+  tags = merge(var.tags, var.launch_template_tags)
 }
 
 ################################################################################
