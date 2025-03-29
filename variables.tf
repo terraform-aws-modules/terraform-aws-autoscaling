@@ -462,6 +462,12 @@ variable "tag_specifications" {
   default     = []
 }
 
+variable "launch_template_tags" {
+  description = "A map of additional tags to add to the launch template"
+  type        = map(string)
+  default     = {}
+}
+
 ################################################################################
 # Autoscaling group traffic source attachment
 ################################################################################
