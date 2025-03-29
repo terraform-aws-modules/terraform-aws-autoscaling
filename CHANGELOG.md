@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [8.2.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.1.0...v8.2.0) (2025-03-29)
+
+
+### Features
+
+* Add specific variables to add tags to launch template ([#285](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/285)) ([d509000](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/d509000a1f1b7c9444e6ffa47584f75ca84b74fc))
+
 ## [8.1.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.0.1...v8.1.0) (2025-02-14)
 
 
