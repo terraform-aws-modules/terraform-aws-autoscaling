@@ -9,7 +9,7 @@ variable "create" {
 }
 
 variable "ignore_desired_capacity_changes" {
-  description = "Determines whether the `desired_capacity` value is ignored after initial apply. See README note for more details"
+  description = "Determines whether the `desired_capacity`, `desired_capacity_type` values are ignored after initial apply. See README note for more details"
   type        = bool
   default     = false
 }

@@ -941,6 +941,7 @@ resource "aws_autoscaling_group" "idc" {
     create_before_destroy = true
     ignore_changes = [
       desired_capacity,
+      desired_capacity_type,
       load_balancers,
       target_group_arns,
     ]
