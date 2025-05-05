@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [8.3.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.2.0...v8.3.0) (2025-05-05)
+
+
+### Features
+
+* Add Terragrunt wrapper generation ([#287](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/287)) ([b625533](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/b6255333d34af23e752f159c9db8bab50016ecca))
+
 ## [8.2.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.1.0...v8.2.0) (2025-03-29)
 
 
