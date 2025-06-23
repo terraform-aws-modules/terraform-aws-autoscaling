@@ -468,6 +468,12 @@ variable "launch_template_tags" {
   default     = {}
 }
 
+variable "autoscaling_group_only_tags" {
+  description = "A map of additional tags to add to the autoscaling group only, not propagated to the ec2 instances"
+  type        = map(string)
+  default     = {}
+}
+
 ################################################################################
 # Autoscaling group traffic source attachment
 ################################################################################

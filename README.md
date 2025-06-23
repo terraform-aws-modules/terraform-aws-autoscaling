@@ -263,6 +263,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_autoscaling_group_only_tags"></a> [autoscaling\_group\_only\_tags](#input\_autoscaling\_group\_only\_tags) | A map of additional tags to add to the autoscaling group only, not propagated to the ec2 instances | `map(string)` | `{}` | no |
 | <a name="input_autoscaling_group_tags"></a> [autoscaling\_group\_tags](#input\_autoscaling\_group\_tags) | A map of additional tags to add to the autoscaling group | `map(string)` | `{}` | no |
 | <a name="input_availability_zone_distribution"></a> [availability\_zone\_distribution](#input\_availability\_zone\_distribution) | A map of configuration for capacity distribution across availability zones | `any` | `{}` | no |
 | <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | A list of one or more availability zones for the group. Used for EC2-Classic and default subnets when not specified with `vpc_zone_identifier` argument. Conflicts with `vpc_zone_identifier` | `list(string)` | `null` | no |

@@ -639,6 +639,15 @@ resource "aws_autoscaling_group" "this" {
     }
   }
 
+  dynamic "tag" {
+    for_each = var.autoscaling_group_only_tags
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = false
+    }
+  }
+
   lifecycle {
     create_before_destroy = true
     ignore_changes = [
@@ -934,6 +943,15 @@ resource "aws_autoscaling_group" "idc" {
       key                 = tag.key
       value               = tag.value
       propagate_at_launch = true
+    }
+  }
+
+  dynamic "tag" {
+    for_each = var.autoscaling_group_only_tags
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = false
     }
   }
 
