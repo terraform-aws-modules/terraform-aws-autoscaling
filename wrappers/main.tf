@@ -25,8 +25,6 @@ module "wrapper" {
   disable_api_stop                     = try(each.value.disable_api_stop, var.defaults.disable_api_stop, null)
   disable_api_termination              = try(each.value.disable_api_termination, var.defaults.disable_api_termination, null)
   ebs_optimized                        = try(each.value.ebs_optimized, var.defaults.ebs_optimized, null)
-  elastic_gpu_specifications           = try(each.value.elastic_gpu_specifications, var.defaults.elastic_gpu_specifications, {})
-  elastic_inference_accelerator        = try(each.value.elastic_inference_accelerator, var.defaults.elastic_inference_accelerator, {})
   enable_monitoring                    = try(each.value.enable_monitoring, var.defaults.enable_monitoring, true)
   enabled_metrics                      = try(each.value.enabled_metrics, var.defaults.enabled_metrics, [])
   enclave_options                      = try(each.value.enclave_options, var.defaults.enclave_options, {})
