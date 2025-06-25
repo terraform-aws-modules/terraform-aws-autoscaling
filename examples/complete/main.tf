@@ -376,16 +376,18 @@ module "mixed_instance" {
       spot_allocation_strategy                 = "capacity-optimized"
     }
 
-    override = [
-      {
-        instance_type     = "t3.nano"
-        weighted_capacity = "2"
-      },
-      {
-        instance_type     = "t3.medium"
-        weighted_capacity = "1"
-      },
-    ]
+    launch_template = {
+      override = [
+        {
+          instance_type     = "t3.nano"
+          weighted_capacity = "2"
+        },
+        {
+          instance_type     = "t3.medium"
+          weighted_capacity = "1"
+        },
+      ]
+    }
   }
 
   tags = local.tags
@@ -495,26 +497,28 @@ module "instance_requirements" {
 
   use_mixed_instances_policy = true
   mixed_instances_policy = {
-    override = [
-      {
-        instance_requirements = {
-          cpu_manufacturers                                       = ["amd"]
-          local_storage_types                                     = ["ssd"]
-          max_spot_price_as_percentage_of_optimal_on_demand_price = 60
-          memory_gib_per_vcpu = {
-            min = 2
-            max = 4
-          }
-          memory_mib = {
-            min = 2048
-          },
-          vcpu_count = {
-            min = 2
-            max = 4
+    launch_template = {
+      override = [
+        {
+          instance_requirements = {
+            cpu_manufacturers                                       = ["amd"]
+            local_storage_types                                     = ["ssd"]
+            max_spot_price_as_percentage_of_optimal_on_demand_price = 60
+            memory_gib_per_vcpu = {
+              min = 2
+              max = 4
+            }
+            memory_mib = {
+              min = 2048
+            },
+            vcpu_count = {
+              min = 2
+              max = 4
+            }
           }
         }
-      }
-    ]
+      ]
+    }
   }
   instance_requirements = {
 
@@ -586,23 +590,25 @@ module "instance_requirements_accelerators" {
 
   use_mixed_instances_policy = true
   mixed_instances_policy = {
-    override = [
-      {
-        instance_requirements = {
-          memory_gib_per_vcpu = {
-            min = 4
-            max = 16
-          }
-          memory_mib = {
-            min = 16
-          },
-          vcpu_count = {
-            min = 4
-            max = 64
+    launch_template = {
+      override = [
+        {
+          instance_requirements = {
+            memory_gib_per_vcpu = {
+              min = 4
+              max = 16
+            }
+            memory_mib = {
+              min = 16
+            },
+            vcpu_count = {
+              min = 4
+              max = 64
+            }
           }
         }
-      }
-    ]
+      ]
+    }
   }
   instance_requirements = {
     accelerator_count = {
