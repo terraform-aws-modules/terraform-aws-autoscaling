@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [8.3.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.3.0...v8.3.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* Restrict AWS provider version from using `v6.x` which contains breaking changes ([#293](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/293)) ([6623981](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/66239812b6afeafc9ecde97f0fef51d8f3fd0dda))
+
 ## [8.3.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.2.0...v8.3.0) (2025-05-05)
 
 
