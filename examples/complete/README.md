@@ -56,7 +56,7 @@ Note that this example may create resources which cost money. Run `terraform des
 | <a name="module_mixed_instance"></a> [mixed\_instance](#module\_mixed\_instance) | ../../ | n/a |
 | <a name="module_step_scaling_alarm"></a> [step\_scaling\_alarm](#module\_step\_scaling\_alarm) | terraform-aws-modules/cloudwatch/aws//modules/metric-alarm | ~> 4.3 |
 | <a name="module_target_tracking_customized_metrics"></a> [target\_tracking\_customized\_metrics](#module\_target\_tracking\_customized\_metrics) | ../../ | n/a |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 5.0 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 6.0 |
 | <a name="module_warm_pool"></a> [warm\_pool](#module\_warm\_pool) | ../../ | n/a |
 
 ## Resources

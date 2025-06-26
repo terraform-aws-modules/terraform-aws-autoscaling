@@ -31,7 +31,7 @@ module "complete" {
   source = "../../"
 
   # Autoscaling group
-  name            = "complete-${local.name}"
+  name            = local.name
   use_name_prefix = false
   instance_name   = "my-instance-name"
 
@@ -98,7 +98,7 @@ module "complete" {
   }
 
   # Launch template
-  launch_template_name        = "complete-${local.name}"
+  launch_template_name        = local.name
   launch_template_description = "Complete launch template example"
   update_default_version      = true
 
@@ -109,7 +109,7 @@ module "complete" {
   enable_monitoring = true
 
   create_iam_instance_profile = true
-  iam_role_name               = "complete-${local.name}"
+  iam_role_name               = local.name
   iam_role_path               = "/ec2/"
   iam_role_description        = "Complete IAM role example"
   iam_role_tags = {
@@ -322,7 +322,7 @@ module "mixed_instance" {
   source = "../../"
 
   # Autoscaling group
-  name = "mixed-instance-${local.name}"
+  name = "mixed-instance"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
@@ -401,9 +401,9 @@ module "warm_pool" {
   source = "../../"
 
   # Autoscaling group
-  name = "warm-pool-${local.name}"
+  name = "warm-pool"
 
-  vpc_zone_identifier = module.vpc.private_subnets
+  vpc_zone_identifier = slice(module.vpc.private_subnets, 0, 1)
   min_size            = 0
   max_size            = 1
   desired_capacity    = 1
@@ -451,7 +451,7 @@ module "efa" {
   source = "../../"
 
   # Autoscaling group
-  name = "default-${local.name}"
+  name = "efa"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
@@ -484,7 +484,7 @@ module "instance_requirements" {
   source = "../../"
 
   # Autoscaling group
-  name = "instance-req-${local.name}"
+  name = "instance-requirements"
 
   vpc_zone_identifier   = module.vpc.private_subnets
   min_size              = 0
@@ -577,7 +577,7 @@ module "instance_requirements_accelerators" {
   create = false
 
   # Autoscaling group
-  name = "instance-req-accelerators-${local.name}"
+  name = "instance-requirements-accelerators"
 
   vpc_zone_identifier   = module.vpc.private_subnets
   min_size              = 0
@@ -670,7 +670,7 @@ module "target_tracking_customized_metrics" {
   source = "../../"
 
   # Autoscaling group
-  name = "customized-metrics-${local.name}"
+  name = "customized-metrics"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
@@ -745,7 +745,7 @@ module "target_tracking_customized_metrics" {
 ################################################################################
 
 resource "aws_launch_template" "this" {
-  name_prefix   = "external-lt-${local.name}-"
+  name_prefix   = "external-lt-"
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
 
@@ -758,7 +758,7 @@ module "external" {
   source = "../../"
 
   # Autoscaling group
-  name = "external-${local.name}"
+  name = "external-launch-template"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
@@ -783,7 +783,7 @@ module "disabled" {
   create_launch_template = false
 
   # Autoscaling group
-  name = "disabled-${local.name}"
+  name = "disabled"
 }
 
 ################################################################################
@@ -794,7 +794,7 @@ module "launch_template_only" {
   source = "../../"
 
   create = false
-  name   = "launch-template-only-${local.name}"
+  name   = "launch-template-only"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
@@ -815,7 +815,7 @@ module "default" {
   source = "../../"
 
   # Autoscaling group
-  name = "default-${local.name}"
+  name = "default"
 
   vpc_zone_identifier = module.vpc.private_subnets
   min_size            = 0
@@ -834,7 +834,7 @@ module "default" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 5.0"
+  version = "~> 6.0"
 
   name = local.name
   cidr = local.vpc_cidr
@@ -870,14 +870,7 @@ module "asg_sg" {
 data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
-
-  filter {
-    name = "name"
-
-    values = [
-      "amzn2-ami-hvm-*-x86_64-gp2",
-    ]
-  }
+  name_regex  = "^al2023-ami-2023.*-x86_64"
 }
 
 resource "aws_iam_service_linked_role" "autoscaling" {
@@ -892,13 +885,13 @@ resource "aws_iam_service_linked_role" "autoscaling" {
 }
 
 resource "aws_iam_instance_profile" "ssm" {
-  name = "complete-${local.name}"
+  name = local.name
   role = aws_iam_role.ssm.name
   tags = local.tags
 }
 
 resource "aws_iam_role" "ssm" {
-  name = "complete-${local.name}"
+  name = local.name
   tags = local.tags
 
   assume_role_policy = jsonencode({

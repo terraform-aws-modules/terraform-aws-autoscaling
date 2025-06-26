@@ -144,7 +144,7 @@ variable "instance_refresh" {
       }))
       auto_rollback                = optional(bool)
       checkpoint_delay             = optional(number)
-      checkpoint_percentage        = optional(list(number))
+      checkpoint_percentages       = optional(list(number))
       instance_warmup              = optional(number)
       max_healthy_percentage       = optional(number)
       min_healthy_percentage       = optional(number)
@@ -676,7 +676,7 @@ variable "network_interfaces" {
     network_interface_id = optional(string)
     primary_ipv6         = optional(bool)
     private_ip_address   = optional(string)
-    security_groups      = optional(list(string))
+    security_groups      = optional(list(string), [])
     subnet_id            = optional(string)
   }))
   default = null
@@ -685,13 +685,14 @@ variable "network_interfaces" {
 variable "placement" {
   description = "The placement of the instance"
   type = object({
-    affinity          = optional(string)
-    availability_zone = optional(string)
-    group_name        = optional(string)
-    host_id           = optional(string)
-    partition_number  = optional(number)
-    spread_domain     = optional(string)
-    tenancy           = optional(string)
+    affinity                = optional(string)
+    availability_zone       = optional(string)
+    group_name              = optional(string)
+    host_id                 = optional(string)
+    host_resource_group_arn = optional(string)
+    partition_number        = optional(number)
+    spread_domain           = optional(string)
+    tenancy                 = optional(string)
   })
   default = null
 }
@@ -873,7 +874,7 @@ variable "scaling_policies" {
       scheduling_buffer_time = optional(number)
     }))
     scaling_adjustment = optional(number)
-    step_adjustments = optional(list(object({
+    step_adjustment = optional(list(object({
       metric_interval_lower_bound = optional(number)
       metric_interval_upper_bound = optional(number)
       scaling_adjustment          = number
