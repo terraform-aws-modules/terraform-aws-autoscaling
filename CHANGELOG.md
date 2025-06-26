@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.3.1...v9.0.0) (2025-06-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade AWS provider and min required Terraform version to `6.0` and `1.5.7` respectively (#294)
+
+### Features
+
+* Upgrade AWS provider and min required Terraform version to `6.0` and `1.5.7` respectively ([#294](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/294)) ([bcc2455](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/bcc24551a4f1b7740b91397c79444bc62eae577c))
+
 ## [8.3.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.3.0...v8.3.1) (2025-06-25)
 
 
