@@ -370,7 +370,7 @@ resource "aws_autoscaling_group" "idc" {
   ignore_failed_scaling_activities = var.ignore_failed_scaling_activities
 
   dynamic "initial_lifecycle_hook" {
-    for_each = var.initial_lifecycle_hooks
+    for_each = var.initial_lifecycle_hooks != null ? var.initial_lifecycle_hooks : []
 
     content {
       default_result          = initial_lifecycle_hook.value.default_result
