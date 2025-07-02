@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.0.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v9.0.0...v9.0.1) (2025-07-02)
+
+
+### Bug Fixes
+
+* Correct null check between two definitions of ASG ([#295](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/295)) ([3659f3e](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/3659f3e33e71b981175dd35735ef1f668ead1ed9))
+
 ## [9.0.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v8.3.1...v9.0.0) (2025-06-26)
 
 
