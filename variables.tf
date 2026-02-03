@@ -682,6 +682,14 @@ variable "network_interfaces" {
   default = null
 }
 
+variable "network_performance_options" {
+  description = "The network performance options for the launch template"
+  type = object({
+    bandwidth_weighting = optional(string)
+  })
+  default = null
+}
+
 variable "placement" {
   description = "The placement of the instance"
   type = object({

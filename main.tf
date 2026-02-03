@@ -1000,6 +1000,14 @@ resource "aws_launch_template" "this" {
     }
   }
 
+  dynamic "network_performance_options" {
+    for_each = var.network_performance_options != null ? [var.network_performance_options] : []
+
+    content {
+      bandwidth_weighting = network_performance_options.value.bandwidth_weighting
+    }
+  }
+
   dynamic "private_dns_name_options" {
     for_each = var.private_dns_name_options != null ? [var.private_dns_name_options] : []
 
