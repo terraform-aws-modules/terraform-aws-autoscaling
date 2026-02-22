@@ -85,6 +85,7 @@ module "wrapper" {
   region                      = try(each.value.region, var.defaults.region, null)
   scaling_policies            = try(each.value.scaling_policies, var.defaults.scaling_policies, null)
   schedules                   = try(each.value.schedules, var.defaults.schedules, null)
+  secondary_interfaces        = try(each.value.secondary_interfaces, var.defaults.secondary_interfaces, null)
   security_groups             = try(each.value.security_groups, var.defaults.security_groups, [])
   service_linked_role_arn     = try(each.value.service_linked_role_arn, var.defaults.service_linked_role_arn, null)
   suspended_processes         = try(each.value.suspended_processes, var.defaults.suspended_processes, [])

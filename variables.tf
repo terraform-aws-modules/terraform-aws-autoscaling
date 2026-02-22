@@ -429,9 +429,10 @@ variable "capacity_reservation_specification" {
 variable "cpu_options" {
   description = "The CPU options for the instance"
   type = object({
-    amd_sev_snp      = optional(string)
-    core_count       = optional(number)
-    threads_per_core = optional(number)
+    amd_sev_snp           = optional(string)
+    core_count            = optional(number)
+    nested_virtualization = optional(string)
+    threads_per_core      = optional(number)
   })
   default = null
 }
@@ -720,6 +721,20 @@ variable "ram_disk_id" {
   description = "The ID of the ram disk"
   type        = string
   default     = null
+}
+
+variable "secondary_interfaces" {
+  description = "Secondary interfaces to associate with instances launched from the template"
+  type = list(object({
+    delete_on_termination    = optional(bool)
+    device_index             = optional(number)
+    interface_type           = optional(string)
+    network_card_index       = optional(number)
+    private_ip_address_count = optional(number)
+    private_ip_addresses     = optional(list(string))
+    secondary_subnet_id      = optional(string)
+  }))
+  default = null
 }
 
 variable "tag_specifications" {
