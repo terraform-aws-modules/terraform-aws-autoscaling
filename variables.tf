@@ -571,7 +571,7 @@ variable "instance_requirements" {
     }))
     vcpu_count = optional(object({
       max = optional(number)
-      min = string
+      min = optional(number)
     }))
   })
   default = null
