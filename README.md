@@ -229,14 +229,14 @@ Note: the default behavior of the module is to create an autoscaling group and l
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.7 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.33 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.33 |
 
 ## Modules
@@ -246,7 +246,7 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_autoscaling_group.idc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
 | [aws_autoscaling_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
 | [aws_autoscaling_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_policy) | resource |
@@ -262,7 +262,7 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_autoscaling_group_tags"></a> [autoscaling\_group\_tags](#input\_autoscaling\_group\_tags) | A map of additional tags to add to the autoscaling group | `map(string)` | `{}` | no |
 | <a name="input_autoscaling_group_tags_not_propagate_at_launch"></a> [autoscaling\_group\_tags\_not\_propagate\_at\_launch](#input\_autoscaling\_group\_tags\_not\_propagate\_at\_launch) | A list of tag keys that should NOT be propagated to launched EC2 instances | `list(string)` | `[]` | no |
 | <a name="input_availability_zone_distribution"></a> [availability\_zone\_distribution](#input\_availability\_zone\_distribution) | A map of configuration for capacity distribution across availability zones | <pre>object({<br/>    capacity_distribution_strategy = optional(string)<br/>  })</pre> | `null` | no |
@@ -310,7 +310,7 @@ No modules.
 | <a name="input_instance_market_options"></a> [instance\_market\_options](#input\_instance\_market\_options) | The market (purchasing) option for the instance | <pre>object({<br/>    market_type = optional(string)<br/>    spot_options = optional(object({<br/>      block_duration_minutes         = optional(number)<br/>      instance_interruption_behavior = optional(string)<br/>      max_price                      = optional(string)<br/>      spot_instance_type             = optional(string)<br/>      valid_until                    = optional(string)<br/>    }))<br/>  })</pre> | `null` | no |
 | <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | Name that is propogated to launched EC2 instances via a tag - if not provided, defaults to `var.name` | `string` | `""` | no |
 | <a name="input_instance_refresh"></a> [instance\_refresh](#input\_instance\_refresh) | If this block is configured, start an Instance Refresh when this Auto Scaling Group is updated | <pre>object({<br/>    preferences = optional(object({<br/>      alarm_specification = optional(object({<br/>        alarms = optional(list(string))<br/>      }))<br/>      auto_rollback                = optional(bool)<br/>      checkpoint_delay             = optional(number)<br/>      checkpoint_percentages       = optional(list(number))<br/>      instance_warmup              = optional(number)<br/>      max_healthy_percentage       = optional(number)<br/>      min_healthy_percentage       = optional(number)<br/>      scale_in_protected_instances = optional(string)<br/>      skip_matching                = optional(bool)<br/>      standby_instances            = optional(string)<br/>    }))<br/>    strategy = string<br/>    triggers = optional(list(string))<br/>  })</pre> | `null` | no |
-| <a name="input_instance_requirements"></a> [instance\_requirements](#input\_instance\_requirements) | The attribute requirements for the type of instance. If present then `instance_type` cannot be present | <pre>object({<br/>    accelerator_count = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    accelerator_manufacturers = optional(list(string))<br/>    accelerator_names         = optional(list(string))<br/>    accelerator_total_memory_mib = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    accelerator_types      = optional(list(string))<br/>    allowed_instance_types = optional(list(string))<br/>    bare_metal             = optional(string)<br/>    baseline_ebs_bandwidth_mbps = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    burstable_performance                                   = optional(string)<br/>    cpu_manufacturers                                       = optional(list(string))<br/>    excluded_instance_types                                 = optional(list(string))<br/>    instance_generations                                    = optional(list(string))<br/>    local_storage                                           = optional(string)<br/>    local_storage_types                                     = optional(list(string))<br/>    max_spot_price_as_percentage_of_optimal_on_demand_price = optional(number)<br/>    memory_gib_per_vcpu = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    memory_mib = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    network_bandwidth_gbps = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    network_interface_count = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    on_demand_max_price_percentage_over_lowest_price = optional(number)<br/>    require_hibernate_support                        = optional(bool)<br/>    spot_max_price_percentage_over_lowest_price      = optional(number)<br/>    total_local_storage_gb = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    vcpu_count = optional(object({<br/>      max = optional(number)<br/>      min = string<br/>    }))<br/>  })</pre> | `null` | no |
+| <a name="input_instance_requirements"></a> [instance\_requirements](#input\_instance\_requirements) | The attribute requirements for the type of instance. If present then `instance_type` cannot be present | <pre>object({<br/>    accelerator_count = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    accelerator_manufacturers = optional(list(string))<br/>    accelerator_names         = optional(list(string))<br/>    accelerator_total_memory_mib = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    accelerator_types      = optional(list(string))<br/>    allowed_instance_types = optional(list(string))<br/>    bare_metal             = optional(string)<br/>    baseline_ebs_bandwidth_mbps = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    burstable_performance                                   = optional(string)<br/>    cpu_manufacturers                                       = optional(list(string))<br/>    excluded_instance_types                                 = optional(list(string))<br/>    instance_generations                                    = optional(list(string))<br/>    local_storage                                           = optional(string)<br/>    local_storage_types                                     = optional(list(string))<br/>    max_spot_price_as_percentage_of_optimal_on_demand_price = optional(number)<br/>    memory_gib_per_vcpu = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    memory_mib = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    network_bandwidth_gbps = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    network_interface_count = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    on_demand_max_price_percentage_over_lowest_price = optional(number)<br/>    require_hibernate_support                        = optional(bool)<br/>    spot_max_price_percentage_over_lowest_price      = optional(number)<br/>    total_local_storage_gb = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>    vcpu_count = optional(object({<br/>      max = optional(number)<br/>      min = optional(number)<br/>    }))<br/>  })</pre> | `null` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The type of the instance. If present then `instance_requirements` cannot be present | `string` | `null` | no |
 | <a name="input_kernel_id"></a> [kernel\_id](#input\_kernel\_id) | The kernel ID | `string` | `null` | no |
 | <a name="input_key_name"></a> [key\_name](#input\_key\_name) | The key name that should be used for the instance | `string` | `null` | no |
@@ -362,7 +362,7 @@ No modules.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_autoscaling_group_arn"></a> [autoscaling\_group\_arn](#output\_autoscaling\_group\_arn) | The ARN for this AutoScaling Group |
 | <a name="output_autoscaling_group_availability_zones"></a> [autoscaling\_group\_availability\_zones](#output\_autoscaling\_group\_availability\_zones) | The availability zones of the autoscale group |
 | <a name="output_autoscaling_group_default_cooldown"></a> [autoscaling\_group\_default\_cooldown](#output\_autoscaling\_group\_default\_cooldown) | Time between a scaling activity and the succeeding scaling activity |
