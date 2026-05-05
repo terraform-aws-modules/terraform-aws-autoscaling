@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.2.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v9.2.0...v9.2.1) (2026-05-05)
+
+### Bug Fixes
+
+* Correct `vcpu_count.min` type from `string` to `optional(number)` ([#307](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/307)) ([57f27ef](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/57f27efc2b5e37f0b7c2842508c280ca608df735)), closes [#305](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/305)
+
 ## [9.2.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v9.1.0...v9.2.0) (2026-02-04)
 
 ### Features
