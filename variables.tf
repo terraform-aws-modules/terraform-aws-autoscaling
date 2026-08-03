@@ -135,6 +135,16 @@ variable "instance_maintenance_policy" {
   default = null
 }
 
+variable "instance_lifecycle_policy" {
+  description = "If this block is configured, adds an instance lifecycle policy to the specified Auto Scaling Group"
+  type = object({
+    retention_triggers = optional(object({
+      terminate_hook_abandon = optional(string)
+    }))
+  })
+  default = null
+}
+
 variable "instance_refresh" {
   description = "If this block is configured, start an Instance Refresh when this Auto Scaling Group is updated"
   type = object({

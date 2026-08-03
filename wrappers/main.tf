@@ -46,6 +46,7 @@ module "wrapper" {
   image_id                                       = try(each.value.image_id, var.defaults.image_id, null)
   initial_lifecycle_hooks                        = try(each.value.initial_lifecycle_hooks, var.defaults.initial_lifecycle_hooks, null)
   instance_initiated_shutdown_behavior           = try(each.value.instance_initiated_shutdown_behavior, var.defaults.instance_initiated_shutdown_behavior, null)
+  instance_lifecycle_policy                      = try(each.value.instance_lifecycle_policy, var.defaults.instance_lifecycle_policy, null)
   instance_maintenance_policy                    = try(each.value.instance_maintenance_policy, var.defaults.instance_maintenance_policy, null)
   instance_market_options                        = try(each.value.instance_market_options, var.defaults.instance_market_options, null)
   instance_name                                  = try(each.value.instance_name, var.defaults.instance_name, "")

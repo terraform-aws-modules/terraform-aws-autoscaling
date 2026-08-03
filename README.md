@@ -231,13 +231,13 @@ Note: the default behavior of the module is to create an autoscaling group and l
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.7 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.33 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.56 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.33 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.56 |
 
 ## Modules
 
@@ -306,6 +306,7 @@ No modules.
 | <a name="input_image_id"></a> [image\_id](#input\_image\_id) | The AMI from which to launch the instance | `string` | `null` | no |
 | <a name="input_initial_lifecycle_hooks"></a> [initial\_lifecycle\_hooks](#input\_initial\_lifecycle\_hooks) | One or more Lifecycle Hooks to attach to the Auto Scaling Group before instances are launched. The syntax is exactly the same as the separate `aws_autoscaling_lifecycle_hook` resource, without the `autoscaling_group_name` attribute. Please note that this will only work when creating a new Auto Scaling Group. For all other use-cases, please use `aws_autoscaling_lifecycle_hook` resource | <pre>list(object({<br/>    default_result          = optional(string)<br/>    heartbeat_timeout       = optional(number)<br/>    lifecycle_transition    = string<br/>    name                    = string<br/>    notification_metadata   = optional(string)<br/>    notification_target_arn = optional(string)<br/>    role_arn                = optional(string)<br/>  }))</pre> | `null` | no |
 | <a name="input_instance_initiated_shutdown_behavior"></a> [instance\_initiated\_shutdown\_behavior](#input\_instance\_initiated\_shutdown\_behavior) | Shutdown behavior for the instance. Can be `stop` or `terminate`. (Default: `stop`) | `string` | `null` | no |
+| <a name="input_instance_lifecycle_policy"></a> [instance\_lifecycle\_policy](#input\_instance\_lifecycle\_policy) | If this block is configured, adds an instance lifecycle policy to the specified Auto Scaling Group | <pre>object({<br/>    retention_triggers = optional(object({<br/>      terminate_hook_abandon = optional(string)<br/>    }))<br/>  })</pre> | `null` | no |
 | <a name="input_instance_maintenance_policy"></a> [instance\_maintenance\_policy](#input\_instance\_maintenance\_policy) | If this block is configured, add a instance maintenance policy to the specified Auto Scaling group | <pre>object({<br/>    max_healthy_percentage = number<br/>    min_healthy_percentage = number<br/>  })</pre> | `null` | no |
 | <a name="input_instance_market_options"></a> [instance\_market\_options](#input\_instance\_market\_options) | The market (purchasing) option for the instance | <pre>object({<br/>    market_type = optional(string)<br/>    spot_options = optional(object({<br/>      block_duration_minutes         = optional(number)<br/>      instance_interruption_behavior = optional(string)<br/>      max_price                      = optional(string)<br/>      spot_instance_type             = optional(string)<br/>      valid_until                    = optional(string)<br/>    }))<br/>  })</pre> | `null` | no |
 | <a name="input_instance_name"></a> [instance\_name](#input\_instance\_name) | Name that is propogated to launched EC2 instances via a tag - if not provided, defaults to `var.name` | `string` | `""` | no |
