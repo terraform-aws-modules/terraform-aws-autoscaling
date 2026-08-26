@@ -61,6 +61,20 @@ resource "aws_autoscaling_group" "this" {
     }
   }
 
+  dynamic "instance_lifecycle_policy" {
+    for_each = var.instance_lifecycle_policy != null ? [var.instance_lifecycle_policy] : []
+
+    content {
+      dynamic "retention_triggers" {
+        for_each = instance_lifecycle_policy.value.retention_triggers != null ? [instance_lifecycle_policy.value.retention_triggers] : []
+
+        content {
+          terminate_hook_abandon = retention_triggers.value.terminate_hook_abandon
+        }
+      }
+    }
+  }
+
   dynamic "instance_maintenance_policy" {
     for_each = var.instance_maintenance_policy != null ? [var.instance_maintenance_policy] : []
 
@@ -380,6 +394,20 @@ resource "aws_autoscaling_group" "idc" {
       notification_metadata   = initial_lifecycle_hook.value.notification_metadata
       notification_target_arn = initial_lifecycle_hook.value.notification_target_arn
       role_arn                = initial_lifecycle_hook.value.role_arn
+    }
+  }
+
+  dynamic "instance_lifecycle_policy" {
+    for_each = var.instance_lifecycle_policy != null ? [var.instance_lifecycle_policy] : []
+
+    content {
+      dynamic "retention_triggers" {
+        for_each = instance_lifecycle_policy.value.retention_triggers != null ? [instance_lifecycle_policy.value.retention_triggers] : []
+
+        content {
+          terminate_hook_abandon = retention_triggers.value.terminate_hook_abandon
+        }
+      }
     }
   }
 

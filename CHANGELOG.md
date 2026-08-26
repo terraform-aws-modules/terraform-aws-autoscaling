@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.3.0](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v9.2.1...v9.3.0) (2026-08-03)
+
+### Features
+
+* Support Autoscaling Group `instance_lifecycle_policy` ([#309](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/309)) ([4b49480](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/4b4948098b033e0f45e507579b158499a52733cd))
+
 ## [9.2.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v9.2.0...v9.2.1) (2026-05-05)
 
 ### Bug Fixes
