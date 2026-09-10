@@ -1419,6 +1419,19 @@ resource "aws_autoscaling_policy" "this" {
   }
 }
 
+resource "aws_autoscaling_lifecycle_hook" "this" {
+  count = local.create && var.lifecycle_hooks != null ? length(var.lifecycle_hooks) : 0
+
+  name                    = var.lifecycle_hooks[count.index].name
+  autoscaling_group_name  = try(aws_autoscaling_group.this[0].name, aws_autoscaling_group.idc[0].name)
+  default_result          = var.lifecycle_hooks[count.index].default_result
+  heartbeat_timeout       = var.lifecycle_hooks[count.index].heartbeat_timeout
+  lifecycle_transition    = var.lifecycle_hooks[count.index].lifecycle_transition
+  notification_metadata   = var.lifecycle_hooks[count.index].notification_metadata
+  notification_target_arn = var.lifecycle_hooks[count.index].notification_target_arn
+  role_arn                = var.lifecycle_hooks[count.index].role_arn
+}
+
 ################################################################################
 # IAM Role / Instance Profile
 ################################################################################
