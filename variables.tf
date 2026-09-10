@@ -180,6 +180,27 @@ variable "launch_template_version" {
   default     = null
 }
 
+variable "lifecycle_hooks" {
+  description = "One or more Lifecycle Hooks to attach to the Auto Scaling Group after the group has been created. Unlike `initial_lifecycle_hooks` those can be added to an existing Auto Scaling Group"
+  type = list(object({
+    default_result          = optional(string)
+    heartbeat_timeout       = optional(number)
+    lifecycle_transition    = string
+    name                    = string
+    notification_metadata   = optional(string)
+    notification_target_arn = optional(string)
+    role_arn                = optional(string)
+  }))
+  default = null
+
+  # Check whether hook names are unique across lifecycle_hooks and initial_lifecycle_hooks
+  # Terraform lacks dedicated logical implication operator so instead we use ternary expression to only fire this check if both variables are set
+  validation {
+    condition     = (var.lifecycle_hooks != null && var.initial_lifecycle_hooks != null) ? setintersection(var.initial_lifecycle_hooks[*].name, var.lifecycle_hooks[*].name) == [] : true
+    error_message = "Lifecycle hook names must be unique between `var.lifecycle_hooks` and `var.initial_lifecycle_hooks`"
+  }
+}
+
 variable "max_instance_lifetime" {
   description = "The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 86400 and 31536000 seconds"
   type        = number
