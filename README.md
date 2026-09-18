@@ -221,6 +221,41 @@ Note: the default behavior of the module is to create an autoscaling group and l
   }
 ```
 
+<!-- BEGIN_KNOWN_LIMITATIONS -->
+
+## Known limitations (Terraform/OpenTofu, not this module)
+
+A few requests come up again and again and cannot be implemented by this
+module, or by any module: Terraform requires `lifecycle` arguments to be
+literal values inside the resource block.
+[hashicorp/terraform#18367](https://github.com/hashicorp/terraform/issues/18367)
+has been open since 2018,
+[#22544](https://github.com/hashicorp/terraform/issues/22544) since 2019, and
+[opentofu/opentofu#1329](https://github.com/opentofu/opentofu/issues/1329) is
+the same request for OpenTofu.
+
+- **Auto Scaling group desired_capacity reverts on every apply** - Native
+  options: leave `desired_capacity` unset, or fork and add
+  `ignore_changes = [desired_capacity]`.
+
+[compliance.tf](https://compliance.tf/docs/workarounds/terraform-aws-autoscaling/?utm_source=github&utm_medium=readme&utm_campaign=known-limitations) serves this module with these rules applied at
+download time, on top of whatever your organization already has enabled there.
+Inputs and outputs do not change; the `source` line does. Drop the `version`
+argument and pin the release you use by adding `&version=` and that release
+number to the URL. To get started, register a free compliance.tf account and
+configure an access token:
+
+    source = "https://registry.compliance.tf/terraform-aws-modules/autoscaling/aws?add_rules=lifecycle_ignore_scaling_changes"
+
+The page behind that link has the full workaround for each item above and the
+exact diff each rule makes. To see the diff before touching a `source` line,
+open this module in the Rules Playground at the version it pins for it:
+https://registry.compliance.tf/playground?module=terraform-aws-modules/autoscaling/aws&rules=lifecycle_ignore_scaling_changes - no account needed.
+
+Disclosure: written by this module's maintainer, who also builds compliance.tf.
+
+<!-- END_KNOWN_LIMITATIONS -->
+
 ## Examples
 
 - [Complete](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/complete) - Creates several variations of resources for autoscaling groups and launch templates.
