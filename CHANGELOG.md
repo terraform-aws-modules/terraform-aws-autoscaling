@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.3.2](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v9.3.1...v9.3.2) (2026-09-18)
+
+### Bug Fixes
+
+* Document known Terraform/OpenTofu limitations in README ([#311](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/issues/311)) ([1d9542e](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/commit/1d9542e6173d669ff2d3938111202a4fe23e15bc))
+
 ## [9.3.1](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/compare/v9.3.0...v9.3.1) (2026-08-26)
 
 ### Bug Fixes
