@@ -1420,16 +1420,25 @@ resource "aws_autoscaling_policy" "this" {
 }
 
 resource "aws_autoscaling_lifecycle_hook" "this" {
-  count = local.create && var.lifecycle_hooks != null ? length(var.lifecycle_hooks) : 0
+  for_each = local.create && var.lifecycle_hooks != null ? var.lifecycle_hooks : {}
 
-  name                    = var.lifecycle_hooks[count.index].name
+  region = var.region
+
+  name                    = try(each.value.name, each.key)
   autoscaling_group_name  = try(aws_autoscaling_group.this[0].name, aws_autoscaling_group.idc[0].name)
-  default_result          = var.lifecycle_hooks[count.index].default_result
-  heartbeat_timeout       = var.lifecycle_hooks[count.index].heartbeat_timeout
-  lifecycle_transition    = var.lifecycle_hooks[count.index].lifecycle_transition
-  notification_metadata   = var.lifecycle_hooks[count.index].notification_metadata
-  notification_target_arn = var.lifecycle_hooks[count.index].notification_target_arn
-  role_arn                = var.lifecycle_hooks[count.index].role_arn
+  default_result          = each.value.default_result
+  heartbeat_timeout       = each.value.heartbeat_timeout
+  lifecycle_transition    = each.value.lifecycle_transition
+  notification_metadata   = each.value.notification_metadata
+  notification_target_arn = each.value.notification_target_arn
+  role_arn                = each.value.role_arn
+
+  lifecycle {
+    precondition {
+      condition     = (var.lifecycle_hooks != null && var.initial_lifecycle_hooks != null) ? length(setintersection(var.initial_lifecycle_hooks[*].name, [for k, v in var.lifecycle_hooks : v.name])) == 0 : true
+      error_message = "Lifecycle hook names must be unique between `var.lifecycle_hooks` and `var.initial_lifecycle_hooks`"
+    }
+  }
 }
 
 ################################################################################
