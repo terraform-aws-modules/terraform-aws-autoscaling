@@ -2,7 +2,7 @@
 
 If you have any questions regarding this upgrade process, please consult the [`examples`](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/tree/master/examples/complete) directory:
 
-⚠️ Instructions detailed here are for migrating from `v4.x` to `v5.x`. For instructions on upgrading to `v4.x` first, please see [UPGRADE-4.0.md](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/blob/master/UPGRADE-4.0.md).
+⚠️ Instructions detailed here are for migrating from `v4.x` to `v5.x`. For instructions on upgrading to `v4.x` first, please see [UPGRADE-4.0.md](https://github.com/terraform-aws-modules/terraform-aws-autoscaling/blob/master/docs/UPGRADE-4.0.md).
 
 If you find a bug, please open an issue with supporting configuration to reproduce.
 
