@@ -100,7 +100,18 @@ module "complete" {
   # Launch template
   launch_template_name        = local.name
   launch_template_description = "Complete launch template example"
-  update_default_version      = true
+
+  lifecycle_hooks = {
+    ExampleLifeCycleHook = {
+      default_result       = "CONTINUE"
+      heartbeat_timeout    = 60
+      lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
+      # This could be a rendered data resource
+      notification_metadata = jsonencode({ "hello" = "world" })
+    }
+  }
+
+  update_default_version = true
 
   image_id          = data.aws_ami.amazon_linux.id
   instance_type     = "t3.micro"

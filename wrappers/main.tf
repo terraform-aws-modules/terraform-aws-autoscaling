@@ -62,6 +62,7 @@ module "wrapper" {
   launch_template_use_name_prefix                = try(each.value.launch_template_use_name_prefix, var.defaults.launch_template_use_name_prefix, true)
   launch_template_version                        = try(each.value.launch_template_version, var.defaults.launch_template_version, null)
   license_specifications                         = try(each.value.license_specifications, var.defaults.license_specifications, null)
+  lifecycle_hooks                                = try(each.value.lifecycle_hooks, var.defaults.lifecycle_hooks, null)
   maintenance_options                            = try(each.value.maintenance_options, var.defaults.maintenance_options, null)
   max_instance_lifetime                          = try(each.value.max_instance_lifetime, var.defaults.max_instance_lifetime, null)
   max_size                                       = try(each.value.max_size, var.defaults.max_size, null)
